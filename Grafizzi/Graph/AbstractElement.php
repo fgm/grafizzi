@@ -1,12 +1,12 @@
 <?php
-namespace OSInet\Graph;
+namespace Grafizzi\Graph;
 
 use Monolog\Logger;
+use Grafizzi\Graph\AbstractLoggable;
+use Grafizzi\Graph\AttributeInterface;
+use Grafizzi\Graph\ElementInterface;
 
-use OSInet\Graph\ElementInterface;
-
-class Element extends AbstractLoggable implements ElementInterface {
-
+abstract class AbstractElement extends AbstractLoggable implements ElementInterface {
   public $fAttributes = array();
 
   public $fChildren = array();
@@ -15,20 +15,23 @@ class Element extends AbstractLoggable implements ElementInterface {
   }
 
   public function build() {
+    $type = $this->getType();
+    $name = $this->getName();
+    $attributes = array();
+    foreach ($this->fAttributes as $attribute) {
+      $attributes[] = $attribute->build();
+    }
+    $ret = "$type $name [ " . implode(', ', $attributes) . " ];\n";
+    return $ret;
   }
 
   public static function getAllowedChildTypes() {
 
   }
 
-  public function getAttributeByName() {
-  }
-
-  public function getName() {
-  }
-
-  public static function getType() {
-
+  public function getAttributeByName($name) {
+    $ret = isset($this->fAttributes[$name]) ? $this->fAttributes[$name] : NULL;
+    return $ret;
   }
 
   public function removeAttribute(AttributeInterface $attribute) {
@@ -47,13 +50,12 @@ class Element extends AbstractLoggable implements ElementInterface {
   }
 
   public function setAttribute(AttributeInterface $attribute) {
-    $name = $attribute->getName();
-    var_dump($name);
-    if (!isset($name)) {
-      $message = 'Trying to set unnamed attribute.';
-      $this->logger->debug($message, debug_backtrace(FALSE));
-      throw new \InvalidArgumentException($message);
-    }
+      $name = $attribute->getName();
+      if (!isset($name)) {
+        $message = 'Trying to set unnamed attribute.';
+        $this->logger->debug($message, debug_backtrace(FALSE));
+        throw new \InvalidArgumentException($message);
+      }
     $this->fAttributes[$name] = $attribute;
   }
 
@@ -64,8 +66,5 @@ class Element extends AbstractLoggable implements ElementInterface {
       }
       $this->setAttribute($attribute);
     }
-  }
-
-  public function setName() {
   }
 }

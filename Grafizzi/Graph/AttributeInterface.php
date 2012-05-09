@@ -1,10 +1,10 @@
 <?php
-namespace OSInet\Graph;
+namespace Grafizzi\Graph;
 
 /**
  * The basic interface of Attribute classes.
  */
-interface AttributeInterface {
+interface AttributeInterface extends NamedInterface {
   /**
    * @return array
    *   An array of USASCII strings.
@@ -20,9 +20,6 @@ interface AttributeInterface {
    */
   public static function getDefaultValue($name);
 
-  public function getName();
   public function getValue();
-
-  public function setName($name);
-  public function setValue($value);
+  public function setValue($value = NULL);
 }

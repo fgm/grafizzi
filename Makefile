@@ -1,4 +1,5 @@
 all:
 
-clean:
-	rm -f php_errors.log
+clean:  
+	find . -name php_errors.log -delete
+	

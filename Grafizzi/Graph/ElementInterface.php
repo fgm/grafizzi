@@ -1,26 +1,20 @@
 <?php
-namespace OSInet\Graph;
+namespace Grafizzi\Graph;
 
-use OSInet\Graph\AttributeInterface;
+use Grafizzi\Graph\AttributeInterface;
+use Grafizzi\Graph\LoggableInterface;
 
-/**
- *
- * @author marand
- */
 interface ElementInterface extends LoggableInterface {
-  public function setAttribute(AttributeInterface $attribute);
-  public function setAttributes(array $attributes);
   public function addChild(ElementInterface $child);
 
   public static function getAllowedChildTypes();
-  public function getAttributeByName();
-  public function getName();
+  public function getAttributeByName($name);
   public static function getType();
 
   public function removeAttribute(AttributeInterface $attribute);
   public function removeAttributeByName($name);
   public function removeChild(ElementInterface $child);
 
-  public function setName();
+  public function setAttribute(AttributeInterface $attribute);
+  public function setAttributes(array $attributes);
 }
-

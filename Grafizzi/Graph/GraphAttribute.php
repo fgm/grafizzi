@@ -1,10 +1,10 @@
 <?php
-namespace OSInet\Graph;
+namespace Grafizzi\Graph;
 
-use OSInet\Graph\AttributeInterface;
-use OSInet\Graph\AbstractAttribute;
+use Grafizzi\Graph\AttributeInterface;
+use Grafizzi\Graph\AbstractAttribute;
 
-class GraphAttribute extends AbstractAttribute /* implements AttributeInterface */ {
+class GraphAttribute extends AbstractAttribute implements AttributeInterface {
   public static $fDefaults = array(
     'bgcolor' => NULL, // color|colorlist
     'fontcolor' => 'black', // color

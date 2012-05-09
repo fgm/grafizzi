@@ -1,45 +1,46 @@
 <?php
+use Monolog\Formatter\JsonFormatter;
+
 error_reporting(-1);
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use OSInet\Graph\Graph;
-use OSInet\Graph\GraphAttribute;
+use Grafizzi\Graph\Graph;
+use Grafizzi\Graph\GraphAttribute;
 
-// Replace by the information for the autoloader used in your project
-$base = '/home/marand/Dropbox/src/php';
-echo "Base: $base\n";
-$autoloaderPath = "$base/php_lib/misc/psr0.php";
-$autoloadFunction = 'psr0_autoload';
+// Initialize autoloader.
+require 'init.php';
 
-// Add or modify the information for your autoloader.
-$paths = array(
-  "$base/monolog/src",
-  "$base/Pimple/lib",
-);
+$log = new Logger(basename(__FILE__, '.php'));
 
-$path = array_reduce($paths, function (&$accu, $item) {
-  return "$accu:$item";
-}, ini_get('include_path'));
-ini_set('include_path', $path);
+// Change the minimum logging level using the Logger:: constants.
+$log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 
-// You should not need to change code after this line.
-require_once $autoloaderPath;
-if (!spl_autoload_register($autoloadFunction)) {
-  die('Autoloader not added.');
-}
-
-$debugLevel = Logger::DEBUG;
-
-$log = new Logger('name');
-$log->pushHandler(new StreamHandler('php://stderr', $debugLevel));
 $dic = new Pimple(array(
   'logger' => $log,
   'directed' => TRUE,
 ));
 
 $g = new Graph($dic);
-// var_dump($g);
+$log->debug('graph generated', array('graph' => $g));
+$g->setName('g');
 
-$a = new GraphAttribute($dic, 'rankdir', 'TB');
-echo "fin\n";
+$rankdir = new GraphAttribute($dic, 'rankdir', 'TB');
+$log->debug('rankdir created', array('rankdir' => $rankdir));
+$label = new GraphAttribute($dic, 'label', 'Some graph');
+$log->debug('label created', array('label' => $label));
+
+$g->setAttribute($rankdir);
+$log->debug('rankdir assigned to graph', array(
+  'graph' => $g,
+  'rankdir' => $rankdir,
+));
+
+$g->setAttribute($label);
+$log->debug('label assigned to graph', array(
+  'graph' => $g,
+  'label' => $label,
+));
+
+echo $g->build();
+$log->debug('done');

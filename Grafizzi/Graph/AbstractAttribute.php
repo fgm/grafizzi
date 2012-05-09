@@ -1,7 +1,8 @@
 <?php
-namespace OSInet\Graph;
+namespace Grafizzi\Graph;
 
-use OSInet\Graph\AttributeInterface;
+use Grafizzi\Graph\AbstractLoggable;
+use Grafizzi\Graph\AttributeInterface;
 
 /**
  * An Element attribute.
@@ -16,16 +17,23 @@ abstract class AbstractAttribute extends AbstractLoggable implements AttributeIn
    */
   public static $fDefaults = array();
 
-  public $fName;
   public $fValue;
 
   /**
    * @see AttributeInterface::__construct()
    */
   public function __construct(\Pimple $dic, $name, $value = NULL) {
-    //parent::__construct($dic);
+    parent::__construct($dic);
     $this->setName($name);
     $this->setValue($value);
+  }
+
+  public function build() {
+    $name = $this->getName();
+    $value = $this->getValue();
+    // TODO escape name, value more carefully
+    $ret = "$name=\"$value\"";
+    return $ret;
   }
 
   /**
@@ -54,24 +62,23 @@ abstract class AbstractAttribute extends AbstractLoggable implements AttributeIn
     }
   }
 
-  public function getName() {
-    if (!isset($this->fName)) {
-      throw new \DomainException;
-    }
-  }
-
   public function getValue() {
-
+    return $this->fValue;
   }
 
   /**
-   * @see AttributeInterface::setName()
+   * In addition to basic behavior, validate name.
+   *
+   * (non-PHPdoc)
+   * @see Grafizzi\Graph.AbstractLoggable::setName()
+   *
+   * @throws AttributeNameException
    */
   public function setName($name) {
     if (!empty(self::$fDefaults) && !array_key_exists($name, self::$fDefaults)) {
       throw new AttributeNameException("Invalid attribute $name");
     }
-    $this->fName = $name;
+    parent::setName($name);
   }
 
   /**

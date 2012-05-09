@@ -1,7 +1,7 @@
 <?php
-namespace OSInet\Graph\GraphViz;
+namespace Grafizzi\Graph\GraphViz;
 
-use OSInet\Graph\GraphAttribute;
+use Grafizzi\Graph\GraphAttribute;
 
 class GraphVizAttribute extends GraphAttribute {
   public static $fDefaults = array(

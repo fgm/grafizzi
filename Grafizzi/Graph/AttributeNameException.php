@@ -1,5 +1,5 @@
 <?php
-namespace OSInet\Graph;
+namespace Grafizzi\Graph;
 
 /**
  */
