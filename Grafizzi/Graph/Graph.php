@@ -9,11 +9,15 @@ class Graph extends AbstractElement implements GraphInterface {
   public function build() {
     $type = $this->getType();
     $name = $this->getName();
-    $attributes = array();
+    $ret = "$type $name {\n";
     foreach ($this->fAttributes as $attribute) {
-      $attributes[] = $attribute->build();
+      $ret .= $attribute->build() . ";\n";
     }
-    $ret = "$type $name {\n" . implode(";\n", $attributes) . "\n}\n";
+
+    foreach ($this->fChildren as $child) {
+      $ret .= $child->build() . "\n";
+    }
+    $ret .= "}\n";
     return $ret;
   }
 

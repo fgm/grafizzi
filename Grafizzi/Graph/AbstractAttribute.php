@@ -69,8 +69,7 @@ abstract class AbstractAttribute extends AbstractLoggable implements AttributeIn
   /**
    * In addition to basic behavior, validate name.
    *
-   * (non-PHPdoc)
-   * @see Grafizzi\Graph.AbstractLoggable::setName()
+   * @see Grafizzi\Graph\AbstractLoggable::setName()
    *
    * @throws AttributeNameException
    */

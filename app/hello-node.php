@@ -14,7 +14,7 @@ require 'init.php';
 $log = new Logger(basename(__FILE__, '.php'));
 
 // Change the minimum logging level using the Logger:: constants.
-$log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
+$log->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
 
 $dic = new Pimple(array(
   'logger' => $log,

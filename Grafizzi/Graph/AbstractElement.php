@@ -17,32 +17,36 @@ abstract class AbstractElement extends AbstractLoggable implements ElementInterf
   public function build() {
     $type = $this->getType();
     $name = $this->getName();
-    $attributes = array();
-    foreach ($this->fAttributes as $attribute) {
-      $attributes[] = $attribute->build();
-    }
+    $this->logger->debug("Building element $name.");
+    $attributes = array_map(function (AttributeInterface $attribute) {
+      return $attribute->build();
+    }, $this->fAttributes);
     $ret = "$type $name [ " . implode(', ', $attributes) . " ];\n";
     return $ret;
   }
 
   public static function getAllowedChildTypes() {
-
+    return NULL;
   }
 
   public function getAttributeByName($name) {
     $ret = isset($this->fAttributes[$name]) ? $this->fAttributes[$name] : NULL;
+    $this->logger->debug("Getting attribute [$name]: " . print_r($ret, TRUE) . ".");
     return $ret;
   }
 
   public function removeAttribute(AttributeInterface $attribute) {
     $name = $attribute->getName();
     if (!isset($name)) {
-      throw new \InvalidArgumentException('Trying to remove unnamed attribute.');
+      $message = 'Trying to remove unnamed attribute.';
+      $this->logger->warn($message);
+      throw new \InvalidArgumentException($message);
     }
     $this->removeAttributeByName($name);
   }
 
   public function removeAttributeByName($name) {
+    $this->logger->debug("Removing attribute [$name].");
     unset($this->fAttributes[$name]);
   }
 
@@ -53,7 +57,7 @@ abstract class AbstractElement extends AbstractLoggable implements ElementInterf
       $name = $attribute->getName();
       if (!isset($name)) {
         $message = 'Trying to set unnamed attribute.';
-        $this->logger->debug($message, debug_backtrace(FALSE));
+        $this->logger->warn($message, debug_backtrace(FALSE));
         throw new \InvalidArgumentException($message);
       }
     $this->fAttributes[$name] = $attribute;
@@ -62,7 +66,9 @@ abstract class AbstractElement extends AbstractLoggable implements ElementInterf
   public function setAttributes(array $attributes) {
     foreach ($attributes as $attribute) {
       if (!in_array('AttributeInterface', class_implements($attribute))) {
-        throw new \InvalidArgumentException('Trying to set non-attribute as an attribute.');
+        $message = 'Trying to set non-attribute as an attribute.';
+        $this->logger->warn($message);
+        throw new \InvalidArgumentException($message);
       }
       $this->setAttribute($attribute);
     }
