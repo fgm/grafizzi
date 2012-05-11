@@ -8,8 +8,8 @@ use Monolog\Handler\StreamHandler;
 use Grafizzi\Graph\Graph;
 use Grafizzi\Graph\GraphAttribute;
 
-// Initialize autoloader.
-require 'init.php';
+// Initialize the Composer autoloader.
+require 'vendor/autoload.php';
 
 $log = new Logger(basename(__FILE__, '.php'));
 

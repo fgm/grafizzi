@@ -3,3 +3,7 @@
 .project
 .settings
 
+# Composer lock, code, and vendors
+composer.phar
+composer.lock
+vendor
