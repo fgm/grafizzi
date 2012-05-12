@@ -1,13 +1,17 @@
 <?php
+
+/**
+ * Status: working, improvements needed before release.
+ */
+
 namespace Grafizzi\Graph;
 
-use Grafizzi\Graph\AbstractLoggable;
-use Grafizzi\Graph\AttributeInterface;
+use Monolog\Logger;
 
 /**
  * An Element attribute.
  */
-abstract class AbstractAttribute extends AbstractLoggable implements AttributeInterface {
+abstract class AbstractAttribute extends AbstractNamed implements AttributeInterface {
   /**
    * A hash of default values for allowed attributes.
    *
@@ -28,10 +32,13 @@ abstract class AbstractAttribute extends AbstractLoggable implements AttributeIn
     $this->setValue($value);
   }
 
+  /**
+   * @todo FIXME escape name, value more carefully
+   */
   public function build() {
     $name = $this->getName();
+    $this->logger->debug("Building attribute " . $name);
     $value = $this->getValue();
-    // TODO escape name, value more carefully
     $ret = "$name=\"$value\"";
     return $ret;
   }
@@ -54,12 +61,16 @@ abstract class AbstractAttribute extends AbstractLoggable implements AttributeIn
    *
    */
   public static function getDefaultValue($name) {
-    if (isset(self::$fDefaults[$name])) {
-      $ret = self::$fDefaults[$name];
-    }
-    else {
-      $ret = NULL;
-    }
+    $ret = isset(self::$fDefaults[$name])
+      ? self::$fDefaults[$name]
+      : null;
+    $this->logger->debug("Default value for attribute $name is "
+      . print_r($ret, TRUE) . ".");
+    return $ret;
+  }
+
+  public static function getType() {
+    return 'attribute';
   }
 
   public function getValue() {
@@ -69,13 +80,15 @@ abstract class AbstractAttribute extends AbstractLoggable implements AttributeIn
   /**
    * In addition to basic behavior, validate name.
    *
-   * @see Grafizzi\Graph\AbstractLoggable::setName()
+   * @see AbstractNamed::setName()
    *
    * @throws AttributeNameException
    */
   public function setName($name) {
     if (!empty(self::$fDefaults) && !array_key_exists($name, self::$fDefaults)) {
-      throw new AttributeNameException("Invalid attribute $name");
+      $message = "Invalid attribute $name.";
+      $this->logger->err($message);
+      throw new AttributeNameException($message);
     }
     parent::setName($name);
   }
@@ -88,6 +101,8 @@ abstract class AbstractAttribute extends AbstractLoggable implements AttributeIn
    * @see AttributeInterface::setValue()
    */
   public function setValue($value = NULL) {
+    $this->logger->debug("{$this->fName}->value = "
+      . print_r($value, TRUE) . ".");
     if (!isset($value) && isset(self::$fDefaults[$this->fName])) {
       $value = self::$fDefaults[$this->fName];
     }

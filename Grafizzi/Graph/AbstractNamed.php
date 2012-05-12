@@ -2,14 +2,14 @@
 namespace Grafizzi\Graph;
 
 use Monolog\Logger;
-use Grafizzi\Graph\NamedInterface;
-use Grafizzi\Graph\AttributeNameException;
 
-abstract class AbstractLoggable implements NamedInterface {
+abstract class AbstractNamed implements NamedInterface {
 
   public $fName;
 
   /**
+   * A shortcut to the injected logger.
+   *
    * @var Logger
    */
   protected $logger;
@@ -21,7 +21,7 @@ abstract class AbstractLoggable implements NamedInterface {
 
   function __construct(\Pimple $dic) {
     $this->dic = $dic;
-    $this->logger = $dic['logger'];
+    $this->logger = &$dic['logger'];
   }
 
   /**
@@ -31,7 +31,9 @@ abstract class AbstractLoggable implements NamedInterface {
    */
   public function getName() {
     if (!isset($this->fName)) {
-      throw new AttributeNameException('Getting name for unnamed object.');
+      $message = 'Getting name for unnamed object.';
+      $this->logger->err($message);
+      throw new AttributeNameException($message);
     }
     return $this->fName;
   }
@@ -40,6 +42,7 @@ abstract class AbstractLoggable implements NamedInterface {
    * @see NamedInterface::setName()
    */
   public function setName($name) {
+    $this->logger->debug("Attribute name set to $name.");
     $this->fName = $name;
   }
 }

@@ -1,12 +1,11 @@
 <?php
-use Monolog\Formatter\JsonFormatter;
+
+namespace Grafizzi\Graph;
 
 error_reporting(-1);
 
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Grafizzi\Graph\Graph;
-use Grafizzi\Graph\GraphAttribute;
+use Monolog\Logger;
 
 // Initialize the Composer autoloader.
 require 'vendor/autoload.php';
@@ -16,7 +15,7 @@ $log = new Logger(basename(__FILE__, '.php'));
 // Change the minimum logging level using the Logger:: constants.
 $log->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
 
-$dic = new Pimple(array(
+$dic = new \Pimple(array(
   'logger' => $log,
   'directed' => TRUE,
 ));
@@ -41,6 +40,12 @@ $log->debug('label assigned to graph', array(
   'graph' => $g,
   'label' => $label,
 ));
+
+$n = new Node($dic, 'n1');
+$nodeLabel = new NodeAttribute($dic, 'label', 'Some node');
+// print_r($nodeLabel);
+$n->setAttribute($nodeLabel);
+$g->addChild($n);
 
 echo $g->build();
 $log->debug('done');

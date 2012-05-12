@@ -1,9 +1,6 @@
 <?php
 namespace Grafizzi\Graph;
 
-use Grafizzi\Graph\AbstractElement;
-use Grafizzi\Graph\GraphInterface;
-
 class Graph extends AbstractElement implements GraphInterface {
 
   public function build() {

@@ -1,10 +1,7 @@
 <?php
 namespace Grafizzi\Graph;
 
-use Grafizzi\Graph\AttributeInterface;
-use Grafizzi\Graph\AbstractAttribute;
-
-class GraphAttribute extends AbstractAttribute implements AttributeInterface {
+class GraphAttribute extends AbstractAttribute {
   public static $fDefaults = array(
     'bgcolor' => NULL, // color|colorlist
     'fontcolor' => 'black', // color
