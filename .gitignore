@@ -3,6 +3,9 @@
 .project
 .settings
 
+# Generated documentation
+doxygen
+
 # Composer lock, code, and vendors
 composer.phar
 composer.lock
