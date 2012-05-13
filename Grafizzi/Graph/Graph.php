@@ -3,8 +3,28 @@ namespace Grafizzi\Graph;
 
 class Graph extends AbstractElement implements GraphInterface {
 
+  /**
+   * Generate digraphs by default.
+   */
+  public $fDirected = true;
+
+  public function __construct(\Pimple $dic) {
+    if (!isset($dic['name'])) {
+      $dic['name'] = 'G';
+    }
+    if (!isset($dic['directed'])) {
+      $dic['directed'] = true;
+    }
+    parent::__construct($dic);
+  }
+
   public function build() {
     $type = $this->getType();
+    if ($type == 'graph') {
+      if ($this->getDirected()) {
+        $type = 'digraph';
+      }
+    }
     $name = $this->getName();
     $ret = "$type $name {\n";
     $indent = str_repeat(' ', ($this->fDepth + 1) * self::DEPTH_INDENT);
@@ -33,7 +53,7 @@ class Graph extends AbstractElement implements GraphInterface {
   }
 
   public function getDirected() {
-    $ret = $this->directed;
+    $ret = $this->fDirected;
     return $ret;
   }
 
@@ -42,10 +62,7 @@ class Graph extends AbstractElement implements GraphInterface {
     return $ret;
   }
 
-  public function render() {
-  }
-
   public function setDirected($directed) {
-    $this->directed = $directed;
+    $this->fDirected = $directed;
   }
 }

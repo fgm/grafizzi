@@ -22,6 +22,7 @@ abstract class AbstractNamed implements NamedInterface {
   function __construct(\Pimple $dic) {
     $this->dic = $dic;
     $this->logger = &$dic['logger'];
+    $this->setName($dic['name']);
   }
 
   /**

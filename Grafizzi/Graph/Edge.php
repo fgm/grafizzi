@@ -8,7 +8,10 @@ class Edge extends AbstractElement {
 
   function __construct() {}
 
-  public function getType() {}
+  public function getType() {
+    $ret = 'edge';
+    return $ret;
+  }
 
   function __destruct() {}
 }

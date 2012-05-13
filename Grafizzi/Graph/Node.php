@@ -31,7 +31,8 @@ class Node extends AbstractElement {
   }
 
   public static function getType() {
-    return 'node';
+    $ret = 'node';
+    return $ret;
   }
 
 //   public function removeAttribute(AttributeInterface $attribute) {}
