@@ -7,10 +7,14 @@ class Graph extends AbstractElement implements GraphInterface {
     $type = $this->getType();
     $name = $this->getName();
     $ret = "$type $name {\n";
-    foreach ($this->fAttributes as $attribute) {
-      $ret .= $attribute->build() . ";\n";
-    }
+    $indent = str_repeat(' ', ($this->fDepth + 1) * self::DEPTH_INDENT);
 
+    foreach ($this->fAttributes as $attribute) {
+      $ret .= $indent . $attribute->build() . ";\n";
+    }
+    if (count($this->fAttributes)) {
+      $ret .= "\n";
+    }
     foreach ($this->fChildren as $child) {
       $ret .= $child->build() . "\n";
     }

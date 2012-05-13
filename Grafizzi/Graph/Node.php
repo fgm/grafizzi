@@ -15,11 +15,12 @@ class Node extends AbstractElement {
   public function build() {
     $type = $this->getType();
     $name = $this->getName();
-    $this->logger->debug("Building element $name.");
+    $this->logger->debug("Building element $name, depth {$this->fDepth}.");
     $attributes = array_map(function (AttributeInterface $attribute) {
       return $attribute->build();
     }, $this->fAttributes);
-    $ret = "$name [ " . implode(', ', $attributes) . " ];\n";
+    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
+      . "$name [ " . implode(', ', $attributes) . " ];\n";
     return $ret;
   }
 

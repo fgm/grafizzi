@@ -7,9 +7,20 @@
 namespace Grafizzi\Graph;
 
 abstract class AbstractElement extends AbstractNamed implements ElementInterface {
+  const DEPTH_INDENT = 2;
+
   public $fAttributes = array();
 
   public $fChildren = array();
+
+  /**
+   * The nesting level of the element.
+   *
+   * An unbound element, like the root graph, has depth 0.
+   *
+   * @var int
+   */
+  public $fDepth = 0;
 
   /**
    * Possibly not needed with an efficient garbage collector, but might help in
@@ -40,13 +51,14 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $name = $this->getName();
     $childName = $child->getName();
     $childType = $child->getType();
-    $this->logger->debug("Adding child $childName, type $childType, to $name.");
+    $this->logger->debug("Adding child $childName, type $childType, to $name, depth {$this->fDepth}.");
     if (!in_array($childType, $this->getAllowedChildTypes())) {
       $message = "Invalid child type $childType for element $name.";
       $this->logger->err($message);
       throw new ChildTypeException($message);
     }
     $this->fChildren[$childName] = $child;
+    $child->adjustDepth($this->fDepth + 1);
   }
 
   /**
@@ -63,7 +75,8 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $attributes = array_map(function (AttributeInterface $attribute) {
       return $attribute->build();
     }, $this->fAttributes);
-    $ret = "$type $name [ " . implode(', ', $attributes) . " ];\n";
+    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
+      . "$type $name [ " . implode(', ', $attributes) . " ];\n";
     return $ret;
   }
 
@@ -85,6 +98,20 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $ret = isset($this->fAttributes[$name]) ? $this->fAttributes[$name] : NULL;
     $this->logger->debug("Getting attribute [$name]: " . print_r($ret, TRUE) . ".");
     return $ret;
+  }
+
+  /**
+   * Increment the depth of the object by $extra.
+   *
+   * @param int $extra
+   *
+   * @return int
+   *   The new depth of the object.
+   */
+  public function adjustDepth($extra = 0) {
+    $this->logger->debug("Adjusting depth {$this->fDepth} by $extra.");
+    $this->fDepth += $extra;
+    return $this->fDepth;
   }
 
   /**
@@ -128,7 +155,8 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
       $this->logger->warn($message);
       throw new ChildNameException($message);
     }
-    $this->removeChildByName($name);
+    $ret = $this->removeChildByName($name);
+    return $ret;
   }
 
   /**
@@ -138,7 +166,16 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    */
   public function removeChildByName($name) {
     $this->logger->debug("Removing child [$name].");
-    unset($this->fChildren[$name]);
+    if (isset($this->fChildren[$name])) {
+      $child = $this->fChildren[$name];
+      $child->adjustDepth(- $this->fDepth - 1);
+      unset($this->fChildren[$name]);
+      $ret = $child;
+    }
+    else {
+      $ret = NULL;
+    }
+    return $ret;
   }
 
   /**

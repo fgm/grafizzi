@@ -7,6 +7,8 @@ interface ElementInterface extends NamedInterface {
   public static function getAllowedChildTypes();
   public function getAttributeByName($name);
 
+  public function adjustDepth($extra);
+
   public function removeAttribute(AttributeInterface $attribute);
   public function removeAttributeByName($name);
   public function removeChild(ElementInterface $child);
