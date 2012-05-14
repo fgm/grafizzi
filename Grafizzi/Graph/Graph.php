@@ -18,27 +18,26 @@ class Graph extends AbstractElement implements GraphInterface {
     parent::__construct($dic);
   }
 
-  public function build() {
+  public function build($directed = NULL) {
     $type = $this->getType();
-    if ($type == 'graph') {
-      if ($this->getDirected()) {
-        $type = 'digraph';
-      }
+    if (!isset($directed)) {
+      $directed = $this->getDirected();
     }
+    $type = $directed ? 'digraph' : 'graph';
     $name = $this->getName();
     $ret = "$type $name {\n";
     $indent = str_repeat(' ', ($this->fDepth + 1) * self::DEPTH_INDENT);
 
     foreach ($this->fAttributes as $attribute) {
-      $ret .= $indent . $attribute->build() . ";\n";
+      $ret .= $indent . $attribute->build($directed) . ";\n";
     }
     if (count($this->fAttributes)) {
       $ret .= "\n";
     }
     foreach ($this->fChildren as $child) {
-      $ret .= $child->build() . "\n";
+      $ret .= $child->build($directed);
     }
-    $ret .= "}\n";
+    $ret .= "} /* /graph */\n";
     return $ret;
   }
 

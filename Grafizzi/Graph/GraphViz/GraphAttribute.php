@@ -1,5 +1,5 @@
 <?php
-namespace Grafizzi\Graph;
+namespace Grafizzi\Graph\GraphViz;
 
 class GraphAttribute extends AbstractAttribute {
   public static $fDefaults = array(

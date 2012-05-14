@@ -23,6 +23,11 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
   public $Graph;
 
   /**
+   * @var Pimple
+   */
+  public $dic;
+
+  /**
    * Prepares the environment before running a test.
    */
   protected function setUp() {
@@ -30,10 +35,10 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
 
     $log = new Logger(basename(__FILE__, '.php'));
     $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
-    $dic = new \Pimple(array(
+    $this->dic = new \Pimple(array(
         'logger' => $log,
     ));
-    $this->Graph = new Graph($dic);
+    $this->Graph = new Graph($this->dic);
   }
 
   /**

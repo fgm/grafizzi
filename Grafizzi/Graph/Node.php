@@ -10,21 +10,23 @@ class Node extends AbstractElement {
     $this->setAttributes($attributes);
   }
 
-//  public function addChild(ElementInterface $child) {}
-
-  public function build() {
+  public function build($directed = NULL) {
+    if ($this->fDepth <= 0) {
+      throw new ChildTypeException("Cannot build unbound node.");
+    }
     $type = $this->getType();
     $name = $this->getName();
-    $this->logger->debug("Building element $name, depth {$this->fDepth}.");
-    $attributes = array_map(function (AttributeInterface $attribute) {
-      return $attribute->build();
+    $this->logger->debug("Building node $name, depth {$this->fDepth}.");
+    $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
+      return $attribute->build($directed);
     }, $this->fAttributes);
-    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
-      . "$name [ " . implode(', ', $attributes) . " ];\n";
+    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT) . "$name";
+    if (!empty($attributes)) {
+      $ret .= " [ " . implode(', ', $attributes) . " ]";
+    }
+    $ret .= ";\n";
     return $ret;
   }
-
-//  public function getAttributeByName($name) {}
 
   public static function getAllowedChildTypes() {
     return array();
@@ -34,14 +36,4 @@ class Node extends AbstractElement {
     $ret = 'node';
     return $ret;
   }
-
-//   public function removeAttribute(AttributeInterface $attribute) {}
-
-//   public function removeAttributeByName($name) {}
-
-//   public function removeChild(ElementInterface $child) {}
-
-//   public function setAttribute(AttributeInterface $attribute) {}
-
-//   public function setAttributes(array $attributes) {}
 }

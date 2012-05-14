@@ -11,7 +11,7 @@ use Monolog\Logger;
 /**
  * An Element attribute.
  */
-abstract class AbstractAttribute extends AbstractNamed implements AttributeInterface {
+class Attribute extends AbstractNamed implements AttributeInterface {
   /**
    * A hash of default values for allowed attributes.
    *
@@ -34,8 +34,10 @@ abstract class AbstractAttribute extends AbstractNamed implements AttributeInter
 
   /**
    * @todo FIXME escape name, value more carefully
+   *
+   * Ignores $directed.
    */
-  public function build() {
+  public function build($directed = NULL) {
     $name = $this->getName();
     $this->logger->debug("Building attribute " . $name);
     $value = $this->getValue();
@@ -64,8 +66,6 @@ abstract class AbstractAttribute extends AbstractNamed implements AttributeInter
     $ret = isset(self::$fDefaults[$name])
       ? self::$fDefaults[$name]
       : null;
-    $this->logger->debug("Default value for attribute $name is "
-      . print_r($ret, TRUE) . ".");
     return $ret;
   }
 

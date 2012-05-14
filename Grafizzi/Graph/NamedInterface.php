@@ -3,7 +3,7 @@
 namespace Grafizzi\Graph;
 
 interface NamedInterface {
-  public function build();
+  public function build($directed = NULL);
   public function getName();
 
   /**

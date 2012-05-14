@@ -2,16 +2,61 @@
 
 namespace Grafizzi\Graph;
 
-use Grafizzi\Graph\AbstractElement;
-
 class Edge extends AbstractElement {
 
-  function __construct() {}
+  /**
+   * @var Node
+   */
+  public $sourceNode;
 
-  public function getType() {
+  /**
+   * @var Node
+   */
+  public $destinationNode;
+
+  /**
+   * @var boolean
+   */
+  public $fDirected = true;
+
+  public function __construct(\Pimple $dic, Node $source, Node $destination, array $attributes = array()) {
+    parent::__construct($dic);
+    $this->sourceNode = $source;
+    $this->destinationNode = $destination;
+    $this->setName($source->getName() . '--' . $destination->getName());
+    $this->setAttributes($attributes);
+  }
+
+  public function build($directed = NULL) {
+    $type = $this->getType();
+    $name = $this->getName();
+    if (!isset($directed)) {
+      $directed = TRUE;
+    }
+    $this->logger->debug("Building edge $name, depth {$this->fDepth}.");
+    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
+      . $this->sourceNode->getName()
+      . ($directed ? ' -> ' : ' -- ')
+      . $this->destinationNode->getName();
+
+    $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
+      return $attribute->build($directed);
+    }, $this->fAttributes);
+    if (!empty($attributes)) {
+      $ret .= " [ " . implode(', ', $attributes) . " ]";
+    }
+
+    $ret .= ";\n";
+    return $ret;
+  }
+
+  public static function getAllowedChildTypes() {
+    return array();
+  }
+
+  public static function getType() {
     $ret = 'edge';
     return $ret;
   }
 
-  function __destruct() {}
 }

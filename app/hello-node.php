@@ -17,16 +17,17 @@ $log->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
 
 $dic = new \Pimple(array(
   'logger' => $log,
-  'directed' => TRUE,
+  'directed' => FALSE,
 ));
 
 $g = new Graph($dic);
 $log->debug('graph generated', array('graph' => $g));
 $g->setName('g');
+$g->setDirected(false);
 
-$rankdir = new GraphAttribute($dic, 'rankdir', 'TB');
+$rankdir = new Attribute($dic, 'rankdir', 'TB');
 $log->debug('rankdir created', array('rankdir' => $rankdir));
-$label = new GraphAttribute($dic, 'label', 'Some graph');
+$label = new Attribute($dic, 'label', 'Some graph');
 $log->debug('label created', array('label' => $label));
 
 $g->setAttribute($rankdir);
@@ -41,11 +42,21 @@ $log->debug('label assigned to graph', array(
   'label' => $label,
 ));
 
-$n = new Node($dic, 'n1');
-$nodeLabel = new NodeAttribute($dic, 'label', 'Some node');
+$n1 = new Node($dic, 'n1');
+$nodeLabel = new Attribute($dic, 'label', 'Some node');
 // print_r($nodeLabel);
-$n->setAttribute($nodeLabel);
-$g->addChild($n);
+$n1->setAttribute($nodeLabel);
+$g->addChild($n1);
+
+$n2 = new Node($dic, 'n2');
+$nodeLabel = new Attribute($dic, 'label', 'Other node');
+// print_r($nodeLabel);
+$n2->setAttribute($nodeLabel);
+$g->addChild($n2);
+
+$edge = new Edge($dic, $n1, $n2);
+$edgeLabel = new Attribute($dic, 'label', 'Close to the edge');
+$g->addChild($edge);
 
 echo $g->build();
 $log->debug('done');

@@ -21,7 +21,7 @@ class GraphTest extends BaseGraphTest {
     $graph = $this->Graph->build();
     $this->assertEquals(<<<EOT
 digraph G {
-}
+} /* /graph */
 
 EOT
       , $graph, 'Empty unnamed graph matches expected format.');

@@ -23,6 +23,13 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   public $fDepth = 0;
 
   /**
+   * The parent element, when bound, or NULL otherwise.
+   *
+   * @var AbstractElement
+   */
+  public $fParent = NULL;
+
+  /**
    * Possibly not needed with an efficient garbage collector, but might help in
    * case of dependency loops.
    *
@@ -59,21 +66,24 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     }
     $this->fChildren[$childName] = $child;
     $child->adjustDepth($this->fDepth + 1);
+    $child->setParent($this);
   }
 
   /**
    * Build the DOT string for this subtree.
    *
+   * Ignores $directed.
+   *
    * @see NamedInterface::build()
    *
    * @return string
    */
-  public function build() {
+  public function build($directed = NULL) {
     $type = $this->getType();
     $name = $this->getName();
     $this->logger->debug("Building element $name.");
     $attributes = array_map(function (AttributeInterface $attribute) {
-      return $attribute->build();
+      return $attribute->build($directed);
     }, $this->fAttributes);
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
       . "$type $name [ " . implode(', ', $attributes) . " ];\n";
@@ -112,6 +122,14 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $this->logger->debug("Adjusting depth {$this->fDepth} by $extra.");
     $this->fDepth += $extra;
     return $this->fDepth;
+  }
+
+  public function getRoot() {
+    $current = $this;
+    while ($current->fParent instanceof ElementInterface) {
+      $current = $current->fParent;
+    }
+    return $current;
   }
 
   /**
@@ -213,5 +231,12 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
       }
       $this->setAttribute($attribute);
     }
+  }
+
+  /**
+   * @see ElementInterface::setParent()
+   */
+  public function setParent(ElementInterface $parent) {
+    $this->fParent = $parent;
   }
 }
