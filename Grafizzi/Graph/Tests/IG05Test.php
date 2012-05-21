@@ -2,27 +2,24 @@
 
 /**
  * @file
- * A recreation of Image_GraphViz test1.phpt
+ * A recreation of Image_GraphViz test5.phpt
  *
  * @author Frédéric G. Marand <fgm@osinet.fr>
  *
- * Original version author: Philippe Jausions <jausions@php.net>
+ * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
  *
- * Test 1: "Process States in an Operating System Kernel"
+ * Test 5: "Unit test for Graph with polygonal shape"
  *
- * Graph definition taken from Neato documentation, fig. 1 p. 3
- * "Drawing graphs with NEATO" / Stephen C. North / April 26, 2004
+ * "Graph definition taken from GraphViz documentation"
  */
 
 namespace Grafizzi\Graph\Tests;
 
 use Grafizzi\Graph\Attribute;
-
 use Grafizzi\Graph\Edge;
 use Grafizzi\Graph\Node;
 
 require 'vendor/autoload.php';
-
 
 /**
  * Graph test case.

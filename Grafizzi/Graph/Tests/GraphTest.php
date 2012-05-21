@@ -32,12 +32,13 @@ EOT
    */
   public function testGetAllowedChildTypes() {
     $types = Graph::getAllowedChildTypes();
-    $this->assertTrue(is_array($types) && count($types) == 4,
-      'Four child types allowed for Graphs.');
+    $this->assertTrue(is_array($types) && count($types) == 5,
+      'Five child types allowed for Graphs.');
     ksort($types);
     $expectedTypes = array(
       'cluster',
       'edge',
+      'multiedge',
       'node',
       'subgraph',
     );

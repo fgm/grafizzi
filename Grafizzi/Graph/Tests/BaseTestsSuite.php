@@ -28,6 +28,7 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     $this->addTestSuite('GraphTest');
     $this->addTestSuite('NodeTest');
     $this->addTestSuite('EdgeTest');
+    $this->addTestSuite('MultiEdgeTest');
     $this->addTestSuite('SubgraphTest');
     $this->addTestSuite('ClusterTest');
 

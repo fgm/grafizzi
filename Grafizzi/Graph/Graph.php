@@ -55,6 +55,7 @@ class Graph extends AbstractElement implements GraphInterface {
     $ret = array(
       'cluster',
       'edge',
+      'multiedge', // Grafizzi extension
       'node',
       'subgraph',
     );

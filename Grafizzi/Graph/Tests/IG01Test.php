@@ -6,7 +6,7 @@
  *
  * @author Frédéric G. Marand <fgm@osinet.fr>
  *
- * Original version author: Philippe Jausions <jausions@php.net>
+ * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
  *
  * Test 1: "Process States in an Operating System Kernel"
  *
