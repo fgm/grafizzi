@@ -4,8 +4,19 @@ namespace Grafizzi\Graph;
 
 class Node extends AbstractElement {
 
+  /**
+   * Node is implicit: it can be used in edge creations, but has no entry of its own.
+   *
+   * @var boolean
+   */
+  public $fImplicit = FALSE;
+
   public function __construct(\Pimple $dic, $name, array $attributes = array()) {
     parent::__construct($dic);
+    if (isset($attributes['implicit'])) {
+      $this->fImplicit = $attributes['implicit'];
+      unset($attributes['implicit']);
+    }
     $this->setAttributes($attributes);
     if (!isset($attributes['name'])) {
       $this->setName($name);
@@ -16,6 +27,10 @@ class Node extends AbstractElement {
    * @see AbstractElement::build()
    */
   public function build($directed = NULL) {
+    // Implicit nodes have no entry of their own.
+    if ($this->fImplicit) {
+      return;
+    }
     $type = $this->getType();
     $name = $this->getName();
     $this->logger->debug("Building node $name, depth {$this->fDepth}.");

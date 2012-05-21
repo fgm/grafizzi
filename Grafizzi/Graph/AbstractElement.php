@@ -227,8 +227,8 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    */
   public function setAttributes(array $attributes) {
     foreach ($attributes as $attribute) {
-      if (!in_array('AttributeInterface', class_implements($attribute))) {
-        $message = 'Trying to set non-attribute as an attribute.';
+      if (!in_array('Grafizzi\\Graph\\AttributeInterface', class_implements($attribute))) {
+        $message = 'Trying to set non-attribute as an attribute';
         $this->logger->warn($message);
         throw new AttributeNameException($message);
       }

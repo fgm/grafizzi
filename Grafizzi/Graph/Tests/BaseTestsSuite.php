@@ -9,6 +9,11 @@ require 'vendor/autoload.php';
  */
 class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
 
+  /**
+   * Extend PHPUnit addTestSuite to add test classes from the current namespace.
+   *
+   * @see PHPUnit_Framework_TestSuite::addTestSuite()
+   */
   public function addTestSuite($testClass) {
     parent::addTestSuite(__NAMESPACE__ . "\\$testClass");
   }
@@ -25,6 +30,13 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     $this->addTestSuite('EdgeTest');
     $this->addTestSuite('SubgraphTest');
     $this->addTestSuite('ClusterTest');
+
+    // Image_GraphViz tests adapted for Grafizzi.
+    $igTests = array('01', '05');
+
+    foreach ($igTests as $igTest) {
+      $this->addTestSuite("IG{$igTest}Test");
+    }
   }
 
   /**
