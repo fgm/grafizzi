@@ -6,8 +6,10 @@ class Node extends AbstractElement {
 
   public function __construct(\Pimple $dic, $name, array $attributes = array()) {
     parent::__construct($dic);
-    $this->setName($name);
     $this->setAttributes($attributes);
+    if (!isset($attributes['name'])) {
+      $this->setName($name);
+    }
   }
 
   /**

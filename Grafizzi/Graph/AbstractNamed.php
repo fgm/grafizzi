@@ -12,7 +12,7 @@ abstract class AbstractNamed implements NamedInterface {
    *
    * @var Logger
    */
-  protected $logger;
+  public $logger;
 
   /**
    * @var \Pimple
@@ -50,7 +50,7 @@ abstract class AbstractNamed implements NamedInterface {
    * @see NamedInterface::setName()
    */
   public function setName($name) {
-    $this->logger->debug("Attribute name set to $name.");
+    $this->logger->debug($this->getType() . " attribute name set to $name.");
     $this->fName = $name;
   }
 }

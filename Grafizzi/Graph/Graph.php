@@ -24,6 +24,7 @@ class Graph extends AbstractElement implements GraphInterface {
       $savedDirected = $this->getDirected();
       $this->setDirected();
     }
+    $actualDirected = $this->getDirected();
     $type = $this->getType();
     $buildName = $this->getBuildName();
     $elementIndent = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT);
@@ -39,7 +40,7 @@ class Graph extends AbstractElement implements GraphInterface {
     }
 
     foreach ($this->fChildren as $child) {
-      $ret .= $child->build($directed);
+      $ret .= $child->build($actualDirected);
     }
     $ret .= "$elementIndent} /* /$type $buildName */\n";
 
