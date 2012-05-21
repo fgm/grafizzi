@@ -2,13 +2,11 @@
 
 namespace Grafizzi\Graph;
 
-use Grafizzi\Subgraph;
-
 class Cluster extends Subgraph {
 
-  public function __construct() {
-    parent::__construct();
+  public function getBuildName() {
+    $name = $this->getName();
+    $ret = "cluster_$name";
+    return $ret;
   }
-
-  function __destruct() {}
 }

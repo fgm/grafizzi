@@ -36,7 +36,7 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
     $log = new Logger(basename(__FILE__, '.php'));
     $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
     $this->dic = new \Pimple(array(
-        'logger' => $log,
+      'logger' => $log,
     ));
     $this->Graph = new Graph($this->dic);
   }

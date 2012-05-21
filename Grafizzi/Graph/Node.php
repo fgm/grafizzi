@@ -32,7 +32,7 @@ class Node extends AbstractElement {
     return array();
   }
 
-  public static function getType() {
+  public function getType() {
     $ret = 'node';
     return $ret;
   }

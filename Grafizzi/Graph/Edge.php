@@ -54,7 +54,7 @@ class Edge extends AbstractElement {
     return array();
   }
 
-  public static function getType() {
+  public function getType() {
     $ret = 'edge';
     return $ret;
   }

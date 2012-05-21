@@ -26,6 +26,13 @@ abstract class AbstractNamed implements NamedInterface {
   }
 
   /**
+   * @see NamedInterface::getBuildName()
+   */
+  public function getBuildName() {
+    return $this->getName();
+  }
+
+  /**
    * @see NamedInterface::getName()
    *
    * @throws AttributeNameException

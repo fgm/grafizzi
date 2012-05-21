@@ -19,13 +19,14 @@ class Graph extends AbstractElement implements GraphInterface {
   }
 
   public function build($directed = NULL) {
-    $type = $this->getType();
-    if (!isset($directed)) {
-      $directed = $this->getDirected();
+    // Allow overriding the build directed attribute.
+    if (isset($directed)) {
+      $savedDirected = $this->getDirected();
+      $this->setDirected();
     }
-    $type = $directed ? 'digraph' : 'graph';
-    $name = $this->getName();
-    $ret = "$type $name {\n";
+    $type = $this->getType();
+    $buildName = $this->getBuildName();
+    $ret = "$type $buildName {\n";
     $indent = str_repeat(' ', ($this->fDepth + 1) * self::DEPTH_INDENT);
 
     foreach ($this->fAttributes as $attribute) {
@@ -37,7 +38,12 @@ class Graph extends AbstractElement implements GraphInterface {
     foreach ($this->fChildren as $child) {
       $ret .= $child->build($directed);
     }
-    $ret .= "} /* /graph */\n";
+    $ret .= "} /* /$type $buildName */\n";
+
+    // Restore the directed attribute if it was changed for build.
+    if (isset($directed)) {
+      $this->setDirected($savedDirected);
+    }
     return $ret;
   }
 
@@ -56,8 +62,8 @@ class Graph extends AbstractElement implements GraphInterface {
     return $ret;
   }
 
-  public static function getType() {
-    $ret = 'graph';
+  public function getType() {
+    $ret = $this->getDirected() ? 'digraph' : 'graph';
     return $ret;
   }
 

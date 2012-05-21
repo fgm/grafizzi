@@ -69,8 +69,9 @@ class Attribute extends AbstractNamed implements AttributeInterface {
     return $ret;
   }
 
-  public static function getType() {
-    return 'attribute';
+  public function getType() {
+    $ret = 'attribute';
+    return $ret;
   }
 
   public function getValue() {

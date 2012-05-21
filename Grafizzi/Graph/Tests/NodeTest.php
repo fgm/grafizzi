@@ -54,7 +54,7 @@ class NodeTest extends BaseGraphTest {
     $this->assertEquals(<<<EOT
 digraph G {
   n1;
-} /* /graph */
+} /* /digraph G */
 
 EOT
       , $dot, "Graph with a single node built correctly.");

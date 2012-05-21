@@ -21,7 +21,7 @@ class GraphTest extends BaseGraphTest {
     $graph = $this->Graph->build();
     $this->assertEquals(<<<EOT
 digraph G {
-} /* /graph */
+} /* /digraph G */
 
 EOT
       , $graph, 'Empty unnamed graph matches expected format.');
@@ -56,8 +56,13 @@ EOT
    * Tests Graph::getType()
    */
   public function testGetType() {
-    $type = Graph::getType();
+    $this->Graph->setDirected(FALSE);
+    $type = $this->Graph->getType();
     $this->assertEquals('graph', $type, 'Graph type is "graph".');
+
+    $this->Graph->setDirected(TRUE);
+    $type = $this->Graph->getType();
+    $this->assertEquals('digraph', $type, 'Graph type is "digraph".');
   }
 
   /**
