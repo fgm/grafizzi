@@ -121,6 +121,9 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   public function adjustDepth($extra = 0) {
     $this->logger->debug("Adjusting depth {$this->fDepth} by $extra.");
     $this->fDepth += $extra;
+    foreach ($this->fChildren as $child) {
+      $child->adjustDepth($extra);
+    }
     return $this->fDepth;
   }
 

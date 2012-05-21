@@ -49,15 +49,32 @@ class NodeTest extends BaseGraphTest {
    * Tests Node->build()
    */
   public function testBuild() {
+    // Test unbound node build.
+    $expected = <<<EOT
+n1;
+
+EOT;
+    $build = $this->Node->build();
+    $this->assertEquals($expected, $build, 'Unbound node built correctly.');
+
+    // Test build of node built at level 1.
     $this->Graph->addChild($this->Node);
-    $dot = $this->Graph->build();
-    $this->assertEquals(<<<EOT
+    $expected = <<<EOT
+  n1;
+
+EOT;
+    $build = $this->Node->build();
+    $this->assertEquals($expected, $build, "Node bound at level 1 built correctly.");
+
+    // Test build of node within a root graph.
+    $expected = <<<EOT
 digraph G {
   n1;
 } /* /digraph G */
 
-EOT
-      , $dot, "Graph with a single node built correctly.");
+EOT;
+    $build = $this->Graph->build();
+    $this->assertEquals($expected, $build, "Graph with a single node built correctly.");
   }
 
   /**
@@ -74,4 +91,3 @@ EOT
     $this->assertEquals('node', Node::getType());
   }
 }
-

@@ -56,6 +56,8 @@ class EdgeTest extends BaseGraphTest {
 
   /**
    * Tests Edge->build()
+   *
+   * @TODO test graph build
    */
   public function testBuild() {
     $dot = $this->Edge->build($this->Graph->getDirected());

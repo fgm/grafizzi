@@ -10,10 +10,10 @@ class Node extends AbstractElement {
     $this->setAttributes($attributes);
   }
 
+  /**
+   * @see AbstractElement::build()
+   */
   public function build($directed = NULL) {
-    if ($this->fDepth <= 0) {
-      throw new ChildTypeException("Cannot build unbound node.");
-    }
     $type = $this->getType();
     $name = $this->getName();
     $this->logger->debug("Building node $name, depth {$this->fDepth}.");

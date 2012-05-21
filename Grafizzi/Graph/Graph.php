@@ -26,19 +26,22 @@ class Graph extends AbstractElement implements GraphInterface {
     }
     $type = $this->getType();
     $buildName = $this->getBuildName();
-    $ret = "$type $buildName {\n";
-    $indent = str_repeat(' ', ($this->fDepth + 1) * self::DEPTH_INDENT);
+    $elementIndent = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT);
+    $childIndent = str_repeat(' ', ($this->fDepth + 1) * self::DEPTH_INDENT);
+
+    $ret = "$elementIndent$type $buildName {\n";
 
     foreach ($this->fAttributes as $attribute) {
-      $ret .= $indent . $attribute->build($directed) . ";\n";
+      $ret .= $childIndent . $attribute->build($directed) . ";\n";
     }
     if (count($this->fAttributes)) {
       $ret .= "\n";
     }
+
     foreach ($this->fChildren as $child) {
       $ret .= $child->build($directed);
     }
-    $ret .= "} /* /$type $buildName */\n";
+    $ret .= "$elementIndent} /* /$type $buildName */\n";
 
     // Restore the directed attribute if it was changed for build.
     if (isset($directed)) {
