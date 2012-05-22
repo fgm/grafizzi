@@ -48,8 +48,10 @@ class IG01Test extends BaseGraphTest {
     foreach ($edgeDefinitions as $edgeDefinition) {
       list($src, $dst) = $edgeDefinition;
       $this->Graph->logger->debug("Adding edge $src -- $dst");
-      $srcNode = new Node($this->dic, $src);
-      $dstNode = new Node($this->dic, $dst);
+      $srcNode = new Node($this->dic, $src, array('implicit' => true));
+      $this->Graph->addChild($srcNode);
+      $dstNode = new Node($this->dic, $dst, array('implicit' => true));
+      $this->Graph->addChild($dstNode);
       $edge = new Edge($this->dic, $srcNode, $dstNode);
       $this->Graph->addChild($edge);
     }
