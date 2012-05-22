@@ -6,6 +6,17 @@ interface NamedInterface {
   public function build($directed = NULL);
 
   /**
+   * Output a string in the default GraphViz format.
+   *
+   * - usual C/PHP double-quoting rules apply.
+   * - strings containing a space or an escape are double-quoted
+   * - strings remaining alphanumeric after this are not quoted
+   *
+   * @param unknown_type $string
+   */
+  public static function escape($string);
+
+  /**
    * The name of the function as used in the build process.
    *
    * May be different from the name used by other methods (clusters).

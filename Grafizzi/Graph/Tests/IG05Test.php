@@ -28,7 +28,7 @@ class IG05Test extends BaseGraphTest {
 
   public function setUp() {
     parent::setUp();
-    $this->Graph->setDirected(FALSE);
+    $this->Graph->setDirected(true);
     $this->Graph->addChild($a = new Node($this->dic, 'a', array(
       new Attribute($this->dic, 'shape', 'polygon'),
       new Attribute($this->dic, 'sides', 5),
@@ -65,21 +65,17 @@ class IG05Test extends BaseGraphTest {
   public function testBuild() {
     $expected = <<<EOT
 digraph G {
-  a [ shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled ];
-  c [ shape=polygon,sides=4,skew=0.4,label="hello world" ];
+  a [ shape=polygon, sides=5, peripheries=3, color=lightblue, style=filled ];
+  c [ shape=polygon, sides=4, skew=0.4, label="hello world" ];
   d [ shape=invtriangle ];
-  e [ shape=polygon,sides=4,distortion=0.7 ];
+  e [ shape=polygon, sides=4, distortion=0.7 ];
   a -> b;
   b -> c;
   b -> d;
-  } /* /digraph G */
+} /* /digraph G */
 
 EOT;
     $build = $this->Graph->build();
     $this->assertEquals($expected, $build, "Image_GraphViz test 5 passed.");
   }
 }
-
-
-?>
---EXPECT--

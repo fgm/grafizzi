@@ -25,12 +25,13 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     $this->setName('BaseTestsSuite');
 
     $this->addTestSuite('AttributeTest');
-    $this->addTestSuite('GraphTest');
-    $this->addTestSuite('NodeTest');
-    $this->addTestSuite('EdgeTest');
-    $this->addTestSuite('MultiEdgeTest');
-    $this->addTestSuite('SubgraphTest');
     $this->addTestSuite('ClusterTest');
+    $this->addTestSuite('EdgeTest');
+    $this->addTestSuite('GraphTest');
+    $this->addTestSuite('MultiEdgeTest');
+    $this->addTestSuite('NodeTest');
+    $this->addTestSuite('SubgraphTest');
+    $this->addTestSuite('escapeTest');
 
     // Image_GraphViz tests adapted for Grafizzi.
     $igTests = array('01', '05');

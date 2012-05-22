@@ -41,7 +41,7 @@ class Attribute extends AbstractNamed implements AttributeInterface {
     $name = $this->getName();
     $this->logger->debug("Building attribute " . $name);
     $value = $this->getValue();
-    $ret = "$name=\"$value\"";
+    $ret = "$name=" . self::escape($value);
     return $ret;
   }
 

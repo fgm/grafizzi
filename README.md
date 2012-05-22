@@ -36,9 +36,13 @@ just the results by redirecting stderr to /dev/null:
 You should see a very basic GraphViz source:
 
     graph g {
-    rankdir="TB";
-    label="Some graph";
-    }
+      rankdir="TB";
+      label="Some graph";
+
+      n1 [ label="Some node" ];
+      n2 [ label="Other node" ];
+      n1 -- n2;
+    } /* /graph g */
 
 If you get any warnings or recommendations, or nothing at all, check your PHP
 error log, and fix these now before moving on.
@@ -57,4 +61,14 @@ doxygen/ directory. Use it by browsing to doxygen/html/index.html
 The documentation and search engine are  even usable over file:/// URLs, so you
 do not need a web server to access it.
 
+3) Cleaning up
+--------------
+
+You can remove php_error.log, the generated doxygen docs directory, and many
+stray generated files by running:
+
+    make clean
+
+
 Have fun!
+
