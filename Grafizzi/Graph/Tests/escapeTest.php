@@ -20,6 +20,7 @@ class escapeTest extends BaseGraphTest {
       'foo bar' => '"foo bar"',
       "foo'bar" => '"foo\'bar"',
       'foo"bar' => '"foo\"bar"',
+      "foo\nbar" => '"foo\nbar"',
     );
 
     foreach ($testSet as $in => $expected) {
