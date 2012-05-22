@@ -40,11 +40,14 @@ class MultiEdgeTest extends BaseGraphTest {
     parent::setUp();
 
     $this->Graph->setDirected(false);
-    $n0 = new Node($this->dic, 'n0');
-    $n1 = new Node($this->dic, 'n1');
-    $n2 = new Node($this->dic, 'n2');
-    $n3 = new Node($this->dic, 'n3');
-    $this->MultiEdge = new MultiEdge($this->dic, array($n0, $n1, $n2, $n3, $n0));
+    $nodes = array();
+    for ($i = 0 ; $i < 4 ; $i++) {
+      $this->Graph->addChild($nodes[] = new Node($this->dic, "n$i", array('implicit' => true)));
+    }
+
+    // Test case is n0 -- n1 -- n2 -- n3 -- n0, so append n0
+    $nodes[] = $nodes[0];
+    $this->MultiEdge = new MultiEdge($this->dic, $nodes);
   }
 
   /**
@@ -115,4 +118,3 @@ EOT;
     $this->assertEquals('multiedge', $this->MultiEdge->getType());
   }
 }
-
