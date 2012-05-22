@@ -42,7 +42,7 @@ class MultiEdgeTest extends BaseGraphTest {
     $this->Graph->setDirected(false);
     $nodes = array();
     for ($i = 0 ; $i < 4 ; $i++) {
-      $this->Graph->addChild($nodes[] = new Node($this->dic, "n$i", array('implicit' => true)));
+      $this->Graph->addChild($nodes[] = new Node($this->dic, "n$i", Node::implicit()));
     }
 
     // Test case is n0 -- n1 -- n2 -- n3 -- n0, so append n0

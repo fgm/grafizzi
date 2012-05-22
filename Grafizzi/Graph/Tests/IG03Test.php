@@ -38,7 +38,6 @@ class IG03Test extends BaseGraphTest {
     $this->Graph->setDirected(true);
     $graph = &$this->Graph;
     $dic = &$this->dic;
-    $implicit = array('implicit' => true);
 
     $graph->addChild($main = new Node($dic, 'main', array(
       new Attribute($dic, 'shape', 'box'),
@@ -49,15 +48,15 @@ class IG03Test extends BaseGraphTest {
         new Attribute($dic, 'weight', 8)
     )));
     $graph->addChild(new Edge($dic,
-      $parse = new Node($dic, 'parse', $implicit),
-      $execute = new Node($dic, 'execute', $implicit)
+      $parse = new Node($dic, 'parse', Node::implicit()),
+      $execute = new Node($dic, 'execute', Node::implicit())
     ));
     $graph->addChild(new Edge($dic, $main,
-      $init = new Node($dic, 'init', $implicit), array(
+      $init = new Node($dic, 'init', Node::implicit()), array(
         new Attribute($dic, 'style', 'dotted')
     )));
     $graph->addChild(new Edge($dic, $main,
-      $cleanup = new Node($dic, 'cleanup', $implicit)
+      $cleanup = new Node($dic, 'cleanup', Node::implicit())
     ));
 
     // XXX The original example creates the node after the edge referencing it.
@@ -67,7 +66,7 @@ class IG03Test extends BaseGraphTest {
 
     $graph->addChild(new Edge($dic, $execute, $make_string));
     $graph->addChild(new Edge($dic, $execute,
-      $printf = new Node($dic, 'printf', $implicit)
+      $printf = new Node($dic, 'printf', Node::implicit())
     ));
     $graph->addChild(new Edge($dic, $init, $make_string));
     $graph->addChild(new Edge($dic, $main, $printf, array(

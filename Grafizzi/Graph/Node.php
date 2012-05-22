@@ -5,6 +5,15 @@ namespace Grafizzi\Graph;
 class Node extends AbstractElement {
 
   /**
+   * Helper to simplify construction of implicit nodes.
+   *
+   * @return array
+   */
+  public static function implicit() {
+    return array('implicit' => true);
+  }
+
+  /**
    * Node is implicit: it can be used in edge creations, but has no entry of its own.
    *
    * @var boolean
@@ -37,7 +46,7 @@ class Node extends AbstractElement {
     $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
       return $attribute->build($directed);
     }, $this->fAttributes);
-    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT) . "$name";
+    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT) . $this->escape($name);
     if (!empty($attributes)) {
       $ret .= " [ " . implode(', ', $attributes) . " ]";
     }

@@ -35,9 +35,9 @@ class Edge extends AbstractElement {
     }
     $this->logger->debug("Building edge $name, depth {$this->fDepth}.");
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
-      . $this->sourceNode->getName()
+      . $this->escape($this->sourceNode->getName())
       . ($directed ? ' -> ' : ' -- ')
-      . $this->destinationNode->getName();
+      . $this->escape($this->destinationNode->getName());
 
     $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
       return $attribute->build($directed);

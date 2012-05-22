@@ -38,7 +38,7 @@ class IG05Test extends BaseGraphTest {
     )));
 
     // TODO : support automatic (undeclared) nodes in edges, to remove $b
-    $this->Graph->addChild($b = new Node($this->dic, 'b', array('implicit' => true)));
+    $this->Graph->addChild($b = new Node($this->dic, 'b', Node::implicit()));
     $this->Graph->addChild($c = new Node($this->dic, 'c', array(
       new Attribute($this->dic, 'shape', 'polygon'),
       new Attribute($this->dic, 'sides', 4),

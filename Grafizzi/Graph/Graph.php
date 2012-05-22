@@ -4,18 +4,39 @@ namespace Grafizzi\Graph;
 class Graph extends AbstractElement implements GraphInterface {
 
   /**
+   * Helper to simplify construction of strict graphs.
+   *
+   * @return array
+   */
+  public static function strict() {
+    return array('strict' => true);
+  }
+
+  /**
+   * Generate non-strict graphs by default
+   *
+   * @var boolean
+   */
+  public $fStrict = false;
+
+  /**
    * Generate digraphs by default.
    */
   public $fDirected = true;
 
-  public function __construct(\Pimple $dic) {
-    if (!isset($dic['name'])) {
-      $dic['name'] = 'G';
-    }
+  public function __construct(\Pimple $dic, $name = 'G', array $attributes = array()) {
     if (!isset($dic['directed'])) {
       $dic['directed'] = true;
     }
     parent::__construct($dic);
+    $this->setName($name);
+    if (!empty($attributes)) {
+      if (isset($attributes['strict'])) {
+        $this->fStrict = $attributes['strict'];
+        unset($attributes['strict']);
+      }
+      $this->setAttributes($attributes);
+    }
   }
 
   public function build($directed = NULL) {
@@ -30,7 +51,8 @@ class Graph extends AbstractElement implements GraphInterface {
     $elementIndent = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT);
     $childIndent = str_repeat(' ', ($this->fDepth + 1) * self::DEPTH_INDENT);
 
-    $ret = "$elementIndent$type $buildName {\n";
+    $strict = $this->fStrict ? 'strict ' : '';
+    $ret = "$elementIndent$strict$type $buildName {\n";
 
     foreach ($this->fAttributes as $attribute) {
       $ret .= $childIndent . $attribute->build($directed) . ";\n";

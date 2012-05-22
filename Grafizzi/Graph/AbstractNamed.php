@@ -3,7 +3,7 @@ namespace Grafizzi\Graph;
 
 abstract class AbstractNamed implements NamedInterface {
 
-  public $fName;
+  public $fName = NULL;
 
   /**
    * A shortcut to the injected logger.
@@ -20,7 +20,6 @@ abstract class AbstractNamed implements NamedInterface {
   function __construct(\Pimple $dic) {
     $this->dic = $dic;
     $this->logger = &$dic['logger'];
-    $this->setName($dic['name']);
   }
 
   /**
@@ -97,7 +96,7 @@ abstract class AbstractNamed implements NamedInterface {
    * @see NamedInterface::getBuildName()
    */
   public function getBuildName() {
-    return $this->getName();
+    return $this->escape($this->getName());
   }
 
   /**

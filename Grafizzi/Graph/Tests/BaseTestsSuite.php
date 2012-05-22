@@ -34,7 +34,7 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     $this->addTestSuite('escapeTest');
 
     // Image_GraphViz tests adapted for Grafizzi.
-    $igTests = array('01', '05');
+    $igTests = array('01', '03', '05', '06');
 
     foreach ($igTests as $igTest) {
       $this->addTestSuite("IG{$igTest}Test");

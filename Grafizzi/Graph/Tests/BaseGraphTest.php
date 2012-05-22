@@ -30,7 +30,7 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
 
     $log = new Logger(basename(__FILE__, '.php'));
@@ -38,7 +38,7 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
     $this->dic = new \Pimple(array(
       'logger' => $log,
     ));
-    $this->Graph = new Graph($this->dic);
+    $this->Graph = new Graph($this->dic, $name, $attributes);
   }
 
   /**

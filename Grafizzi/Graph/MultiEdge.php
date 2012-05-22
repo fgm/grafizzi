@@ -41,7 +41,7 @@ class MultiEdge extends AbstractElement {
     $joiner = ($directed ? ' -> ' : ' -- ');
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
       . implode($joiner, array_map(function (Node $node) {
-        return $node->getName();
+        return $node->getBuildName();
       }, $this->fNodes));
 
     $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {

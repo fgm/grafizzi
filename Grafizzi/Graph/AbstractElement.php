@@ -85,6 +85,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $attributes = array_map(function (AttributeInterface $attribute) {
       return $attribute->build($directed);
     }, $this->fAttributes);
+    $name = $this->escape($name);
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
       . "$type $name [ " . implode(', ', $attributes) . " ];\n";
     return $ret;
