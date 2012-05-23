@@ -68,6 +68,67 @@ EOT
       , $dot, "Edge builds correctly");
   }
 
+  // Normal attributes list on edge bound to root graph.
+  public function testBuildAttributesNormal() {
+    $this->Edge->removeAttribute($this->Attribute);
+    $this->Edge->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+  source -> destination [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->Edge->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title in middle on edge bound to root graph.
+  public function testBuildAttributesEmptyMiddle() {
+    $this->Edge->removeAttribute($this->Attribute);
+    $this->Edge->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'title', ''),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+  source -> destination [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->Edge->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as single attribute on edge bound to root graph.
+  public function testBuildAttributesOnlyEmpty() {
+    $this->Edge->removeAttribute($this->Attribute);
+    $this->Edge->setAttributes(array(
+      new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+  source -> destination;
+
+EOT;
+    $actual = $this->Edge->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as last attribute on edge bound to root graph.
+  public function testBuildAttributesEmptyLast() {
+    $this->Edge->removeAttribute($this->Attribute);
+    $this->Edge->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+      new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+  source -> destination [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->Edge->build();
+    $this->assertEquals($expected, $actual);
+  }
+
   /**
    * Tests Edge::getAllowedChildTypes()
    */

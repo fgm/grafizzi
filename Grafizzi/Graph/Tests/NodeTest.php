@@ -4,8 +4,7 @@ namespace Grafizzi\Graph\Tests;
 
 require 'vendor/autoload.php';
 
-use \Monolog\Logger;
-use \Monolog\Handler\StreamHandler;
+use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Node;
 
 /**
@@ -75,6 +74,63 @@ digraph G {
 EOT;
     $build = $this->Graph->build();
     $this->assertEquals($expected, $build, "Graph with a single node built correctly.");
+  }
+
+  // Normal attributes list.
+  public function testBuildAttributesNormal() {
+    $this->Node->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+n1 [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->Node->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title in middle.
+  public function testBuildAttributesEmptyMiddle() {
+    $this->Node->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'title', ''),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+n1 [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->Node->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as single attribute.
+  public function testBuildAttributesOnlyEmpty() {
+    $this->Node->setAttributes(array(
+      new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+n1;
+
+EOT;
+    $actual = $this->Node->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as last attribute.
+  public function testBuildAttributesEmptyLast() {
+    $this->Node->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+      new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+n1 [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->Node->build();
+    $this->assertEquals($expected, $actual);
   }
 
   /**

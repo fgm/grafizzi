@@ -48,7 +48,10 @@ class Node extends AbstractElement {
     }, $this->fAttributes);
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT) . $this->escape($name);
     if (!empty($attributes)) {
-      $ret .= " [ " . implode(', ', $attributes) . " ]";
+      $builtAttributes = implode(', ', array_filter($attributes));
+      if (!empty($builtAttributes)) {
+        $ret .= " [ " . implode(', ', array_filter($attributes)) . " ]";
+      }
     }
     $ret .= ";\n";
     return $ret;

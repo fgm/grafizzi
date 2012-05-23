@@ -54,10 +54,14 @@ class Graph extends AbstractElement implements GraphInterface {
     $strict = $this->fStrict ? 'strict ' : '';
     $ret = "$elementIndent$strict$type $buildName {\n";
 
+    $builtCount = 0;
     foreach ($this->fAttributes as $attribute) {
-      $ret .= $childIndent . $attribute->build($directed) . ";\n";
+      if ($built = $attribute->build($directed)) {
+        $ret .= "$childIndent$built;\n";
+        $builtCount++;
+      }
     }
-    if (count($this->fAttributes)) {
+    if ($builtCount) {
       $ret .= "\n";
     }
 

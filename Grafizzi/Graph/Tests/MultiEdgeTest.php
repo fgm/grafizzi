@@ -104,6 +104,63 @@ EOT;
     $this->assertEquals($expected, $build, "Graph with undirected multiedge with attributes built correctly.");
   }
 
+  // Normal attributes list on unbound multiedge.
+  public function testBuildAttributesNormal() {
+    $this->MultiEdge->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+n0 -- n1 -- n2 -- n3 -- n0 [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->MultiEdge->build(false);
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title in middle on unbound multiedge.
+  public function testBuildAttributesEmptyMiddle() {
+    $this->MultiEdge->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'title', ''),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+n0 -- n1 -- n2 -- n3 -- n0 [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->MultiEdge->build(false);
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as single attribute on unbound multiedge.
+  public function testBuildAttributesOnlyEmpty() {
+    $this->MultiEdge->setAttributes(array(
+      new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+n0 -- n1 -- n2 -- n3 -- n0;
+
+EOT;
+    $actual = $this->MultiEdge->build(false);
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as last attribute on unbound multiedge.
+  public function testBuildAttributesEmptyLast() {
+    $this->MultiEdge->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+      new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+n0 -- n1 -- n2 -- n3 -- n0 [ foo=bar, baz=quux ];
+
+EOT;
+    $actual = $this->MultiEdge->build(false);
+    $this->assertEquals($expected, $actual);
+  }
+
   /**
    * Tests MultiEdge::getAllowedChildTypes()
    */

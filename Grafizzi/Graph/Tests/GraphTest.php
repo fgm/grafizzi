@@ -4,9 +4,7 @@ namespace Grafizzi\Graph\Tests;
 
 require 'vendor/autoload.php';
 
-use \Monolog\Logger;
-use \Monolog\Handler\StreamHandler;
-
+use \Grafizzi\Graph\Attribute;
 use \Grafizzi\Graph\Graph;
 
 /**
@@ -25,6 +23,76 @@ digraph G {
 
 EOT
       , $graph, 'Empty unnamed graph matches expected format.');
+  }
+
+  // Normal attributes list.
+  public function testBuildAttributesNormal() {
+    $this->Graph->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+digraph G {
+  foo=bar;
+  baz=quux;
+
+} /* /digraph G */
+
+EOT;
+    $actual = $this->Graph->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title in middle.
+  public function testBuildAttributesEmptyMiddle() {
+    $this->Graph->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'title', ''),
+      new Attribute($this->dic, 'baz', 'quux'),
+    ));
+    $expected = <<<EOT
+digraph G {
+  foo=bar;
+  baz=quux;
+
+} /* /digraph G */
+
+EOT;
+    $actual = $this->Graph->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as single attribute.
+  public function testBuildAttributesOnlyEmpty() {
+    $this->Graph->setAttributes(array(
+        new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+digraph G {
+} /* /digraph G */
+
+EOT;
+    $actual = $this->Graph->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  // Attribute list with empty title as last attribute.
+  public function testBuildAttributesEmptyLast() {
+    $this->Graph->setAttributes(array(
+      new Attribute($this->dic, 'foo', 'bar'),
+      new Attribute($this->dic, 'baz', 'quux'),
+      new Attribute($this->dic, 'title', ''),
+    ));
+    $expected = <<<EOT
+digraph G {
+  foo=bar;
+  baz=quux;
+
+} /* /digraph G */
+
+EOT;
+    $actual = $this->Graph->build();
+    $this->assertEquals($expected, $actual);
   }
 
   /**

@@ -47,6 +47,15 @@ class AttributeTest extends BaseGraphTest {
   public function testBuild() {
     $ret = $this->Attribute->build($this->Graph->getDirected());
     $this->assertEquals('label="A plain label"', $ret);
+
+    $title = new Attribute($this->dic, 'title', 'Non empty title');
+    $ret = $title->build($this->Graph->getDirected());
+    $this->assertEquals('title="Non empty title"', $ret, 'Non-empty title built like a normal attribute.');
+
+    $title = new Attribute($this->dic, 'title', '');
+    $ret = $title->build($this->Graph->getDirected());
+    $this->assertNull($ret, 'Empty title built as null.');
+
   }
 
   /**

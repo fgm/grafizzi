@@ -48,7 +48,10 @@ class MultiEdge extends AbstractElement {
       return $attribute->build($directed);
     }, $this->fAttributes);
     if (!empty($attributes)) {
-      $ret .= " [ " . implode(', ', $attributes) . " ]";
+      $builtAttributes = implode(', ', array_filter($attributes));
+      if (!empty($builtAttributes)) {
+        $ret .= " [ $builtAttributes ]";
+      }
     }
 
     $ret .= ";\n";
