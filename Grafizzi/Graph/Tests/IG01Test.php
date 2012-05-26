@@ -29,7 +29,7 @@ class IG01Test extends BaseGraphTest {
 
   public function setUp() {
     parent::setUp();
-    $this->Graph->setDirected(FALSE);
+    $this->Graph->setDirected(false);
     $edgeDefinitions = array(
       array('run', 'intr'),
       array('run', 'kernel'),

@@ -17,7 +17,7 @@ $log->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
 
 $dic = new \Pimple(array(
   'logger' => $log,
-  'directed' => FALSE,
+  'directed' => false,
 ));
 
 $g = new Graph($dic);

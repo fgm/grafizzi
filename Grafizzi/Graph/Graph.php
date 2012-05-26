@@ -39,7 +39,7 @@ class Graph extends AbstractElement implements GraphInterface {
     }
   }
 
-  public function build($directed = NULL) {
+  public function build($directed = null) {
     // Allow overriding the build directed attribute.
     if (isset($directed)) {
       $savedDirected = $this->getDirected();

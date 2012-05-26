@@ -26,7 +26,7 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   /**
    * @see AttributeInterface::__construct()
    */
-  public function __construct(\Pimple $dic, $name, $value = NULL) {
+  public function __construct(\Pimple $dic, $name, $value = null) {
     parent::__construct($dic);
     $this->setName($name);
     $this->setValue($value);
@@ -37,15 +37,16 @@ class Attribute extends AbstractNamed implements AttributeInterface {
    *
    * Ignores $directed.
    */
-  public function build($directed = NULL) {
+  public function build($directed = null) {
     $name = $this->getName();
     $this->logger->debug("Building attribute " . $name);
     $value = $this->getValue();
     if ('title' == $name && empty($value)) {
-      $ret = NULL;
+      $ret = null;
     }
     else {
-      $ret = "$name=" . self::escape($value);
+      $escape = in_array($name, array('label', 'headlabel', 'taillabel'));
+      $ret = "$name=" . self::escape($value, $escape);
     }
     return $ret;
   }
@@ -100,15 +101,15 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   }
 
   /**
-   * Note: a NULL default value will work too: if $value is not NULL, the
-   * default is ignored, and if value is NULL, isset() fails, and fValue is set
-   * to $value, i.e. NULL too.
+   * Note: a null default value will work too: if $value is not null, the
+   * default is ignored, and if value is null, isset() fails, and fValue is set
+   * to $value, i.e. null too.
    *
    * @see AttributeInterface::setValue()
    */
-  public function setValue($value = NULL) {
+  public function setValue($value = null) {
     $this->logger->debug("{$this->fName}->value = "
-      . print_r($value, TRUE) . ".");
+      . print_r($value, true) . ".");
     if (!isset($value) && isset(self::$fDefaults[$this->fName])) {
       $value = self::$fDefaults[$this->fName];
     }

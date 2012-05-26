@@ -3,7 +3,7 @@ namespace Grafizzi\Graph\GraphViz;
 
 class GraphAttribute extends AbstractAttribute {
   public static $fDefaults = array(
-    'bgcolor' => NULL, // color|colorlist
+    'bgcolor' => null, // color|colorlist
     'fontcolor' => 'black', // color
     'fontsize' => 14.0, // double, >= 1.0
     'label' => '', // string ("\n" on nodes)

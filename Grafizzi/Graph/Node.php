@@ -18,7 +18,7 @@ class Node extends AbstractElement {
    *
    * @var boolean
    */
-  public $fImplicit = FALSE;
+  public $fImplicit = false;
 
   public function __construct(\Pimple $dic, $name, array $attributes = array()) {
     parent::__construct($dic);
@@ -35,7 +35,7 @@ class Node extends AbstractElement {
   /**
    * @see AbstractElement::build()
    */
-  public function build($directed = NULL) {
+  public function build($directed = null) {
     // Implicit nodes have no entry of their own.
     if ($this->fImplicit) {
       return;

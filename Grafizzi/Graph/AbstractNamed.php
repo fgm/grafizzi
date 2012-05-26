@@ -3,7 +3,7 @@ namespace Grafizzi\Graph;
 
 abstract class AbstractNamed implements NamedInterface {
 
-  public $fName = NULL;
+  public $fName = null;
 
   /**
    * A shortcut to the injected logger.
@@ -47,7 +47,7 @@ abstract class AbstractNamed implements NamedInterface {
     // 1. Handle keywords specifically, convert anything else to string.
     $s = trim(strtolower($string));
     if (in_array($s, $keywords)) {
-      $wrapping = true;
+      $wrapping = 'dquote';
     } elseif (!isset($string)) {
       $s = 'false';
     } elseif (is_bool($string)) {
@@ -55,23 +55,33 @@ abstract class AbstractNamed implements NamedInterface {
     } else {
       $s = (string) $string;
       if (!self::validateId($s)) {
-        $wrapping = true;
+        $wrapping = 'dquote';
       }
     }
 
     // 2. Wrap requested pseudo-html if it contains at least one terminated element.
     if ($pseudoHtml && (strpos($s, '</') !== false || strpos($s, '/>') !== false)) {
-      $s = "<$s>";
-      $wrapping = true;
+      $wrapping = 'html';
     }
 
     // 3. Normalize quotes and new lines
-    $s = str_replace(array("\r\n", "\n", "\r", '"'),
-                     array('\n',   '\n', '\n', '\"'), $s);
+    if ($wrapping != 'html') {
+      $s = str_replace(array("\r\n", "\n", "\r", '"'),
+                       array('\n',   '\n', '\n', '\"'), $s);
+    }
 
     // 4. Wrap in double quotes if needed.
-    if ($wrapping) {
-      $s = '"' . $s . '"';
+    switch ($wrapping) {
+      case 'dquote':
+        $s = '"' . $s . '"';
+        break;
+
+      case 'html':
+        $s = "<$s>";
+        break;
+
+      default:
+        // Do not wrap.
     }
 
     return $s;

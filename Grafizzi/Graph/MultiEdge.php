@@ -31,7 +31,7 @@ class MultiEdge extends AbstractElement {
     $this->setAttributes($attributes);
   }
 
-  public function build($directed = NULL) {
+  public function build($directed = null) {
     $type = $this->getType();
     $name = $this->getName();
     if (!isset($directed)) {

@@ -15,29 +15,54 @@ class Edge extends AbstractElement {
   public $destinationNode;
 
   /**
+   * Optional port name on source Node.
+   *
+   * @var string
+   */
+  public $sourcePort = null;
+
+  /**
+   * Optional port name on destination Node.
+   *
+   * @var string
+   */
+  public $destinationPort = null;
+
+  /**
    * @var boolean
    */
   public $fDirected = true;
 
-  public function __construct(\Pimple $dic, Node $source, Node $destination, array $attributes = array()) {
+  public function __construct(\Pimple $dic, Node $source, Node $destination,
+    array $attributes = array(), $sourcePort = null, $destinationPort = null) {
     parent::__construct($dic);
     $this->sourceNode = $source;
     $this->destinationNode = $destination;
-    $this->setName($source->getName() . '--' . $destination->getName());
+    $name = $source->getName() . '--' . $destination->getName();
+    if ($sourcePort && $destinationPort) {
+      $this->sourcePort = $sourcePort;
+      $this->destinationPort = $destinationPort;
+      $name .= "--$sourcePort--$destinationPort";
+    } elseif ($sourcePort || $destinationPort) {
+      throw new \InvalidArgumentException('Both ports must be set if one is set, but you only set one.');
+    }
+    $this->setName($name);
     $this->setAttributes($attributes);
   }
 
-  public function build($directed = NULL) {
+  public function build($directed = null) {
     $type = $this->getType();
     $name = $this->getName();
     if (!isset($directed)) {
-      $directed = TRUE;
+      $directed = true;
     }
     $this->logger->debug("Building edge $name, depth {$this->fDepth}.");
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
       . $this->escape($this->sourceNode->getName())
+      . (isset($this->sourcePort) ? ":$this->sourcePort" : null)
       . ($directed ? ' -> ' : ' -- ')
-      . $this->escape($this->destinationNode->getName());
+      . $this->escape($this->destinationNode->getName())
+      . (isset($this->destinationPort) ? ":$this->destinationPort" : null);
 
     $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
       return $attribute->build($directed);

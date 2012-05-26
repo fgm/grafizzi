@@ -3,7 +3,7 @@
 namespace Grafizzi\Graph;
 
 interface NamedInterface {
-  public function build($directed = NULL);
+  public function build($directed = null);
 
   /**
    * Output a string in the default GraphViz format.

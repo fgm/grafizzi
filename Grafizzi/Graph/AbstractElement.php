@@ -23,11 +23,11 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   public $fDepth = 0;
 
   /**
-   * The parent element, when bound, or NULL otherwise.
+   * The parent element, when bound, or null otherwise.
    *
    * @var AbstractElement
    */
-  public $fParent = NULL;
+  public $fParent = null;
 
   /**
    * Possibly not needed with an efficient garbage collector, but might help in
@@ -78,7 +78,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    *
    * @return string
    */
-  public function build($directed = NULL) {
+  public function build($directed = null) {
     $type = $this->getType();
     $name = $this->getName();
     $this->logger->debug("Building element $name.");
@@ -99,10 +99,10 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * Nodes do not have children, only attributes.
    *
-   * @return NULL
+   * @return null
    */
   public static function getAllowedChildTypes() {
-    return NULL;
+    return null;
   }
 
   /**
@@ -111,8 +111,8 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    * @return AttributeInterface
    */
   public function getAttributeByName($name) {
-    $ret = isset($this->fAttributes[$name]) ? $this->fAttributes[$name] : NULL;
-    $this->logger->debug("Getting attribute [$name]: " . print_r($ret, TRUE) . ".");
+    $ret = isset($this->fAttributes[$name]) ? $this->fAttributes[$name] : null;
+    $this->logger->debug("Getting attribute [$name]: " . print_r($ret, true) . ".");
     return $ret;
   }
 
@@ -200,7 +200,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
       $ret = $child;
     }
     else {
-      $ret = NULL;
+      $ret = null;
     }
     return $ret;
   }
@@ -216,7 +216,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
       $name = $attribute->getName();
       if (!isset($name)) {
         $message = 'Trying to set unnamed attribute.';
-        $this->logger->warn($message, debug_backtrace(FALSE));
+        $this->logger->warn($message, debug_backtrace(false));
         throw new ChildNameException($message);
       }
     $this->fAttributes[$name] = $attribute;

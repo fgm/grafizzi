@@ -14,12 +14,12 @@ interface AttributeInterface extends NamedInterface {
   /**
    * Return the default value for an attribute if not set.
    *
-   * Note: NULL is not a valid default value.
+   * Note: null is not a valid default value.
    *
    * @param string $name
    */
   public static function getDefaultValue($name);
 
   public function getValue();
-  public function setValue($value = NULL);
+  public function setValue($value = null);
 }

@@ -125,11 +125,11 @@ EOT;
    * Tests Graph::getType()
    */
   public function testGetType() {
-    $this->Graph->setDirected(FALSE);
+    $this->Graph->setDirected(false);
     $type = $this->Graph->getType();
     $this->assertEquals('graph', $type, 'Graph type is "graph".');
 
-    $this->Graph->setDirected(TRUE);
+    $this->Graph->setDirected(true);
     $type = $this->Graph->getType();
     $this->assertEquals('digraph', $type, 'Graph type is "digraph".');
   }
