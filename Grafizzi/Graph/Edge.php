@@ -86,5 +86,4 @@ class Edge extends AbstractElement {
     $ret = 'edge';
     return $ret;
   }
-
 }
