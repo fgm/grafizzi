@@ -69,8 +69,6 @@ strict digraph "strict" {
 } /* /digraph "strict" */
 
 EOT;
-    $build = $this->Graph->build();
-    $this->Graph->logger->debug("\n\n$build\n\n");
-    $this->assertEquals($expected, $build, "Image_GraphViz test 6 passed.");
+    $this->check($expected, "Image_GraphViz test 6 passed.");
   }
 }

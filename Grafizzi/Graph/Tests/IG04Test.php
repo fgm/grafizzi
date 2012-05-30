@@ -139,8 +139,6 @@ digraph G {
 } /* /digraph G */
 
 EOT;
-    $build = $this->Graph->build();
-    $this->Graph->logger->debug("\n\n$build\n\n");
-    $this->assertEquals($expected, $build, "Image_GraphViz test 4 passed.");
+    $this->check($expected, "Image_GraphViz test 4 passed.");
   }
 }

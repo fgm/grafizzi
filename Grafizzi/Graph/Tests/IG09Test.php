@@ -456,8 +456,6 @@ digraph asde91 {
 } /* /digraph asde91 */
 
 EOT;
-    $build = $this->Graph->build();
-    $this->Graph->logger->debug("\n\n$build\n\n");
-    $this->assertEquals($expected, $build, "Image_GraphViz test 9 passed.");
+    $this->check($expected, "Image_GraphViz test 9 passed.");
   }
 }

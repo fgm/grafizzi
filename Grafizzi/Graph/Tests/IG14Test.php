@@ -66,8 +66,6 @@ digraph structs {
 } /* /digraph structs */
 
 EOT;
-    $build = $this->Graph->build();
-    // echo "\n\n$build\n\n";
-    $this->assertEquals($expected, $build, "Image_GraphViz test 14 passed.");
+    $this->check($expected, "Image_GraphViz test 14 passed.");
   }
 }

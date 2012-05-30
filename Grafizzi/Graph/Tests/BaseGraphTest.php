@@ -42,6 +42,20 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
+   * Helper function for testBuild() method.
+   *
+   * @param string $expected
+   *   A DOT source.
+   * @param string $message
+   *   The assertion message.
+   */
+  public function check($expected, $message) {
+    $build = $this->Graph->build();
+    $this->Graph->logger->debug("\n\n$build\n\n");
+    $this->assertEquals($expected, $build, $message);
+  }
+
+  /**
    * Cleans up the environment after running a test.
    */
   protected function tearDown() {
