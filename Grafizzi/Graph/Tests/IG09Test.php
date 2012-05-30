@@ -17,7 +17,6 @@
 
 namespace Grafizzi\Graph\Tests;
 
-
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Edge;
 use Grafizzi\Graph\Graph;
@@ -458,7 +457,7 @@ digraph asde91 {
 
 EOT;
     $build = $this->Graph->build();
-    // echo "\n\n$build\n\n";
+    $this->Graph->logger->debug("\n\n$build\n\n");
     $this->assertEquals($expected, $build, "Image_GraphViz test 9 passed.");
   }
 }

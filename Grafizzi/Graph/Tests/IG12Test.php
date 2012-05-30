@@ -8,21 +8,17 @@
  *
  * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
  *
- * Two descriptions in Image_GraphViz source:
- * - Test 12: "Unit test for graph with ports"
- * - Test 12: "Graph of binary search tree"
+ * Test 12: "Graph of binary search tree"
  *
  * "Graph definition taken from GraphViz documentation"
  */
 
 namespace Grafizzi\Graph\Tests;
 
-
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Edge;
 use Grafizzi\Graph\Graph;
 use Grafizzi\Graph\Node;
-use Grafizzi\Graph\Subgraph;
 
 require 'vendor/autoload.php';
 
@@ -85,7 +81,7 @@ digraph structs {
 
 EOT;
     $build = $this->Graph->build();
-    // echo "\n\n$build\n\n";
+    $this->Graph->logger->debug("\n\n$build\n\n");
     $this->assertEquals($expected, $build, "Image_GraphViz test 12 passed.");
   }
 }

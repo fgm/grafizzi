@@ -13,13 +13,10 @@
 
 namespace Grafizzi\Graph\Tests;
 
-use Monolog\Logger;
-
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Edge;
 use Grafizzi\Graph\Graph;
 use Grafizzi\Graph\Node;
-use Grafizzi\Graph\Subgraph;
 
 require 'vendor/autoload.php';
 
@@ -106,7 +103,7 @@ digraph structs {
 
 EOT;
     $build = $this->Graph->build();
-    // echo "\n\n$build\n\n";
+    $this->Graph->logger->debug("\n\n$build\n\n");
     $this->assertEquals($expected, $build, "Image_GraphViz test 2 passed.");
   }
 }
