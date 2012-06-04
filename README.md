@@ -73,7 +73,17 @@ that PHPunit 3.5 or later is installed on your system, and run:
 
     make test
 
-4) Cleaning up
+5) Using Grafizzi in your PHP GraphViz projects
+-----------------------------------------------
+
+Grafizzi is available from https://github.com/FGM/grafizzi and declared
+on http://packagist.org, making it available to your projects using Composer.
+
+Just declare `osinet/grafizzi: *` in the `require` section of your 
+`composer.json` and Composer will fetch Grafizzi and include it in the
+autoloader map it will generate for your project.
+
+6) Cleaning up
 --------------
 
 You can remove php_error.log, the generated doxygen docs directory, and many
