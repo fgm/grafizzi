@@ -2,20 +2,23 @@
 
 /**
  * @file
- * A recreation of Image_GraphViz test20.phpt
+ * Grafizzi\Graph\Tests\IG20Test: a component of the Grafizzi library.
  *
- * @author Frédéric G. Marand <fgm@osinet.fr>
+ * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
  *
- * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
+ * Grafizzi is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  *
- * Test 20: "Graph with edges on clusters"
+ * Grafizzi is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+ * details.
  *
- * "Graph definition taken from GraphViz documentation"
- *
- * Note: original sample names cluster 0 "cluster0" instead of 'cluster_0'.
- * Although GraphViz supports these run-ins, Grafizzi adds a "_" for legibility.
- * This means cluster names in lhead/ltail attributes had to be changed to match
- * Grafizzi name format.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Grafizzi, in the COPYING.LESSER.txt file.  If not, see
+ * <http://www.gnu.org/licenses/>
  */
 
 namespace Grafizzi\Graph\Tests;
@@ -29,7 +32,18 @@ use Grafizzi\Graph\Node;
 require 'vendor/autoload.php';
 
 /**
- * Graph test case.
+ * A recreation of Image_GraphViz test20.phpt
+ *
+ * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
+ *
+ * Test 20: "Graph with edges on clusters"
+ *
+ * "Graph definition taken from GraphViz documentation"
+ *
+ * Note: original sample names cluster 0 "cluster0" instead of 'cluster_0'.
+ * Although GraphViz supports these run-ins, Grafizzi adds a "_" for legibility.
+ * This means cluster names in lhead/ltail attributes had to be changed to match
+ * Grafizzi name format.
  */
 class IG20Test extends BaseGraphTest {
 

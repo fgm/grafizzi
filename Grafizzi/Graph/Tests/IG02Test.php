@@ -2,13 +2,23 @@
 
 /**
  * @file
- * A recreation of Image_GraphViz test2.phpt
+ * Grafizzi\Graph\Tests\IG02Test: a component of the Grafizzi library.
  *
- * @author Frédéric G. Marand <fgm@osinet.fr>
+ * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
  *
- * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
+ * Grafizzi is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  *
- * Test 2: "HTML-like labels"
+ * Grafizzi is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Grafizzi, in the COPYING.LESSER.txt file.  If not, see
+ * <http://www.gnu.org/licenses/>
  */
 
 namespace Grafizzi\Graph\Tests;
@@ -21,7 +31,11 @@ use Grafizzi\Graph\Node;
 require 'vendor/autoload.php';
 
 /**
- * Graph test case.
+ * A recreation of Image_GraphViz test2.phpt
+ *
+ * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
+ *
+ * Test 2: "HTML-like labels"
  */
 class IG02Test extends BaseGraphTest {
 

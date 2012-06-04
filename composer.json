@@ -2,7 +2,7 @@
     "name": "osinet/grafizzi",
     "description": "A GraphViz generator for PHP. PEAR Image_GraphViz rethought.",
     "keywords": ["dot", "neato", "fdp", "sfdp", "circo", "twopi", "graphviz", "Image_GraphViz", "force-directed graph"],
-    "license": ["GPLv3", "CeCILLv2"],
+    "license": ["LGPLv3"],
     
     "authors": [
         {

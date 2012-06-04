@@ -2,16 +2,24 @@
 
 /**
  * @file
- * A test for Grafizzi "Multiedges".
+ * Grafizzi\Graph\Tests\MultiEdgeTest: a component of the Grafizzi library.
  *
- * No equivalent in Image_GraphViz.
+ * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
  *
- * @author Frédéric G. Marand <fgm@osinet.fr>
+ * Grafizzi is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  *
- * Graph definition taken from Neato documentation, fig. 5 p. 6
- * "Drawing graphs with NEATO" / Stephen C. North / April 26, 2004
+ * Grafizzi is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Grafizzi, in the COPYING.LESSER.txt file.  If not, see
+ * <http://www.gnu.org/licenses/>
  */
-
 
 namespace Grafizzi\Graph\Tests;
 
@@ -21,9 +29,15 @@ use Grafizzi\Graph\Node;
 
 require 'vendor/autoload.php';
 
-
 /**
- * MultiEdge test case.
+ * A test for Grafizzi "Multiedges".
+ *
+ * No equivalent in Image_GraphViz.
+ *
+ * @author Frédéric G. Marand <fgm@osinet.fr>
+ *
+ * Graph definition taken from Neato documentation, fig. 5 p. 6
+ * "Drawing graphs with NEATO" / Stephen C. North / April 26, 2004
  */
 class MultiEdgeTest extends BaseGraphTest {
 

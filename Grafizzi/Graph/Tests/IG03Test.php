@@ -2,9 +2,35 @@
 
 /**
  * @file
- * A recreation of Image_GraphViz test3.phpt
+ * Grafizzi\Graph\Tests\IG03Test: a component of the Grafizzi library.
  *
- * @author Frédéric G. Marand <fgm@osinet.fr>
+ * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ *
+ * Grafizzi is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * Grafizzi is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Grafizzi, in the COPYING.LESSER.txt file.  If not, see
+ * <http://www.gnu.org/licenses/>
+ */
+
+namespace Grafizzi\Graph\Tests;
+
+use Grafizzi\Graph\Attribute;
+use Grafizzi\Graph\Edge;
+use Grafizzi\Graph\Node;
+
+require 'vendor/autoload.php';
+
+/**
+ * A recreation of Image_GraphViz test3.phpt
  *
  * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
  *
@@ -17,19 +43,6 @@
  * Setup logic and order of result lines slightly modified to account for the
  * API change: nodes must be created before they are referenced, be they
  * implicit or explicit in the resulting graph.
- */
-
-namespace Grafizzi\Graph\Tests;
-
-use Grafizzi\Graph\Attribute;
-
-use Grafizzi\Graph\Edge;
-use Grafizzi\Graph\Node;
-
-require 'vendor/autoload.php';
-
-/**
- * Graph test case.
  */
 class IG03Test extends BaseGraphTest {
 

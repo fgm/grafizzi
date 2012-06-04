@@ -2,16 +2,23 @@
 
 /**
  * @file
- * A recreation of Image_GraphViz test1.phpt
+ * Grafizzi\Graph\Tests\IG01Test: a component of the Grafizzi library.
  *
- * @author Frédéric G. Marand <fgm@osinet.fr>
+ * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
  *
- * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
+ * Grafizzi is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  *
- * Test 1: "Process States in an Operating System Kernel"
+ * Grafizzi is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+ * details.
  *
- * Graph definition taken from Neato documentation, fig. 1 p. 3
- * "Drawing graphs with NEATO" / Stephen C. North / April 26, 2004
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Grafizzi, in the COPYING.LESSER.txt file.  If not, see
+ * <http://www.gnu.org/licenses/>
  */
 
 namespace Grafizzi\Graph\Tests;
@@ -22,7 +29,14 @@ use Grafizzi\Graph\Node;
 require 'vendor/autoload.php';
 
 /**
- * Graph test case.
+ * A recreation of Image_GraphViz test1.phpt
+ *
+ * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
+ *
+ * Test 1: "Process States in an Operating System Kernel"
+ *
+ * Graph definition taken from Neato documentation, fig. 1 p. 3
+ * "Drawing graphs with NEATO" / Stephen C. North / April 26, 2004
  */
 class IG01Test extends BaseGraphTest {
 
