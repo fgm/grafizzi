@@ -33,9 +33,12 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     $this->addTestSuite('SubgraphTest');
     $this->addTestSuite('escapeTest');
 
-    // Image_GraphViz tests adapted for Grafizzi. Image_GraphViz does not have
-    // any tests for number 7 nor 8.
-    $igTests = array('01', '02', '03', '04', '05', '06', '09');
+    // Image_GraphViz tests adapted for Grafizzi. Image_GraphViz tests skip many
+    // numbers between 17 and 20.
+    $igTests = array(
+      '01', '02', '03', '04', '05', '06',  '09', '12', '14', '16', '17', '19',
+      '20',
+    );
 
     foreach ($igTests as $igTest) {
       $this->addTestSuite("IG{$igTest}Test");
