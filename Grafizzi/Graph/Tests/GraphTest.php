@@ -57,7 +57,6 @@ EOT
 digraph G {
   foo=bar;
   baz=quux;
-
 } /* /digraph G */
 
 EOT;
@@ -76,7 +75,6 @@ EOT;
 digraph G {
   foo=bar;
   baz=quux;
-
 } /* /digraph G */
 
 EOT;
@@ -109,7 +107,6 @@ EOT;
 digraph G {
   foo=bar;
   baz=quux;
-
 } /* /digraph G */
 
 EOT;

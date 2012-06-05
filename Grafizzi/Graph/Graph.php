@@ -83,14 +83,15 @@ class Graph extends AbstractElement implements GraphInterface {
         $builtCount++;
       }
     }
-    if ($builtCount) {
+
+    $builtChildren = '';
+    foreach ($this->fChildren as $child) {
+      $builtChildren .= $child->build($actualDirected);
+    }
+    if ($builtCount && !empty($builtChildren)) {
       $ret .= "\n";
     }
-
-    foreach ($this->fChildren as $child) {
-      $ret .= $child->build($actualDirected);
-    }
-    $ret .= "$elementIndent} /* /$type $buildName */\n";
+    $ret .= "$builtChildren$elementIndent} /* /$type $buildName */\n";
 
     // Restore the directed attribute if it was changed for build.
     if (isset($directed)) {

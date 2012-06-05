@@ -62,7 +62,7 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
       '01', '02', '03', '04', '05', '06', '09',
       '12', '14', '16', '17', '19', '20', '20b',
       // Bug fix tests
-      '15019', '15943', '16872',
+      '15019', '15943', '16872', '18676',
     );
 
     foreach ($igTests as $igTest) {
