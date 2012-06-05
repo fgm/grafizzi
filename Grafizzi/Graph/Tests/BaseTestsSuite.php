@@ -46,20 +46,23 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
   public function __construct() {
     $this->setName('BaseTestsSuite');
 
-    $this->addTestSuite('AttributeTest');
-    $this->addTestSuite('ClusterTest');
-    $this->addTestSuite('EdgeTest');
-    $this->addTestSuite('GraphTest');
-    $this->addTestSuite('MultiEdgeTest');
-    $this->addTestSuite('NodeTest');
-    $this->addTestSuite('SubgraphTest');
-    $this->addTestSuite('escapeTest');
+    // Original unit tests for Grafizzi.
+    $unitTests = array(
+      'Attribute', 'Cluster', 'Edge',     'Graph',
+      'MultiEdge', 'Node',    'Subgraph', 'escape',
+    );
+    foreach ($unitTests as $unit) {
+      $this->addTestSuite("{$unit}Test");
+    }
 
-    // Image_GraphViz tests adapted for Grafizzi. Image_GraphViz tests skip many
-    // numbers between 17 and 20.
+    // Image_GraphViz tests adapted for Grafizzi.
+    // Note: Image_GraphViz tests skip many numbers between 17 and 20.
     $igTests = array(
-      '01', '02', '03', '04', '05', '06',  '09', '12', '14', '16', '17', '19',
-      '20', '20b',
+      // Base tests
+      '01', '02', '03', '04', '05', '06', '09',
+      '12', '14', '16', '17', '19', '20', '20b',
+      // Bug fix tests
+      '15019', '15943',
     );
 
     foreach ($igTests as $igTest) {
