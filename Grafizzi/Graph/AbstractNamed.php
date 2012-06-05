@@ -69,6 +69,7 @@ abstract class AbstractNamed implements NamedInterface {
     $s = trim(strtolower($string));
     if (in_array($s, $keywords)) {
       $wrapping = 'dquote';
+      $s = $string;
     } elseif (!isset($string)) {
       $s = 'false';
     } elseif (is_bool($string)) {

@@ -90,6 +90,23 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
+   * Increment the depth of the object by $extra.
+   *
+   * @param int $extra
+   *
+   * @return int
+   *   The new depth of the object.
+   */
+  public function adjustDepth($extra = 0) {
+    $this->logger->debug("Adjusting depth {$this->fDepth} by $extra.");
+    $this->fDepth += $extra;
+    foreach ($this->fChildren as $child) {
+      $child->adjustDepth($extra);
+    }
+    return $this->fDepth;
+  }
+
+  /**
    * Build the DOT string for this subtree.
    *
    * Ignores $directed.
@@ -137,22 +154,18 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * Increment the depth of the object by $extra.
-   *
-   * @param int $extra
-   *
-   * @return int
-   *   The new depth of the object.
+   * @see \Grafizzi\Graph\ElementInterface::getChildByName()
    */
-  public function adjustDepth($extra = 0) {
-    $this->logger->debug("Adjusting depth {$this->fDepth} by $extra.");
-    $this->fDepth += $extra;
-    foreach ($this->fChildren as $child) {
-      $child->adjustDepth($extra);
-    }
-    return $this->fDepth;
+  public function getChildByName($name) {
+    $ret = isset($this->fChildren[$name])
+      ? $this->fChildren[$name]
+      : null;
+    return $ret;
   }
 
+  /**
+   * @see \Grafizzi\Graph\ElementInterface::getRoot()
+   */
   public function getRoot() {
     $current = $this;
     while ($current->fParent instanceof ElementInterface) {

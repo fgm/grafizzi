@@ -28,7 +28,29 @@ interface ElementInterface extends NamedInterface {
   public function adjustDepth($extra);
 
   public static function getAllowedChildTypes();
+  /**
+   *
+   * @param string $name
+   *
+   * @return Attribute
+   */
   public function getAttributeByName($name);
+
+  /**
+   *
+   * @param string $name
+   *
+   * @return ElementInterface
+   */
+  public function getChildByName($name);
+
+  /**
+   * Return the root element for the graph to which this element belongs.
+   *
+   * An unbound element returns itself.
+   *
+   * @return ElementInterface
+   */
   public function getRoot();
 
   public function removeAttribute(AttributeInterface $attribute);
