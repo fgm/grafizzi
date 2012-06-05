@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Grafizzi\Graph\Tests\IG20Test: a component of the Grafizzi library.
+ * Grafizzi\Graph\Tests\IG20bTest: a component of the Grafizzi library.
  *
  * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
  *
@@ -32,15 +32,15 @@ use Grafizzi\Graph\Node;
 require 'vendor/autoload.php';
 
 /**
- * A recreation of Image_GraphViz test20.phpt
+ * A recreation of Image_GraphViz test20b.phpt
  *
  * Image_GraphViz version author: Philippe Jausions <jausions@php.net>
  *
- * Test 20: "Graph with edges on clusters"
+ * Test 20b: "Graph with edges on clusters not 'cluster'-named IDs"
  *
  * "Graph definition taken from GraphViz documentation"
  */
-class IG20Test extends BaseGraphTest {
+class IG20bTest extends BaseGraphTest {
 
   public function setUp() {
     // not strict by default.
@@ -55,12 +55,12 @@ class IG20Test extends BaseGraphTest {
 
     $nullTitle = array(new Attribute($dic, 'title', NULL));
 
-    $graph->addChild($cluster0 = new Cluster($dic, 'cluster0', $nullTitle));
+    $graph->addChild($cluster0 = new Cluster($dic, 0, $nullTitle));
     foreach (array('a', 'b', 'c', 'd') as $name) {
       $cluster0->addChild($$name = new Node($dic, $name));
     }
 
-    $graph->addChild($cluster1 = new Cluster($dic, 'cluster1', $nullTitle));
+    $graph->addChild($cluster1 = new Cluster($dic, 1, $nullTitle));
     foreach (array('e', 'f', 'g') as $name) {
       $cluster1->addChild($$name = new Node($dic, $name));
     }
@@ -96,24 +96,24 @@ class IG20Test extends BaseGraphTest {
 digraph G {
   compound=true;
 
-  subgraph cluster0 {
+  subgraph cluster_0 {
     a;
     b;
     c;
     d;
-  } /* /subgraph cluster0 */
-  subgraph cluster1 {
+  } /* /subgraph cluster_0 */
+  subgraph cluster_1 {
     e;
     f;
     g;
-  } /* /subgraph cluster1 */
+  } /* /subgraph cluster_1 */
   a -> b;
   a -> c;
   b -> d;
-  b -> f [ lhead=cluster1 ];
+  b -> f [ lhead=cluster_1 ];
   c -> d;
-  c -> g [ ltail=cluster0, lhead=cluster1 ];
-  c -> e [ ltail=cluster0 ];
+  c -> g [ ltail=cluster_0, lhead=cluster_1 ];
+  c -> e [ ltail=cluster_0 ];
   e -> g;
   e -> f;
   d -> e;
@@ -121,6 +121,6 @@ digraph G {
 } /* /digraph G */
 
 EOT;
-    $this->check($expected, "Image_graphViz test 20 passed.");
+    $this->check($expected, "Image_graphViz test 20b passed.");
   }
 }

@@ -27,7 +27,11 @@ class Cluster extends Subgraph {
 
   public function getBuildName() {
     $name = $this->getName();
-    $ret = $this->escape("cluster_$name");
+    if (strpos($name, 'cluster') !== 0) {
+      $name = "cluster_$name";
+    }
+    $this->dic['logger']->debug("Cluster name: [$name]");
+    $ret = $this->escape($name);
     return $ret;
   }
 }

@@ -59,7 +59,7 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     // numbers between 17 and 20.
     $igTests = array(
       '01', '02', '03', '04', '05', '06',  '09', '12', '14', '16', '17', '19',
-      '20',
+      '20', '20b',
     );
 
     foreach ($igTests as $igTest) {
