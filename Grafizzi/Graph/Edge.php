@@ -50,6 +50,16 @@ class Edge extends AbstractElement {
   public $destinationPort = null;
 
   /**
+   * Edge need a unique id.
+   *
+   * This is because, multiple edges may exist between the same vertices,
+   * port included.
+   *
+   * @var int
+   */
+  public static $sequence = 0;
+
+  /**
    * @var boolean
    */
   public $fDirected = true;
@@ -59,7 +69,7 @@ class Edge extends AbstractElement {
     parent::__construct($dic);
     $this->sourceNode = $source;
     $this->destinationNode = $destination;
-    $name = $source->getName() . '--' . $destination->getName();
+    $name = self::$sequence++ . '--' . $source->getName() . '--' . $destination->getName();
     if ($sourcePort && $destinationPort) {
       $this->sourcePort = $sourcePort;
       $this->destinationPort = $destinationPort;
