@@ -121,6 +121,29 @@ class Graph extends AbstractElement implements GraphInterface {
     return $ret;
   }
 
+  /**
+   * @throws \InvalidArgumentException
+   *
+   * @param string $format
+   *
+   * @return boolean
+   */
+  public function image($format) {
+    $formats = array(
+      'canon', 'cmap', 'cmapx', 'cmapx_np', 'dot', 'eps', 'fig', 'gd', 'gd2',
+      'gif', 'gv', 'imap', 'imap_np', 'ismap', 'jpe', 'jpeg', 'jpg', 'pdf',
+      'plain', 'plain-ext', 'png', 'ps', 'ps2', 'svg', 'svgz', 'tk', 'vml',
+      'vmlz', 'vrml', 'wbmp', 'x11', 'xdot', 'xlib',
+    );
+    if (!in_array($format, $formats)) {
+      $ret = false;
+      if (!empty($this->dic['use_exceptions'])) {
+        throw new \InvalidArgumentException('Invalid image format');
+      }
+    }
+    return $ret;
+  }
+
   public function setDirected($directed) {
     $this->fDirected = $directed;
   }
