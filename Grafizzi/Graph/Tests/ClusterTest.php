@@ -42,7 +42,7 @@ class ClusterTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
     $this->Cluster = new Cluster($this->dic);
     $this->Cluster->setName('foo');

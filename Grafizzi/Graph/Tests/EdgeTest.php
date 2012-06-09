@@ -47,7 +47,7 @@ class EdgeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
     $src = new Node($this->dic, 'source');
     $dst = new Node($this->dic, 'destination');
@@ -161,7 +161,7 @@ EOT;
    * Tests Edge::getType()
    */
   public function testGetType() {
-    $this->assertEquals('edge', Edge::getType());
+    $this->assertEquals('edge', $this->Edge->getType());
   }
 }
 

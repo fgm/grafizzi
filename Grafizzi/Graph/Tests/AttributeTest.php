@@ -41,7 +41,7 @@ class AttributeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
     $this->Attribute = new Attribute($this->dic, 'label', 'A plain label');
   }
@@ -98,7 +98,7 @@ class AttributeTest extends BaseGraphTest {
    * Tests Attribute::getType()
    */
   public function testGetType() {
-    $this->assertEquals('attribute', Attribute::getType());
+    $this->assertEquals('attribute', $this->Attribute->getType());
   }
 
   /**

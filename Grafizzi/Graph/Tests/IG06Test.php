@@ -43,7 +43,7 @@ require 'vendor/autoload.php';
  */
 class IG06Test extends BaseGraphTest {
 
-  public function setUp() {
+  public function setUp($name = 'G', $attributes = array()) {
     parent::setUp('G', Graph::strict());
     $graph = &$this->Graph;
     $dic = $this->dic;

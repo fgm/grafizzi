@@ -43,7 +43,7 @@ class SubgraphTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
     $this->Subgraph = new Subgraph($this->dic);
     $this->Subgraph->setName('sub');

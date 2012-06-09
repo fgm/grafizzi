@@ -50,7 +50,7 @@ strict digraph G {
 
 EOT;
 
-  public function setUp() {
+  public function setUp($name = 'G', $attributes = array()) {
     parent::setUp('G', array('strict' => true));
     $g = $this->Graph;
     $dic = $this->dic;

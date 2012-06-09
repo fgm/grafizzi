@@ -41,7 +41,7 @@ require 'vendor/autoload.php';
  */
 class IG12Test extends BaseGraphTest {
 
-  public function setUp() {
+  public function setUp($name = 'G', $attributes = array()) {
     // not strict by default.
     parent::setUp('structs');
     $g = $this->Graph;

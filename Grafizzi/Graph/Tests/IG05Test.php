@@ -40,7 +40,7 @@ require 'vendor/autoload.php';
  */
 class IG05Test extends BaseGraphTest {
 
-  public function setUp() {
+  public function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
     $this->Graph->setDirected(true);
     $this->Graph->addChild($a = new Node($this->dic, 'a', array(

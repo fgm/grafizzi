@@ -40,7 +40,7 @@ require 'vendor/autoload.php';
  */
 class IG01Test extends BaseGraphTest {
 
-  public function setUp() {
+  public function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
     $this->Graph->setDirected(false);
     $edgeDefinitions = array(

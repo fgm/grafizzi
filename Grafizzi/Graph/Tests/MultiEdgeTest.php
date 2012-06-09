@@ -50,7 +50,7 @@ class MultiEdgeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
 
     $this->Graph->setDirected(false);

@@ -60,7 +60,7 @@ digraph sp_d_rcp_001 {
 
 EOT;
 
-  public function setUp() {
+  public function setUp($name = 'G', $attributes = array()) {
     parent::setUp('sp_d_rcp_001');
     $g = $this->Graph;
     $dic = $this->dic;

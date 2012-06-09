@@ -54,7 +54,7 @@ class IG12913Test extends BaseGraphTest {
    */
   public $dic2;
 
-  public function setUp() {
+  public function setUp($name = 'G', $attributes = array()) {
     parent::setUp('G');
     $this->Graph2 = $this->Graph;
     $this->dic2 = $this->dic;

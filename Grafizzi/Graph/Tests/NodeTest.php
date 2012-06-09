@@ -42,7 +42,7 @@ class NodeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp($name = 'G', $attributes = array()) {
     parent::setUp();
 
     $this->Node = new Node($this->dic, 'n1');
@@ -165,6 +165,6 @@ EOT;
    * Tests Node::getType()
    */
   public function testGetType() {
-    $this->assertEquals('node', Node::getType());
+    $this->assertEquals('node', $this->Node->getType());
   }
 }
