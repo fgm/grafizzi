@@ -6,6 +6,7 @@ require 'vendor/autoload.php';
 
 use Grafizzi\Graph\Renderer;
 use Grafizzi\Graph\Filter\AbstractFilter;
+use \ErrorException;
 
 /**
  * Renderer test case.
@@ -38,11 +39,37 @@ class RendererTest extends BaseGraphTest {
   /**
    * Tests Renderer::getFormats()
    */
-  public function ZtestGetFormats() {
-    // TODO Auto-generated RendererTest::testGetFormats()
-    $this->markTestIncomplete("getFormats test not implemented");
+  public function testGetFormats() {
+    $dic = $this->dic;
+    $dic['use_exceptions'] = false;
+    $formats = Renderer::getFormats($dic);
+    $this->assertTrue(is_array($formats), 'Renderer::getFormats() returns an array when exceptions are not used.');
 
-    Renderer::getFormats(/* parameters */);
+    $dic['use_exceptions'] = true;
+    try {
+      $formats = Renderer::getFormats($dic);
+      $this->assertTrue(is_array($formats) && !empty($formats), 'Renderer::getFormats() returns a non-empty array when exceptions are used.');
+    }
+    catch (ErrorException $e) {
+      $this->pass('Renderer::getFormats() could not find dot and threw an ErrorException.');
+    }
+  }
+
+  /**
+   * Test use of magic __call() with non existent filter.
+   *
+   * - must throw DomainException
+   * - must not overwrite source data
+   */
+  public function test__call() {
+    $expected = $out = 'Some data';
+    try {
+      $out = $this->renderer->nonexistent();
+    }
+    catch (\DomainException $e) {
+      $this->assertInstanceOf('\\DomainException', $e, 'Rendering non existent filter throws DomainException');
+    }
+    $this->assertEquals($expected, $out, 'Output is not overwritten by non existent filter.');
   }
 
   /**
@@ -65,6 +92,9 @@ class RendererTest extends BaseGraphTest {
     $this->assertEquals($expected, $output, "Filter to string updates argument.");
   }
 
+  /**
+   * Test the fluent filter interface.
+   */
   public function testRenderChainedFilters() {
     $callback = 'strrev';
 

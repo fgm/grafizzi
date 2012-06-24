@@ -50,13 +50,15 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     $unitTests = array(
       'Attribute', 'Cluster', 'Edge',     'Graph',
       'MultiEdge', 'Node',    'Subgraph', 'escape',
+      'Renderer',
+      'SinkFilter', 'StringFilter',
     );
     foreach ($unitTests as $unit) {
       $this->addTestSuite("{$unit}Test");
     }
 
     // Image_GraphViz tests adapted for Grafizzi.
-    // Note: Image_GraphViz tests skip many numbers between 17 and 20.
+    // Note: Image_GraphViz tests skip many numbers between 7 and 20.
     $igTests = array(
       // Base tests
       '01', '02', '03', '04', '05', '06', '09',

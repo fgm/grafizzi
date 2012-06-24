@@ -26,6 +26,13 @@ namespace Grafizzi\Graph;
 class Graph extends AbstractElement implements GraphInterface {
 
   /**
+   * Valid output formats.
+   *
+   * @var array
+   */
+  public $formats = null;
+
+  /**
    * Helper to simplify construction of strict graphs.
    *
    * @return array
@@ -129,18 +136,19 @@ class Graph extends AbstractElement implements GraphInterface {
    * @return boolean
    */
   public function image($format) {
-    $formats = array(
-      'canon', 'cmap', 'cmapx', 'cmapx_np', 'dot', 'eps', 'fig', 'gd', 'gd2',
-      'gif', 'gv', 'imap', 'imap_np', 'ismap', 'jpe', 'jpeg', 'jpg', 'pdf',
-      'plain', 'plain-ext', 'png', 'ps', 'ps2', 'svg', 'svgz', 'tk', 'vml',
-      'vmlz', 'vrml', 'wbmp', 'x11', 'xdot', 'xlib',
-    );
-    if (!in_array($format, $formats)) {
+    if (!isset($this->formats)) {
+      // In case of failure, this will hold an empty array, not null.
+      $this->formats = Renderer::getFormats($this->dic);
+    }
+
+    if (!in_array($format, $this->formats)) {
       $ret = false;
       if (!empty($this->dic['use_exceptions'])) {
         throw new \InvalidArgumentException('Invalid image format');
       }
     }
+
+    // TODO perform rendering.
     return $ret;
   }
 

@@ -33,7 +33,6 @@ class StringFilter extends AbstractFilter implements FilterInterface {
    * @throws \InvalidArgumentException
    */
   public function __construct(array &$args = array()) {
-    $args = isset($args[0]) ? $args[0] : array();
     if (isset($args['out'])) {
       $this->string = &$args['out'];
     }
@@ -51,14 +50,12 @@ class StringFilter extends AbstractFilter implements FilterInterface {
    * @see \Grafizzi\Graph\Filter\FilterInterface::filter()
    */
   public function filter($input) {
-    // echo "In " . __METHOD__ . "(" . var_export($input, TRUE) . ")\n";
+    $ret = isset($this->callback)
+      ? call_user_func($this->callback, $input)
+      : $input;
     if (isset($this->string)) {
-      $ret = isset($this->callback)
-        ? call_user_func($this->callback, $input)
-        : $input;
       $this->string = $ret;
     }
-    //echo "Filtering $input returns $ret\n";
     return $ret;
   }
 }

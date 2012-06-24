@@ -2,7 +2,6 @@
 namespace Grafizzi\Graph;
 
 use Grafizzi\Graph\Filter\AbstractFilter;
-
 use Grafizzi\Graph\GraphVizWrapper;
 use Pimple;
 
@@ -84,28 +83,31 @@ class Renderer {
   }
 
   /**
-   * Apply the rendering pipeline to the raw GraphViz source.
+   * Magic method: apply filter methods by simple name.
    *
-   * @param string $raw
-   * @return string
+   * @see Grafizzi\Graph\Filter\AbstractFilter::create()
+   *
+   * @param string $name
+   *   The simple name for a filter. Will be converted to an actual class name.
+   * @param array $args
+   *   An array of arguments to pass to the filter method.
+   *
+   * @throws \DomainException
+   *   Throws exception if the filter name does not convert to a usable filter
+   *   class.
+   *
+   * @return \Grafizzi\Graph\Renderer
    */
-  public function render($raw) {
-    $ret = array_reduce($this->filters, function ($data, AbstractFilter $filter) {
-      $ret = $filter($data);
-      return $ret;
-    }, $raw);
-
-    return $ret;
-  }
-
   public function __call($name, $args) {
-    // echo "In ". __METHOD__ . "(" . print_r($args, true) . ")\n";
-    // Will throw DomainException in case of error.
-    array_unshift($args, $name);
-    $filter = call_user_func_array(array(__NAMESPACE__ . '\\Filter\\AbstractFilter', 'create'), $args);
-    // echo "Filter: " . var_export($filter, true) . "\n";
+
+    $filter = isset($args[0])
+      ? AbstractFilter::create($name, $args[0])
+      : AbstractFilter::create($name);
     if ($filter) {
       $this->pipe = $filter->filter($this->pipe);
+    }
+    else {
+      throw new \DomainException('Filter not found: ' . $name);
     }
     return $this;
   }

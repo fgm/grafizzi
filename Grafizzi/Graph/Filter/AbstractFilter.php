@@ -44,12 +44,9 @@ abstract class AbstractFilter {
    * @throws DomainException
    * @return FilterInterface
    */
-  public static function create($name) {
+  public static function create($name, array &$args = array()) {
     $className = __NAMESPACE__ . '\\' . ucfirst($name) . 'Filter';
     if (class_exists($className, true)) {
-      $args = func_get_args();
-      array_shift($args);
-      // echo "In " . __METHOD__ . "class: $className (". var_export($args, true) . ")\n";
       $ret = new $className($args);
     }
     else {
