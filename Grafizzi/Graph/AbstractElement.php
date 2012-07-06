@@ -87,6 +87,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $this->fChildren[$childName] = $child;
     $child->adjustDepth($this->fDepth + 1);
     $child->setParent($this);
+    return $this;
   }
 
   /**

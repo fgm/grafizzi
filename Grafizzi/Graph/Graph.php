@@ -26,13 +26,6 @@ namespace Grafizzi\Graph;
 class Graph extends AbstractElement implements GraphInterface {
 
   /**
-   * Valid output formats.
-   *
-   * @var array
-   */
-  public $formats = null;
-
-  /**
    * Helper to simplify construction of strict graphs.
    *
    * @return array
@@ -125,30 +118,6 @@ class Graph extends AbstractElement implements GraphInterface {
 
   public function getType() {
     $ret = $this->getDirected() ? 'digraph' : 'graph';
-    return $ret;
-  }
-
-  /**
-   * @throws \InvalidArgumentException
-   *
-   * @param string $format
-   *
-   * @return boolean
-   */
-  public function image($format) {
-    if (!isset($this->formats)) {
-      // In case of failure, this will hold an empty array, not null.
-      $this->formats = Renderer::getFormats($this->dic);
-    }
-
-    if (!in_array($format, $this->formats)) {
-      $ret = false;
-      if (!empty($this->dic['use_exceptions'])) {
-        throw new \InvalidArgumentException('Invalid image format');
-      }
-    }
-
-    // TODO perform rendering.
     return $ret;
   }
 

@@ -23,6 +23,15 @@
 
 namespace Grafizzi\Graph;
 
+/**
+ * A MultiEdge is a graph object made up of several nodes linked by edges, with
+ * only one set of attributes. In GraphViz format, this means something like:
+ *
+ * foo -> bar -> baz [ label=Quux ];
+ *
+ * It provides a simpler source representation for node chains than multiple
+ * edges.
+ */
 class MultiEdge extends AbstractElement {
 
   /**

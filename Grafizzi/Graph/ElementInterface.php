@@ -24,7 +24,16 @@
 namespace Grafizzi\Graph;
 
 interface ElementInterface extends NamedInterface {
+  /**
+   * Add a child to another element, usually a Graph.
+   *
+   * @param ElementInterface $child
+   *
+   * @return ElementInterface;
+   *   Return the object on which the method is invoked, to allow chaining.
+   */
   public function addChild(ElementInterface $child);
+
   public function adjustDepth($extra);
 
   public static function getAllowedChildTypes();

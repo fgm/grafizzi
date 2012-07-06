@@ -75,8 +75,8 @@ $nodeLabel = new Attribute($dic, 'label', 'Other node');
 $n2->setAttribute($nodeLabel);
 $g->addChild($n2);
 
-$edge = new Edge($dic, $n1, $n2);
 $edgeLabel = new Attribute($dic, 'label', 'Close to the edge');
+$edge = new Edge($dic, $n1, $n2, array($edgeLabel));
 $g->addChild($edge);
 
 echo $g->build();
