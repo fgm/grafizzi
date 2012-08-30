@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Grafizzi\Graph\Tests\SinkFilterTest: a component of the Grafizzi library.
+ * Grafizzi\Graph\Tests\BaseFilterTest: a component of the Grafizzi library.
  *
  * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
  *
@@ -25,27 +25,23 @@ namespace Grafizzi\Graph\Tests;
 
 require 'vendor/autoload.php';
 
-use Grafizzi\Graph\Filter\SinkFilter;
-
 /**
- * SinkFilter test case.
+ *
+ * @author marand
  */
-class SinkFilterTest extends BaseFilterTest {
+abstract class BaseFilterTest extends \PHPUnit_Framework_TestCase {
 
   /**
-   * Prepares the environment before running a test.
+   * @var array
+   *   Array of filters, implementing FilterInterface.
    */
-  protected function setUp() {
-    parent::setUp();
-    $this->filters[] = new SinkFilter();
-  }
+  protected $filters = array();
 
   /**
-   * Tests SinkFilter->filter()
+   * Cleans up the environment after running a test.
    */
-  public function testFilter() {
-    $in = 'Sink test';
-    $out = $this->filters[0]->filter($in);
-    $this->assertNull($out, 'Sink filter returns NULL output.');
+  protected function tearDown() {
+    $this->filters = array();
+    parent::tearDown();
   }
 }

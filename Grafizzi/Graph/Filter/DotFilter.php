@@ -43,13 +43,10 @@ class DotFilter extends AbstractCommandFilter {
 
   public static $commandName = 'dot';
 
-<<<<<<< HEAD
-=======
   public function __construct(array &$args = array()) {
     parent::__construct($args);
   }
 
->>>>>>> 313b54c... Backup version for safety only: work in progress, do not use.
   /**
    * @throws \InvalidArgumentException
    *
@@ -73,8 +70,4 @@ class DotFilter extends AbstractCommandFilter {
     // TODO perform rendering.
     return $ret;
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 313b54c... Backup version for safety only: work in progress, do not use.
 }

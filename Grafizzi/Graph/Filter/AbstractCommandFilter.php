@@ -42,7 +42,6 @@ abstract class AbstractCommandFilter extends AbstractFilter {
 
   public static $commandName;
 
-<<<<<<< HEAD
   /**
    * Options passed on the command line.
    *
@@ -67,11 +66,6 @@ abstract class AbstractCommandFilter extends AbstractFilter {
     }
 
     $command = static::$commandName . $args;
-=======
-  public function run() {
-    $args = implode(' ', func_get_args());
-    $command = self::$commandName . " $args";
->>>>>>> 313b54c... Backup version for safety only: work in progress, do not use.
 
     $descriptorSpec = array(
       0 => array('pipe', 'r'),
@@ -85,18 +79,11 @@ abstract class AbstractCommandFilter extends AbstractFilter {
       throw new \ErrorException('"$command" command could not be run.');
     }
 
-<<<<<<< HEAD
     fwrite($pipes[0], $input);
     fclose($pipes[0]);
     $ret = array(
       'stdout' => stream_get_contents($pipes[1]),
       'stderr' => stream_get_contents($pipes[2]),
-=======
-    fclose($pipes[0]);
-    $ret = array(
-      'data' => stream_get_contents($pipes[1]),
-      'info' => stream_get_contents($pipes[2]),
->>>>>>> 313b54c... Backup version for safety only: work in progress, do not use.
     );
     fclose($pipes[1]);
     fclose($pipes[2]);
