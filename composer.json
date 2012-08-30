@@ -1,9 +1,10 @@
 {
     "name": "osinet/grafizzi",
     "description": "A GraphViz generator for PHP. PEAR Image_GraphViz rethought.",
-    "keywords": ["dot", "neato", "fdp", "sfdp", "circo", "twopi", "graphviz", "Image_GraphViz", "force-directed graph"],
-    "license": ["LGPLv3"],
-    
+    "keywords": ["graphviz", "dot", "neato", "fdp", "sfdp", "circo", "twopi", "Image-GraphViz", "Image GraphViz", "force-directed graph"],
+    "homepage": "http://github.com/fgm/grafizzi",
+    "license": ["LGPL-3.0+"],
+    "type": "library",
     "authors": [
         {
             "name": "Frédéric G. MARAND",
