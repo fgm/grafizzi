@@ -43,10 +43,6 @@ class DotFilter extends AbstractCommandFilter {
 
   public static $commandName = 'dot';
 
-  public function __construct(array &$args = array()) {
-    parent::__construct($args);
-  }
-
   /**
    * @throws \InvalidArgumentException
    *

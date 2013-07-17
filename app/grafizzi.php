@@ -43,18 +43,23 @@ class Grafizzi {
   public $r;
 
   /**
+   * @var \Monolog\Logger
+   */
+  public $logger;
+
+  /**
    * @var \Pimple
    */
   public $dic;
 
   public function __construct() {
-    $log = new Logger(basename(__FILE__, '.php'));
+    $this->logger = new Logger(basename(__FILE__, '.php'));
 
     // Change the minimum logging level using the Logger:: constants.
-    $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
+    $this->logger->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
 
     $this->dic = $dic = new \Pimple(array(
-      'logger' => $log,
+      'logger' => $this->logger,
       'directed' => false,
     ));
 
@@ -65,8 +70,7 @@ class Grafizzi {
     $this->r = new Renderer($dic);
   }
 
-  public function addFilters() {
-    $g = $this->g;
+  public function addData() {
     $dic = $this->dic;
     $class = new Attribute($dic, 'shape', 'box');
     $interface = new Attribute($dic, 'shape', 'ellipse');
@@ -88,15 +92,7 @@ class Grafizzi {
       ->addChild(new Edge($dic, $string, $af, array($extends)))
       ->addChild(new Edge($dic, $dot, $acf, array($extends)))
       ->addChild(new Edge($dic, $acf, $af, array($extends)));
-
   }
-
-  public function addData() {
-    $this->addFilters();
-//  public function addTests();
-//  public function addBaseClasses();
-  }
-
 
   public function render() {
     // 1. Build the DOT source
@@ -111,7 +107,7 @@ class Grafizzi {
     // 2bis. Optional: handle stderr from DOT.
     $stderr = $this->r->pipe['stderr'];
     if (!empty($stderr)) {
-      $this->dic['logger']->info($stderr);
+      $this->logger->info($stderr);
     }
 
     // 3. Return the rendered results.
