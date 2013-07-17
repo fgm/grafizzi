@@ -91,7 +91,6 @@ class Grafizzi {
 
   }
 
-<<<<<<< HEAD
   public function addData() {
     $this->addFilters();
 //  public function addTests();
@@ -104,9 +103,10 @@ class Grafizzi {
     $this->r->pipe = $this->g->build();
 
     // 2. Render it with DOT
-    $this->r->dot(array(
+    $dotArgs = array(
       '-T' => 'svg',
-    ));
+    );
+    $this->r->dot($dotArgs);
 
     // 2bis. Optional: handle stderr from DOT.
     $stderr = $this->r->pipe['stderr'];
@@ -125,22 +125,4 @@ $g = new Grafizzi();
 // Add its actual data.
 $g->addData();
 // Render it.
-=======
-//  public function addTests();
-//  public function addBaseClasses();
-
-  public function render() {
-    $this->addFilters();
-    $this->r->pipe = $this->g->build();
-    $dotArgs = array(
-      '-T' => 'svg',
-    );
-    echo $this->r->pipe;
-    $this->r->dot($dotArgs);
-    return $this->r->pipe;
-  }
-}
-
-$g = new Grafizzi();
->>>>>>> 313b54c... Backup version for safety only: work in progress, do not use.
 echo $g->render();

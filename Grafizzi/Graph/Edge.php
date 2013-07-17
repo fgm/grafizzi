@@ -87,7 +87,7 @@ class Edge extends AbstractElement {
     if (!isset($directed)) {
       $directed = true;
     }
-    $this->logger->debug("Building edge $name, depth {$this->fDepth}.");
+    $this->logger->debug("Building $type $name, depth {$this->fDepth}.");
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
       . $this->escape($this->sourceNode->getName())
       . (isset($this->sourcePort) ? ":$this->sourcePort" : null)

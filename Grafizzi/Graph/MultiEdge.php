@@ -67,7 +67,7 @@ class MultiEdge extends AbstractElement {
     if (!isset($directed)) {
       $directed = $this->getRoot()->getDirected();
     }
-    $this->logger->debug("Building edge $name, depth {$this->fDepth}.");
+    $this->logger->debug("Building $type $name, depth {$this->fDepth}.");
     $joiner = ($directed ? ' -> ' : ' -- ');
     $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
       . implode($joiner, array_map(function (Node $node) {

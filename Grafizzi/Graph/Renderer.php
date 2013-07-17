@@ -23,7 +23,6 @@
 namespace Grafizzi\Graph;
 
 use Grafizzi\Graph\Filter\AbstractFilter;
-use Grafizzi\Graph\GraphVizWrapper;
 use Pimple;
 
 /**

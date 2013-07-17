@@ -63,7 +63,7 @@ class Node extends AbstractElement {
     }
     $type = $this->getType();
     $name = $this->getName();
-    $this->logger->debug("Building node $name, depth {$this->fDepth}.");
+    $this->logger->debug("Building $type $name, depth {$this->fDepth}.");
     $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
       return $attribute->build($directed);
     }, $this->fAttributes);

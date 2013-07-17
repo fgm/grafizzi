@@ -23,8 +23,6 @@
 
 namespace Grafizzi\Graph;
 
-use Monolog\Logger;
-
 /**
  * An Element attribute.
  */
