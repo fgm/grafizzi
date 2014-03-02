@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-    backupGlobals="true"
-    backupStaticAttributes="false"
-    cacheTokens="true"
-    colors="false"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    forceCoversAnnotation="false"
-    mapTestClassNameToCoveredClassName="false"
-    printerClass="PHPUnit_TextUI_ResultPrinter"
-    processIsolation="false"
-    stopOnError="false"
-    stopOnFailure="false"
-    stopOnIncomplete="false"
-    stopOnSkipped="false"
-    testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
-    strict="true"
-    verbose="true">
+  backupGlobals="true"
+  backupStaticAttributes="false"
+  cacheTokens="true"
+  colors="false"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  forceCoversAnnotation="false"
+  mapTestClassNameToCoveredClassName="false"
+  printerClass="PHPUnit_TextUI_ResultPrinter"
+  processIsolation="false"
+  stopOnError="false"
+  stopOnFailure="false"
+  stopOnIncomplete="false"
+  stopOnSkipped="false"
+  strict="true"
+  testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+  verbose="true">
 
-    <testsuites>
-        <testsuite name="Base Test Suite">
-            <directory>Grafizzi/Graph/Tests</directory>
-            </testsuite>
-        </testsuites>
-    </phpunit>
+  <filter>
+    <whitelist>
+      <directory>Grafizzi/</directory>
+      </whitelist>
+    </filter>
+
+  <testsuites>
+    <testsuite name="Base Test Suite">
+      <directory>Grafizzi/Graph/Tests</directory>
+      </testsuite>
+    </testsuites>
+  </phpunit>
 

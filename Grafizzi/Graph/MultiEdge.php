@@ -61,11 +61,19 @@ class MultiEdge extends AbstractElement {
     $this->setAttributes($attributes);
   }
 
+  /**
+   * @param bool $directed
+   *
+   * @return string
+   */
   public function build($directed = null) {
     $type = $this->getType();
     $name = $this->getName();
     if (!isset($directed)) {
-      $directed = $this->getRoot()->getDirected();
+      $root = $this->getRoot();
+      if ($root instanceof GraphInterface) {
+        $directed = $root->getDirected();
+      }
     }
     $this->logger->debug("Building $type $name, depth {$this->fDepth}.");
     $joiner = ($directed ? ' -> ' : ' -- ');

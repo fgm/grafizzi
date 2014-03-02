@@ -1,0 +1,71 @@
+#changetracking:
+#  bug_patterns:
+#    - '\bfix(?:es|ed)?\b'
+#
+
+filter:
+  excluded_paths:
+    - 'vendor/*'
+    - 'tests/*'
+    - 'app/*'
+    - 'bin/*'
+    - 'library/*'
+  paths: []
+
+tools:
+  external_code_coverage:
+    timeout: 300
+
+#  php_analyzer:
+#    enabled: true
+#    extensions:
+#      - php
+#    filter:
+#      excluded_paths:
+#        - 'vendor/*'
+#        - 'tests/*'
+#        - 'app/*'
+#        - 'bin/*'
+#        - 'library/*'
+#      paths: []
+#    path_configs: ~
+#
+#  php_cpd:
+#    command: ~
+#    enabled: true
+#    excluded_dirs: []
+#    min_lines: 5
+#    min_tokens: 70
+#    names:
+#      - '*.php'
+#    filter:
+#      excluded_paths:
+#        - 'vendor/*'
+#        - 'tests/*'
+#        - 'app/*'
+#        - 'bin/*'
+#        - 'library/*'
+#      paths: []
+#
+#  php_mess_detector:
+#    extensions:
+#      - php
+#    command: ~
+#    config: ~
+#    enabled: false
+#    filter:
+#      excluded_paths:
+#        - 'vendor/*'
+#        - 'tests/*'
+#        - 'app/*'
+#        - 'bin/*'
+#        - 'library/*'
+#      paths: []
+#    path_configs: ~
+#
+#  php_pdepend:
+#    command: ~
+#    configuration_file: ~
+#    enabled: true
+#    suffixes:
+#      - php

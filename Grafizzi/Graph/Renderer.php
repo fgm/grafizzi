@@ -67,9 +67,7 @@ class Renderer {
       if ($useExceptions) {
         throw new \ErrorException('GraphViz "dot" command could not be run.', EER);
       }
-      else {
-        $formats = array();
-      }
+      // No need to define $formats otherwise: it is always defined further down.
     }
 
     fclose($pipes[0]);
@@ -97,8 +95,6 @@ class Renderer {
    * Constructor.
    *
    * @param Pimple $dic
-   * @param array $filters
-   *   An array of filters and their options, to apply in a chain.
    */
   public function __construct(Pimple $dic) {
     $this->dic = $dic;

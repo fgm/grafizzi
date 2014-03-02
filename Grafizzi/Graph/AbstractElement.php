@@ -31,6 +31,9 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
 
   public $fAttributes = array();
 
+  /**
+   * @var array
+   */
   public $fChildren = array();
 
   /**
@@ -56,9 +59,14 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    * XXX 20120512 check if really useful.
    */
   public function __destruct() {
-    $name = $this->getName();
+    try {
+      $name = $this->getName();
+    }
+    catch (AttributeNameException $e) {
+      $name = 'unnamed';
+    }
     $type = $this->getType();
-    $this->logger->debug("Destroying $type " . ($name ?: "(unnamed)"));
+    $this->logger->debug("Destroying $type $name");
     foreach ($this->fAttributes as &$attribute) {
       unset($attribute);
     }
@@ -70,9 +78,13 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * @todo TODO decide what to do with duplicates.
    *
-   * @throws ChildTypeException
+   * @param ElementInterface $child
    *
+   * @return ElementInterface
+   *
+   * @throws ChildTypeException
    * @see ElementInterface::addChild()
+   *
    */
   public function addChild(ElementInterface $child) {
     $name = $this->getName();
@@ -120,7 +132,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $type = $this->getType();
     $name = $this->getName();
     $this->logger->debug("Building element $name.");
-    $attributes = array_map(function (AttributeInterface $attribute) {
+    $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
       return $attribute->build($directed);
     }, $this->fAttributes);
     $name = $this->escape($name);
@@ -137,10 +149,10 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * Nodes do not have children, only attributes.
    *
-   * @return null
+   * @return array
    */
   public static function getAllowedChildTypes() {
-    return null;
+    return array();
   }
 
   /**
@@ -196,6 +208,10 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    * Silently fail, like unset, when removing an unassigned attribute.
    *
    * @see ElementInterface::removeAttributeByName()
+   *
+   * @param string $name
+   *
+   * @return void
    */
   public function removeAttributeByName($name) {
     $this->logger->debug("Removing attribute [$name].");
@@ -208,6 +224,10 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    * @throws ChildNameException
    *
    * @see ElementInterface::removeChild()
+   *
+   * @param ElementInterface $child
+   *
+   * @return ElementInterface
    */
   public function removeChild(ElementInterface $child) {
     $name = $child->getName();
@@ -224,6 +244,10 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    * Silently fail, like unset, when removing an unassigned attribute.
    *
    * @see ElementInterface::removeChildByName()
+   *
+   * @param string $name
+   *
+   * @return ElementInterface
    */
   public function removeChildByName($name) {
     $this->logger->debug("Removing child [$name].");

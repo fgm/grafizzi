@@ -23,7 +23,6 @@
 
 namespace Grafizzi\Graph\Filter;
 
-use Grafizzi\Graph\Filter\AbstractCommandFilter;
 use Grafizzi\Graph\Renderer;
 
 /**
@@ -61,6 +60,9 @@ class DotFilter extends AbstractCommandFilter {
       if (!empty($this->dic['use_exceptions'])) {
         throw new \InvalidArgumentException('Invalid image format');
       }
+    }
+    else {
+      $ret = true;
     }
 
     // TODO perform rendering.
