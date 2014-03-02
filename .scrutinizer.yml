@@ -3,14 +3,16 @@
 #    - '\bfix(?:es|ed)?\b'
 #
 
-filter:
-  excluded_paths:
-    - 'vendor/*'
-    - 'tests/*'
-    - 'app/*'
-    - 'bin/*'
-    - 'library/*'
-  paths: []
+#filter:
+#  excluded_paths:
+#    - 'vendor/*'
+#    - 'tests/*'
+#    - 'app/*'
+#    - 'bin/*'
+#    - 'library/*'
+#  paths: []
+#
+inherit: true
 
 tools:
   external_code_coverage:
