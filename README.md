@@ -4,6 +4,7 @@ Grafizzi
 Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 
 [![Build Status](https://secure.travis-ci.org/FGM/grafizzi.png?branch=master)](http://travis-ci.org/FGM/grafizzi)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/FGM/grafizzi/badges/quality-score.png?s=95ce57b528611f1f89868672f04e3af65ba73801)](https://scrutinizer-ci.com/g/FGM/grafizzi/)
 
 1) Installing Grafizzi
 ----------------------
