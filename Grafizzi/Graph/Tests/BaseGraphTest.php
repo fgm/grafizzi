@@ -45,7 +45,7 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
   public $Graph;
 
   /**
-   * @var Pimple
+   * @var \Pimple
    */
   public $dic;
 

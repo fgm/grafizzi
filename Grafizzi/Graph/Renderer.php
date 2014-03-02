@@ -23,7 +23,6 @@
 namespace Grafizzi\Graph;
 
 use Grafizzi\Graph\Filter\AbstractFilter;
-use Pimple;
 
 /**
  * A Renderer builds a rendering pipeline by instantiating Filters and providing
@@ -34,7 +33,7 @@ class Renderer {
   /**
    * The dependency injection container.
    *
-   * @var Pimple
+   * @var \Pimple
    */
   public $dic;
 
@@ -53,7 +52,7 @@ class Renderer {
    * @return array
    *   An array of format names or false if dot cannot be run.
    */
-  public static function getFormats(Pimple $dic) {
+  public static function getFormats(\Pimple $dic) {
     $dotCommand = 'dot -Tinvalid';
     $useExceptions = !empty($dic['use_exceptions']);
     $descriptorSpec = array(
@@ -94,9 +93,9 @@ class Renderer {
   /**
    * Constructor.
    *
-   * @param Pimple $dic
+   * @param \Pimple $dic
    */
-  public function __construct(Pimple $dic) {
+  public function __construct(\Pimple $dic) {
     $this->dic = $dic;
   }
 

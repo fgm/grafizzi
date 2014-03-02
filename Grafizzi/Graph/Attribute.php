@@ -54,7 +54,10 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   /**
    * @todo FIXME escape name, value more carefully
    *
-   * Ignores $directed.
+   * @param boolean $directed
+   *   Needed for signature conformity,but actually ignored.
+   *
+   * @return null|string
    */
   public function build($directed = null) {
     $name = $this->getName();

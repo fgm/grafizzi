@@ -91,6 +91,11 @@ class Edge extends AbstractElement {
     $this->setAttributes($attributes);
   }
 
+  /**
+   * @param boolean $directed
+   *
+   * @return string
+   */
   public function build($directed = null) {
     $type = $this->getType();
     $name = $this->getName();

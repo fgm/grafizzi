@@ -52,7 +52,7 @@ class IG12Test extends BaseGraphTest {
     $nodeShape = new Attribute($dic, 'shape', 'record');
     $nodes = array();
     foreach ($letters as $offset => $letter) {
-      $g->addChild($$name = new Node($dic, $nodes[$offset], array(
+      $g->addChild($nodes[$offset] = new Node($dic, "node$offset", array(
         $nodeShape,
         new Attribute($dic, 'label', "<f0> |<f1> $letter|<f2> "),
       )));

@@ -84,7 +84,7 @@ class RendererTest extends BaseGraphTest {
   public function test__call() {
     $expected = $out = 'Some data';
     try {
-      $out = $this->renderer->nonexistent();
+      $out = call_user_func(array($this->renderer, 'nonexistent'));
     }
     catch (\DomainException $e) {
       $this->assertInstanceOf('\\DomainException', $e, 'Rendering non existent filter throws DomainException');
@@ -103,7 +103,7 @@ class RendererTest extends BaseGraphTest {
     $output = 'input';
 
     $expected = $callback($this->renderer->pipe);
-    $this->renderer->string(array(
+    call_user_func(array($this->renderer, 'string'), array(
       'out' => &$output,
       'callback' => $callback,
     ));
@@ -122,10 +122,11 @@ class RendererTest extends BaseGraphTest {
     $output = 'input';
 
     $expected = $this->renderer->pipe;
-    $r = $this->renderer->string(array(
+    $step1 = call_user_func(array($this->renderer, 'string'), array(
       'out' => &$output,
       'callback' => $callback,
-    ))->string(array(
+    ));
+    $r = call_user_func(array($step1, 'string'), array(
       'out' => &$output,
       'callback' => $callback,
     ));

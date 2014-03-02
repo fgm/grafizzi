@@ -62,16 +62,17 @@ class IG17Test extends BaseGraphTest {
       new Attribute($dic, 'shape', 'Msquare'),
     )));
 
+    $nodes = array();
+
     // cluster0
     $g->addChild($cluster0 = new Cluster($dic, 0, array(
       new Attribute($dic, 'style', 'filled'),
       new Attribute($dic, 'color', 'lightgrey'),
       new Attribute($dic, 'label', 'process #1'),
     )));
-    $a3 = $a2 = $a1 = $a0 = null;
     for ($i = 0 ; $i < 4 ; $i++) {
       $nodeName = "a$i";
-      $cluster0->addChild($$nodeName = new Node($dic, $nodeName, $nullTitle));
+      $cluster0->addChild($nodes[$nodeName] = new Node($dic, $nodeName, $nullTitle));
     }
 
     // cluster1
@@ -79,27 +80,26 @@ class IG17Test extends BaseGraphTest {
       new Attribute($dic, 'color', 'blue'),
       new Attribute($dic, 'label', 'process #2'),
     )));
-    $b3 = $b2 = $b1 = $b0 = null;
     for ($i = 0 ; $i < 4 ; $i++) {
       $nodeName = "b$i";
-      $cluster1->addChild($$nodeName = new Node($dic, $nodeName, $nullTitle));
+      $cluster1->addChild($nodes[$nodeName] = new Node($dic, $nodeName, $nullTitle));
     }
 
-    $g->addChild(new Edge($dic, $a0, $a1));
-    $g->addChild(new Edge($dic, $a1, $a2));
-    $g->addChild(new Edge($dic, $a1, $b3));
-    $g->addChild(new Edge($dic, $a2, $a3));
-    $g->addChild(new Edge($dic, $b0, $b1));
-    $g->addChild(new Edge($dic, $b1, $b2));
-    $g->addChild(new Edge($dic, $b2, $b3));
-    $g->addChild(new Edge($dic, $b2, $a3));
+    $g->addChild(new Edge($dic, $nodes['a0'], $nodes['a1']));
+    $g->addChild(new Edge($dic, $nodes['a1'], $nodes['a2']));
+    $g->addChild(new Edge($dic, $nodes['a1'], $nodes['b3']));
+    $g->addChild(new Edge($dic, $nodes['a2'], $nodes['a3']));
+    $g->addChild(new Edge($dic, $nodes['b0'], $nodes['b1']));
+    $g->addChild(new Edge($dic, $nodes['b1'], $nodes['b2']));
+    $g->addChild(new Edge($dic, $nodes['b2'], $nodes['b3']));
+    $g->addChild(new Edge($dic, $nodes['b2'], $nodes['a3']));
 
-    $g->addChild(new Edge($dic, $start, $a0));
-    $g->addChild(new Edge($dic, $start, $b0));
+    $g->addChild(new Edge($dic, $start, $nodes['a0']));
+    $g->addChild(new Edge($dic, $start, $nodes['b0']));
 
-    $g->addChild(new Edge($dic, $a3, $a0));
-    $g->addChild(new Edge($dic, $a3, $end));
-    $g->addChild(new Edge($dic, $b3, $end));
+    $g->addChild(new Edge($dic, $nodes['a3'], $nodes['a0']));
+    $g->addChild(new Edge($dic, $nodes['a3'], $end));
+    $g->addChild(new Edge($dic, $nodes['b3'], $end));
   }
 
   /**

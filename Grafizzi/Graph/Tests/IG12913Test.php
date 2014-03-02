@@ -26,7 +26,6 @@ namespace Grafizzi\Graph\Tests;
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Cluster;
 use Grafizzi\Graph\Node;
-use Pimple;
 
 require 'vendor/autoload.php';
 
