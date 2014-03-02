@@ -34,6 +34,11 @@ use Grafizzi\Graph\Renderer;
 class DotFilter extends AbstractCommandFilter {
 
   /**
+   * @var \Pimple
+   */
+  protected $dic;
+
+  /**
    * Valid output formats.
    *
    * @var array
@@ -67,5 +72,9 @@ class DotFilter extends AbstractCommandFilter {
 
     // TODO perform rendering.
     return $ret;
+  }
+
+  public function setDic(\Pimple $dic) {
+    $this->dic = $dic;
   }
 }

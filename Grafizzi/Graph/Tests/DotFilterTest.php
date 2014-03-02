@@ -44,7 +44,9 @@ class DotFilterTest extends BaseFilterTest {
    */
   protected function setUp() {
     parent::setUp();
-    $this->filters[] = new DotFilter();
+    $dotFilter = new DotFilter();
+    $dotFilter->setDic(new \Pimple());
+    $this->filters[] = $dotFilter;
   }
 
   /**

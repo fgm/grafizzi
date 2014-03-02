@@ -23,8 +23,6 @@
 
 namespace Grafizzi\Graph\Filter;
 
-use Grafizzi\Graph\Filter\AbstractFilter;
-
 /**
  * Filters implemented as an executable file
  * - nop -p <file>+ : check and optionally pretty-print graph files
