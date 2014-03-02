@@ -39,6 +39,10 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   public $fValue;
 
   /**
+   * @param \Pimple $dic
+   * @param string $name
+   * @param mixed $value
+   *
    * @see AttributeInterface::__construct()
    */
   public function __construct(\Pimple $dic, $name, $value = null) {

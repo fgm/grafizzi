@@ -28,6 +28,11 @@ namespace Grafizzi\Graph\Filter;
  */
 interface FilterInterface {
 
+  /**
+   * @param array $args
+   *
+   * @return \Grafizzi\Graph\Filter\FilterInterface
+   */
   public function __construct(array &$args = array());
 
   /**

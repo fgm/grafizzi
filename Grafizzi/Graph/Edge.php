@@ -64,6 +64,16 @@ class Edge extends AbstractElement {
    */
   public $fDirected = true;
 
+  /**
+   * @param \Pimple $dic
+   * @param \Grafizzi\Graph\Node $source
+   * @param \Grafizzi\Graph\Node $destination
+   * @param array $attributes
+   * @param int $sourcePort
+   * @param int $destinationPort
+   *
+   * @throws \InvalidArgumentException
+   */
   public function __construct(\Pimple $dic, Node $source, Node $destination,
     array $attributes = array(), $sourcePort = null, $destinationPort = null) {
     parent::__construct($dic);

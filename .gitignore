@@ -1,12 +1,10 @@
-# Eclipse files
-.buildpath
-.project
-.settings
-
 # Generated documentation
 doxygen
 
 # Composer lock, code, and vendors
 composer.phar
-composer.lock
 vendor
+
+# Continuous integration artefacts
+ocular.phar
+coverage.clover

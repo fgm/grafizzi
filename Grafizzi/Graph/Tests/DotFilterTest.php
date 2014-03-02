@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Grafizzi\Graph\GraphInterface: a component of the Grafizzi library.
+ * Grafizzi\Graph\Tests\DotFilterTest: a component of the Grafizzi library.
  *
  * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
  *
@@ -21,21 +21,41 @@
  * <http://www.gnu.org/licenses/>
  */
 
-namespace Grafizzi\Graph;
+namespace Grafizzi\Graph\Tests;
 
-interface GraphInterface extends ElementInterface {
+require 'vendor/autoload.php';
+
+use Grafizzi\Graph\Filter\DotFilter;
+
+/**
+ * DotFilter test case.
+ */
+class DotFilterTest extends BaseFilterTest {
+
   /**
-   * @return bool
-   */
-  public function getDirected();
-
-  // Not yet
-  // public function render();
-
-  /**
-   * @param bool $directed
+   * File to copy to.
    *
-   * @return void
+   * @var string
    */
-  public function setDirected($directed);
+  private $out = null;
+
+  /**
+   * Prepares the environment before running a test.
+   */
+  protected function setUp() {
+    parent::setUp();
+    $this->filters[] = new DotFilter();
+  }
+
+  /**
+   * Tests DotFilter->filter()
+   */
+  public function testFilter() {
+    $in = 'String test';
+    $out = $this->filters[0]->filter($in);
+    $this->assertInternalType('array', $out, 'Dot filter returns an array');
+    $this->assertArrayHasKey('stdout', $out);
+    $this->assertArrayHasKey('stderr', $out);
+  }
 }
+

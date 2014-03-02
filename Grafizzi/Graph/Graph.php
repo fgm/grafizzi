@@ -46,6 +46,11 @@ class Graph extends AbstractElement implements GraphInterface {
    */
   public $fDirected = true;
 
+  /**
+   * @param \Pimple $dic
+   * @param string $name
+   * @param array $attributes
+   */
   public function __construct(\Pimple $dic, $name = 'G', array $attributes = array()) {
     if (!isset($dic['directed'])) {
       $dic['directed'] = true;
@@ -61,12 +66,21 @@ class Graph extends AbstractElement implements GraphInterface {
     }
   }
 
+  /**
+   * @param bool $directed
+   *
+   * @return string
+   */
   public function build($directed = null) {
     // Allow overriding the build directed attribute.
     if (isset($directed)) {
       $savedDirected = $this->getDirected();
       $this->setDirected($directed);
     }
+    else {
+      $savedDirected = true;
+    }
+
     $actualDirected = $this->getDirected();
     $type = $this->getType();
     $buildName = $this->getBuildName();
@@ -111,16 +125,25 @@ class Graph extends AbstractElement implements GraphInterface {
     return $ret;
   }
 
+  /**
+   * @return bool
+   */
   public function getDirected() {
     $ret = $this->fDirected;
     return $ret;
   }
 
+  /**
+   * @return string
+   */
   public function getType() {
     $ret = $this->getDirected() ? 'digraph' : 'graph';
     return $ret;
   }
 
+  /**
+   * @param bool $directed
+   */
   public function setDirected($directed) {
     $this->fDirected = $directed;
   }

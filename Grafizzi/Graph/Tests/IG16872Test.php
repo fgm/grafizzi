@@ -84,7 +84,6 @@ EOT;
     $boxShape = new Attribute($dic, 'shape', 'box');
     foreach ($result as $row) {
       $table = $row['tab'];
-      $action = $row['action'];
       if (array_key_exists($table, $lst_tab) == false){
         $g->addChild($$table = new Node($dic, $table, array($boxShape)));
         $lst_tab[] = $table;

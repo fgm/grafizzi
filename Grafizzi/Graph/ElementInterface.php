@@ -29,14 +29,23 @@ interface ElementInterface extends NamedInterface {
    *
    * @param ElementInterface $child
    *
-   * @return ElementInterface;
+   * @return ElementInterface
    *   Return the object on which the method is invoked, to allow chaining.
    */
   public function addChild(ElementInterface $child);
 
+  /**
+   * @param integer $extra
+   *
+   * @return integer
+   */
   public function adjustDepth($extra);
 
+  /**
+   * @return array
+   */
   public static function getAllowedChildTypes();
+
   /**
    *
    * @param string $name
@@ -62,12 +71,52 @@ interface ElementInterface extends NamedInterface {
    */
   public function getRoot();
 
+  /**
+   * @param AttributeInterface $attribute
+   *
+   * @return void
+   */
   public function removeAttribute(AttributeInterface $attribute);
+
+  /**
+   * @param $name
+   *
+   * @return void
+   */
   public function removeAttributeByName($name);
+
+  /**
+   * @param ElementInterface $child
+   *
+   * @return ElementInterface
+   */
   public function removeChild(ElementInterface $child);
+
+  /**
+   * @param string $name
+   *
+   * @return ElementInterface
+   */
   public function removeChildByName($name);
 
+  /**
+   * @param AttributeInterface $attribute
+   *
+   * @return void
+   */
   public function setAttribute(AttributeInterface $attribute);
+
+  /**
+   * @param array $attributes
+   *
+   * @return void
+   */
   public function setAttributes(array $attributes);
+
+  /**
+   * @param ElementInterface $parent
+   *
+   * @return void
+   */
   public function setParent(ElementInterface $parent);
 }

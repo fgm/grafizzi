@@ -26,7 +26,6 @@ namespace Grafizzi\Graph\Tests;
 require 'vendor/autoload.php';
 
 use Grafizzi\Graph\Renderer;
-use Grafizzi\Graph\Filter\AbstractFilter;
 use \ErrorException;
 
 /**

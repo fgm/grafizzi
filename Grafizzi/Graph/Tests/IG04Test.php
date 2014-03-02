@@ -23,11 +23,8 @@
 
 namespace Grafizzi\Graph\Tests;
 
-use Monolog\Logger;
-
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Edge;
-use Grafizzi\Graph\Graph;
 use Grafizzi\Graph\Node;
 use Grafizzi\Graph\Subgraph;
 

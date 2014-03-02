@@ -42,6 +42,15 @@ interface AttributeInterface extends NamedInterface {
    */
   public static function getDefaultValue($name);
 
+  /**
+   * @return mixed
+   */
   public function getValue();
+
+  /**
+   * @param mixed $value
+   *
+   * @return void
+   */
   public function setValue($value = null);
 }

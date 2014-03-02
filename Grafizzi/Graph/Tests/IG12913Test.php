@@ -25,7 +25,6 @@ namespace Grafizzi\Graph\Tests;
 
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Cluster;
-use Grafizzi\Graph\Edge;
 use Grafizzi\Graph\Node;
 use Pimple;
 
@@ -45,7 +44,7 @@ class IG12913Test extends BaseGraphTest {
 
   /**
    *
-   * @var Grafizzi\Graph\Graph
+   * @var \Grafizzi\Graph\Graph
    */
   public $Graph2;
 
@@ -80,7 +79,6 @@ class IG12913Test extends BaseGraphTest {
    */
   public function testImage() {
     $this->markTestSkipped('Needs changing after move of image() from Graph to filters.');
-    return;
 
     $format = 'unavailable_format';
     try {

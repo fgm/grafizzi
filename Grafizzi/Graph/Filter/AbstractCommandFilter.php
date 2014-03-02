@@ -59,6 +59,12 @@ abstract class AbstractCommandFilter extends AbstractFilter {
     $this->commandOptions = $args;
   }
 
+  /**
+   * @param string $input
+   *
+   * @return array
+   * @throws \ErrorException
+   */
   public function filter($input) {
     $args = '';
     foreach ($this->commandOptions as $k => $v) {
