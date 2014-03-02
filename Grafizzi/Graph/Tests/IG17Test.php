@@ -68,6 +68,7 @@ class IG17Test extends BaseGraphTest {
       new Attribute($dic, 'color', 'lightgrey'),
       new Attribute($dic, 'label', 'process #1'),
     )));
+    $a3 = $a2 = $a1 = $a0 = null;
     for ($i = 0 ; $i < 4 ; $i++) {
       $nodeName = "a$i";
       $cluster0->addChild($$nodeName = new Node($dic, $nodeName, $nullTitle));
@@ -78,6 +79,7 @@ class IG17Test extends BaseGraphTest {
       new Attribute($dic, 'color', 'blue'),
       new Attribute($dic, 'label', 'process #2'),
     )));
+    $b3 = $b2 = $b1 = $b0 = null;
     for ($i = 0 ; $i < 4 ; $i++) {
       $nodeName = "b$i";
       $cluster1->addChild($$nodeName = new Node($dic, $nodeName, $nullTitle));

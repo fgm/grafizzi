@@ -48,24 +48,25 @@ class IG12Test extends BaseGraphTest {
     $dic = $this->dic;
     $g->setDirected(true);
     $letters = array('G', 'E', 'B', 'F', 'R', 'H', 'Y', 'A', 'C');
+
     $nodeShape = new Attribute($dic, 'shape', 'record');
+    $nodes = array();
     foreach ($letters as $offset => $letter) {
-      $name = "node$offset";
-      $g->addChild($$name = new Node($dic, $name, array(
+      $g->addChild($$name = new Node($dic, $nodes[$offset], array(
         $nodeShape,
         new Attribute($dic, 'label', "<f0> |<f1> $letter|<f2> "),
       )));
     }
 
     $edgeAttributes = array();
-    $g->addChild(new Edge($dic, $node0, $node4, $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $node0, $node1, $edgeAttributes, 'f0', 'f1'));
-    $g->addChild(new Edge($dic, $node1, $node2, $edgeAttributes, 'f0', 'f1'));
-    $g->addChild(new Edge($dic, $node1, $node3, $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $node2, $node8, $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $node2, $node7, $edgeAttributes, 'f0', 'f1'));
-    $g->addChild(new Edge($dic, $node4, $node6, $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $node4, $node5, $edgeAttributes, 'f0', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[0], $nodes[4], $edgeAttributes, 'f2', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[0], $nodes[1], $edgeAttributes, 'f0', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[1], $nodes[2], $edgeAttributes, 'f0', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[1], $nodes[3], $edgeAttributes, 'f2', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[2], $nodes[8], $edgeAttributes, 'f2', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[2], $nodes[7], $edgeAttributes, 'f0', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[4], $nodes[6], $edgeAttributes, 'f2', 'f1'));
+    $g->addChild(new Edge($dic, $nodes[4], $nodes[5], $edgeAttributes, 'f0', 'f1'));
   }
 
   /**

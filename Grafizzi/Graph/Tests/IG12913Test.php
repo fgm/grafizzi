@@ -80,21 +80,22 @@ class IG12913Test extends BaseGraphTest {
   public function testImage() {
     $this->markTestSkipped('Needs changing after move of image() from Graph to filters.');
 
-    $format = 'unavailable_format';
-    try {
-      $result = $this->Graph->image($format);
-      $this->fail('Invalid format image did not throw an exception.');
-    }
-    catch (\InvalidArgumentException $e) {
-      $this->assertInstanceOf('InvalidArgumentException', $e, 'Invalid argument for invalid format.');
-    }
-
-    try {
-      $result = $this->Graph2->image($format);
-      $this->assertFalse($result, 'Unavailable format image.');
-    }
-    catch (\InvalidArgumentException $e) {
-      $this->fail('Invalid format image threw an exception.');
-    }
+//    $format = 'unavailable_format';
+//    try {
+//      print_r($this->Graph);
+//      $result = $this->Graph->image($format);
+//      $this->fail('Invalid format image did not throw an exception.');
+//    }
+//    catch (\InvalidArgumentException $e) {
+//      $this->assertInstanceOf('InvalidArgumentException', $e, 'Invalid argument for invalid format.');
+//    }
+//
+//    try {
+//      $result = $this->Graph2->image($format);
+//      $this->assertFalse($result, 'Unavailable format image.');
+//    }
+//    catch (\InvalidArgumentException $e) {
+//      $this->fail('Invalid format image threw an exception.');
+//    }
   }
 }

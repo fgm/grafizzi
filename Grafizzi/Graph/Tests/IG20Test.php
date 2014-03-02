@@ -52,8 +52,8 @@ class IG20Test extends BaseGraphTest {
       new Attribute($dic, 'compound', true),
     ));
 
-
     $nullTitle = array(new Attribute($dic, 'title', NULL));
+    $a = $b = $c = $d = $e = $f = $g = null;
 
     $graph->addChild($cluster0 = new Cluster($dic, 'cluster0', $nullTitle));
     foreach (array('a', 'b', 'c', 'd') as $name) {

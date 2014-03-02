@@ -71,7 +71,7 @@ class RendererTest extends BaseGraphTest {
       $this->assertTrue(is_array($formats) && !empty($formats), 'Renderer::getFormats() returns a non-empty array when exceptions are used.');
     }
     catch (ErrorException $e) {
-      $this->pass('Renderer::getFormats() could not find dot and threw an ErrorException.');
+      $this->fail('Renderer::getFormats() could not find dot and threw an ErrorException.');
     }
   }
 
