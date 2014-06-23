@@ -1,15 +1,24 @@
-language: php 
+language: php
 
 php:
     - "5.3"
     - "5.4"
+    - "5.5"
+    - "hhvm"
 
 before_script:
     - "curl -s http://getcomposer.org/installer | php"
-    - "COMPOSER_ROOT_VERSION=dev-master php composer.phar --dev install"
+    - "COMPOSER_ROOT_VERSION=dev-master php composer.phar install"
 
-script: phpunit --coverage-clover=coverage.clover
+script: vendor/bin/phpunit --coverage-clover=coverage.clover
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+matrix:
+  allow_failures:
+    - php:
+      - "5.5"
+      - "hhvm"
+
