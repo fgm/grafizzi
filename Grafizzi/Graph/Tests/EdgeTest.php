@@ -23,6 +23,7 @@
 
 namespace Grafizzi\Graph\Tests;
 
+/** @noinspection PhpIncludeInspection */
 require 'vendor/autoload.php';
 
 use Grafizzi\Graph\Attribute;
@@ -89,65 +90,76 @@ EOT
       , $dot, "Edge builds correctly");
   }
 
-  // Normal attributes list on edge bound to root graph.
-  public function testBuildAttributesNormal() {
+  /**
+   * Common logic for the testBuild* test methods.
+   *
+   * @param string $expected
+   *   The expected GraphViz output.
+   * @param array $edges
+   *
+   * @internal param array $toSet An array of edges to add.*   An array of edges to add.
+   */
+  public function buildTestHelper($expected, array $edges) {
     $this->Edge->removeAttribute($this->Attribute);
-    $this->Edge->setAttributes(array(
-      new Attribute($this->dic, 'foo', 'bar'),
-      new Attribute($this->dic, 'baz', 'quux'),
-    ));
+    $toSet = array();
+    foreach ($edges as $edge) {
+      list($name, $value) = $edge;
+      $toSet[] = new Attribute($this->dic, $name, $value);
+    }
+    $this->Edge->setAttributes($toSet);
+    $actual = $this->Edge->build();
+    $this->assertEquals($expected, $actual);
+  }
+
+  public function testBuildAttributesNormal() {
     $expected = <<<EOT
   source -> destination [ foo=bar, baz=quux ];
 
 EOT;
-    $actual = $this->Edge->build();
-    $this->assertEquals($expected, $actual);
+    $this->buildTestHelper($expected, array(
+      array('foo', 'bar'),
+      array('baz', 'quux'),
+    ));
   }
 
   // Attribute list with empty title in middle on edge bound to root graph.
   public function testBuildAttributesEmptyMiddle() {
-    $this->Edge->removeAttribute($this->Attribute);
-    $this->Edge->setAttributes(array(
-      new Attribute($this->dic, 'foo', 'bar'),
-      new Attribute($this->dic, 'title', ''),
-      new Attribute($this->dic, 'baz', 'quux'),
-    ));
     $expected = <<<EOT
   source -> destination [ foo=bar, baz=quux ];
 
 EOT;
-    $actual = $this->Edge->build();
-    $this->assertEquals($expected, $actual);
+
+    $this->buildTestHelper($expected, array(
+      array('foo', 'bar'),
+      array('title', ''),
+      array('baz', 'quux'),
+    ));
   }
 
   // Attribute list with empty title as single attribute on edge bound to root graph.
   public function testBuildAttributesOnlyEmpty() {
-    $this->Edge->removeAttribute($this->Attribute);
-    $this->Edge->setAttributes(array(
-      new Attribute($this->dic, 'title', ''),
-    ));
     $expected = <<<EOT
   source -> destination;
 
 EOT;
-    $actual = $this->Edge->build();
-    $this->assertEquals($expected, $actual);
+
+    $this->buildTestHelper($expected, array(
+      array('title', ''),
+    ));
   }
 
   // Attribute list with empty title as last attribute on edge bound to root graph.
   public function testBuildAttributesEmptyLast() {
-    $this->Edge->removeAttribute($this->Attribute);
-    $this->Edge->setAttributes(array(
-      new Attribute($this->dic, 'foo', 'bar'),
-      new Attribute($this->dic, 'baz', 'quux'),
-      new Attribute($this->dic, 'title', ''),
-    ));
     $expected = <<<EOT
   source -> destination [ foo=bar, baz=quux ];
 
 EOT;
-    $actual = $this->Edge->build();
-    $this->assertEquals($expected, $actual);
+
+    $this->buildTestHelper($expected, array(
+      array('foo', 'bar'),
+      array('baz', 'quux'),
+      array('title', ''),
+    ));
   }
 
   /**
