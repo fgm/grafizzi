@@ -5,6 +5,9 @@ doxygen
 composer.phar
 vendor
 
+# Custom configuration
+phpunit.xml
+
 # Continuous integration artefacts
 ocular.phar
 coverage.clover

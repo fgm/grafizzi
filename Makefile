@@ -34,7 +34,7 @@ docs:
 	doxygen Grafizzi.dox
 
 test:
-	phpunit -v Grafizzi
+	vendor/bin/phpunit -v Grafizzi
 
 # Stronger cleaning: will need net access to restore.
 purge: clean

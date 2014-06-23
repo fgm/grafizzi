@@ -22,7 +22,7 @@
   },
 
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "phpunit/phpunit": "~3"
   },
 
   "autoload": {
