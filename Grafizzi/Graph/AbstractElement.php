@@ -139,13 +139,40 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
       return $attribute->build($directed);
     }, $this->fAttributes);
     $name = $this->escape($name);
-    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT);
+    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT)
+      . $this->buildAttributes($attributes, $type, $name)
+      . ";\n";
+    return $ret;
+  }
+
+  /**
+   * @param array $attributes
+   * @param string $type
+   * @param string $name
+   *
+   * @return string
+   */
+  protected function buildAttributes($attributes, $type, $name) {
+    $ret = '';
     if (!empty($attributes)) {
       $builtAttributes = implode(', ', array_filter($attributes));
       if (!empty($builtAttributes)) {
-        $ret .= "$type $name [ $builtAttributes ];\n";
+        $prefix = '';
+        if ($type) {
+          $prefix .= "$type ";
+        }
+        if ($name) {
+          $prefix .= "$name ";
+        }
+        if (empty($prefix)) {
+          $prefix = ' ';
+        }
+
+        $ret .= "{$prefix}[ $builtAttributes ]";
       }
     }
+
+    $ret .= ";\n";
     return $ret;
   }
 
@@ -319,4 +346,5 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   public function setParent(ElementInterface $parent) {
     $this->fParent = $parent;
   }
+
 }

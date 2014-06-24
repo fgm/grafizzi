@@ -69,8 +69,8 @@ class Edge extends AbstractElement {
    * @param \Grafizzi\Graph\Node $source
    * @param \Grafizzi\Graph\Node $destination
    * @param array $attributes
-   * @param int $sourcePort
-   * @param int $destinationPort
+   * @param string $sourcePort
+   * @param string $destinationPort
    *
    * @throws \InvalidArgumentException
    */
@@ -113,14 +113,8 @@ class Edge extends AbstractElement {
     $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
       return $attribute->build($directed);
     }, $this->fAttributes);
-    if (!empty($attributes)) {
-      $builtAttributes = implode(', ', array_filter($attributes));
-      if (!empty($builtAttributes)) {
-        $ret .= " [ $builtAttributes ]";
-      }
-    }
 
-    $ret .= ";\n";
+    $ret .= $this->buildAttributes($attributes, NULL, NULL);
     return $ret;
   }
 
