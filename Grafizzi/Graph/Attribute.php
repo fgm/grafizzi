@@ -116,7 +116,7 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   public function setName($name) {
     if (!empty(self::$fDefaults) && !array_key_exists($name, self::$fDefaults)) {
       $message = "Invalid attribute $name.";
-      $this->logger->err($message);
+      $this->logger->error($message);
       throw new AttributeNameException($message);
     }
     parent::setName($name);

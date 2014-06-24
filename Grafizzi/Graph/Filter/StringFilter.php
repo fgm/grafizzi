@@ -23,9 +23,6 @@
 
 namespace Grafizzi\Graph\Filter;
 
-use Grafizzi\Graph\Filter\FilterInterface;
-use Grafizzi\Graph\Filter\AbstractFilter;
-
 /**
  * A Grafizzi filter that also outputs its result to the passed-in string.
  *
@@ -69,7 +66,7 @@ class StringFilter extends AbstractFilter implements FilterInterface {
   }
 
   /**
-   * @see \Grafizzi\Graph\Filter\FilterInterface::filter()
+   * {@inheritdoc}
    */
   public function filter($input) {
     $ret = isset($this->callback)

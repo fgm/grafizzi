@@ -139,7 +139,7 @@ abstract class AbstractNamed implements NamedInterface {
   public function getName() {
     if (!isset($this->fName)) {
       $message = 'Getting name for unnamed object.';
-      $this->logger->err($message);
+      $this->logger->error($message);
       throw new AttributeNameException($message);
     }
     return $this->fName;

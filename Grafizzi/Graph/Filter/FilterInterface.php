@@ -37,12 +37,14 @@ interface FilterInterface {
 
   /**
    *
+   * @throws \ErrorException
+   *
    * @param string $input
    *
    * @return array
-   *   - 'data': the data output of the filter, normally to be used as the
+   *   - 'stdout': the data output of the filter, normally to be used as the
    *     input to the next chained filter.
-   *   - 'info': the info output of the filter, possibly used for error
+   *   - 'stderr': the info output of the filter, possibly used for error
    *     reporting.
    */
   public function filter($input);

@@ -101,7 +101,7 @@ interface ElementInterface extends NamedInterface {
   /**
    * Silently fail, like unset, when removing an unassigned attribute.
    *
-   * @param $name
+   * @param string $name
    *
    * @return void
    */

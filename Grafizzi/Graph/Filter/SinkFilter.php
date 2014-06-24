@@ -32,7 +32,7 @@ use Grafizzi\Graph\Filter\AbstractFilter;
 class SinkFilter extends AbstractFilter implements FilterInterface {
 
   /**
-   * @see \Grafizzi\Graph\Filter\FilterInterface::filter()
+   * {@inheritdoc}
    */
   public function filter($input) {
     return null;
