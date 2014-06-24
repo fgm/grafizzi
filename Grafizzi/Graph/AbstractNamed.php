@@ -29,7 +29,7 @@ abstract class AbstractNamed implements NamedInterface {
   /**
    * A shortcut to the injected logger.
    *
-   * @var Logger
+   * @var \Psr\Log\LoggerInterface
    */
   public $logger;
 

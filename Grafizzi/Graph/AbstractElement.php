@@ -32,7 +32,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   public $fAttributes = array();
 
   /**
-   * @var array
+   * @var AbstractElement[] $fChildren
    */
   public $fChildren = array();
 
@@ -48,7 +48,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * The parent element, when bound, or null otherwise.
    *
-   * @var AbstractElement
+   * @var ElementInterface
    */
   public $fParent = null;
 
@@ -93,7 +93,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $this->logger->debug("Adding child $childName, type $childType, to $name, depth {$this->fDepth}.");
     if (!in_array($childType, $this->getAllowedChildTypes())) {
       $message = "Invalid child type $childType for element $name.";
-      $this->logger->err($message);
+      $this->logger->error($message);
       throw new ChildTypeException($message);
     }
     $this->fChildren[$childName] = $child;
@@ -113,6 +113,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   public function adjustDepth($extra = 0) {
     $this->logger->debug("Adjusting depth {$this->fDepth} by $extra.");
     $this->fDepth += $extra;
+    /** @var AbstractElement $child */
     foreach ($this->fChildren as $child) {
       $child->adjustDepth($extra);
     }
@@ -125,6 +126,8 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    * Ignores $directed.
    *
    * @see NamedInterface::build()
+   *
+   * @param bool $directed
    *
    * @return string
    */
@@ -157,6 +160,8 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
 
   /**
    * @see ElementInterface::getAttributeByName()
+   *
+   * @param string $name
    *
    * @return AttributeInterface
    */
@@ -198,7 +203,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $name = $attribute->getName();
     if (!isset($name)) {
       $message = 'Trying to remove unnamed attribute.';
-      $this->logger->warn($message);
+      $this->logger->warning($message);
       throw new AttributeNameException($message);
     }
     $this->removeAttributeByName($name);
@@ -233,7 +238,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     $name = $child->getName();
     if (!isset($name)) {
       $message = 'Trying to remove unnamed child.';
-      $this->logger->warn($message);
+      $this->logger->warning($message);
       throw new ChildNameException($message);
     }
     $ret = $this->removeChildByName($name);
@@ -274,7 +279,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
       $name = $attribute->getName();
       if (!isset($name)) {
         $message = 'Trying to set unnamed attribute.';
-        $this->logger->warn($message, debug_backtrace(false));
+        $this->logger->warning($message, debug_backtrace(false));
         throw new ChildNameException($message);
       }
     $this->fAttributes[$name] = $attribute;
@@ -293,7 +298,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
     foreach ($attributes as $attribute) {
       if (!in_array('Grafizzi\\Graph\\AttributeInterface', class_implements($attribute))) {
         $message = 'Trying to set non-attribute as an attribute';
-        $this->logger->warn($message);
+        $this->logger->warning($message);
         throw new AttributeNameException($message);
       }
       $this->setAttribute($attribute);
@@ -301,7 +306,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * @see ElementInterface::setParent()
+   * {@inheritdoc}
    */
   public function setParent(ElementInterface $parent) {
     $this->fParent = $parent;
