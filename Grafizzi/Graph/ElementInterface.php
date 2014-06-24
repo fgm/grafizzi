@@ -63,6 +63,15 @@ interface ElementInterface extends NamedInterface {
   public function getChildByName($name);
 
   /**
+   * Return the parent element for the graph to which this element belongs.
+   *
+   * An unbound element returns null.
+   *
+   * @return ElementInterface
+   */
+  public function getParent();
+
+  /**
    * Return the root element for the graph to which this element belongs.
    *
    * An unbound element returns itself.

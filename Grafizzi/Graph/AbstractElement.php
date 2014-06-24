@@ -182,12 +182,20 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getParent() {
+    return $this->fParent;
+  }
+
+  /**
    * @see \Grafizzi\Graph\ElementInterface::getRoot()
    */
   public function getRoot() {
     $current = $this;
-    while ($current->fParent instanceof ElementInterface) {
-      $current = $current->fParent;
+    // Beware of priorities: do not remove parentheses.
+    while (($parent = $current->getParent()) instanceof ElementInterface) {
+      $current = $parent;
     }
     return $current;
   }
