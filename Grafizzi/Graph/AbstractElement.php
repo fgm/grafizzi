@@ -76,15 +76,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * @todo TODO decide what to do with duplicates.
-   *
-   * @param ElementInterface $child
-   *
-   * @return ElementInterface
-   *
-   * @throws ChildTypeException
-   * @see ElementInterface::addChild()
-   *
+   * {@inheritdoc}
    */
   public function addChild(ElementInterface $child) {
     $name = $this->getName();
@@ -103,12 +95,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * Increment the depth of the object by $extra.
-   *
-   * @param int $extra
-   *
-   * @return int
-   *   The new depth of the object.
+   * {@inheritdoc}
    */
   public function adjustDepth($extra = 0) {
     $this->logger->debug("Adjusting depth {$this->fDepth} by $extra.");
@@ -177,20 +164,14 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * Nodes do not have children, only attributes.
-   *
-   * @return array
+   * {@inheritdoc}
    */
   public static function getAllowedChildTypes() {
     return array();
   }
 
   /**
-   * @see ElementInterface::getAttributeByName()
-   *
-   * @param string $name
-   *
-   * @return AttributeInterface
+   * {@inheritdoc}
    */
   public function getAttributeByName($name) {
     $ret = isset($this->fAttributes[$name]) ? $this->fAttributes[$name] : null;
@@ -199,7 +180,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * @see \Grafizzi\Graph\ElementInterface::getChildByName()
+   * {@inheritdoc}
    */
   public function getChildByName($name) {
     $ret = isset($this->fChildren[$name])
@@ -216,7 +197,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * @see \Grafizzi\Graph\ElementInterface::getRoot()
+   * {@inheritdoc}
    */
   public function getRoot() {
     $current = $this;
@@ -228,11 +209,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * A helper for removeAttributeByName().
-   *
-   * @throws AttributeNameException
-   *
-   * @see ElementInterface::removeAttribute()
+   * {@inheritdoc}
    */
   public function removeAttribute(AttributeInterface $attribute) {
     $name = $attribute->getName();
@@ -245,13 +222,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * Silently fail, like unset, when removing an unassigned attribute.
-   *
-   * @see ElementInterface::removeAttributeByName()
-   *
-   * @param string $name
-   *
-   * @return void
+   * {@inheritdoc}
    */
   public function removeAttributeByName($name) {
     $this->logger->debug("Removing attribute [$name].");
@@ -259,15 +230,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * A helper for removeChildByName().
-   *
-   * @throws ChildNameException
-   *
-   * @see ElementInterface::removeChild()
-   *
-   * @param ElementInterface $child
-   *
-   * @return ElementInterface
+   * {@inheritdoc}
    */
   public function removeChild(ElementInterface $child) {
     $name = $child->getName();
@@ -281,13 +244,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * Silently fail, like unset, when removing an unassigned attribute.
-   *
-   * @see ElementInterface::removeChildByName()
-   *
-   * @param string $name
-   *
-   * @return ElementInterface
+   * {@inheritdoc}
    */
   public function removeChildByName($name) {
     $this->logger->debug("Removing child [$name].");
@@ -304,11 +261,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * @todo TODO decide what to do with duplicates.
-   *
-   * @throws ChildNameException
-   *
-   * @see ElementInterface::setAttribute()
+   * {@inheritdoc}
    */
   public function setAttribute(AttributeInterface $attribute) {
       $name = $attribute->getName();
@@ -321,13 +274,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   *
-   * @see ElementInterface::setAttributes()
-   *
-   * @throws AttributeNameException
-   *
-   * @param array $attributes
-   *   An array of objects implementing AttributeInterface
+   * {@inheritdoc}
    */
   public function setAttributes(array $attributes) {
     foreach ($attributes as $attribute) {

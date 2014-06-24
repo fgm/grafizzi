@@ -27,6 +27,10 @@ interface ElementInterface extends NamedInterface {
   /**
    * Add a child to another element, usually a Graph.
    *
+   * @todo decide what to do with duplicates.
+   *
+   * @throws ChildTypeException
+   *
    * @param ElementInterface $child
    *
    * @return ElementInterface
@@ -35,13 +39,18 @@ interface ElementInterface extends NamedInterface {
   public function addChild(ElementInterface $child);
 
   /**
+   * Increment the depth of the object by $extra.
+   *
    * @param integer $extra
    *
    * @return integer
+   *   The new depth of the object.
    */
   public function adjustDepth($extra);
 
   /**
+   * Nodes do not have children, only attributes.
+   *
    * @return array
    */
   public static function getAllowedChildTypes();
@@ -50,7 +59,7 @@ interface ElementInterface extends NamedInterface {
    *
    * @param string $name
    *
-   * @return Attribute
+   * @return AttributeInterface
    */
   public function getAttributeByName($name);
 
@@ -81,6 +90,8 @@ interface ElementInterface extends NamedInterface {
   public function getRoot();
 
   /**
+   * A helper for removeAttributeByName().
+   *
    * @param AttributeInterface $attribute
    *
    * @return void
@@ -88,6 +99,8 @@ interface ElementInterface extends NamedInterface {
   public function removeAttribute(AttributeInterface $attribute);
 
   /**
+   * Silently fail, like unset, when removing an unassigned attribute.
+   *
    * @param $name
    *
    * @return void
@@ -95,6 +108,10 @@ interface ElementInterface extends NamedInterface {
   public function removeAttributeByName($name);
 
   /**
+   * A helper for removeChildByName().
+   *
+   * @throws ChildNameException
+   *
    * @param ElementInterface $child
    *
    * @return ElementInterface
@@ -102,6 +119,8 @@ interface ElementInterface extends NamedInterface {
   public function removeChild(ElementInterface $child);
 
   /**
+   * Silently fail, like unset, when removing an unassigned attribute.
+   *
    * @param string $name
    *
    * @return ElementInterface
@@ -109,6 +128,10 @@ interface ElementInterface extends NamedInterface {
   public function removeChildByName($name);
 
   /**
+   * @todo decide what to do with duplicates.
+   *
+   * @throws ChildNameException
+   *
    * @param AttributeInterface $attribute
    *
    * @return void
@@ -116,7 +139,10 @@ interface ElementInterface extends NamedInterface {
   public function setAttribute(AttributeInterface $attribute);
 
   /**
+   * @throws AttributeNameException
+   *
    * @param array $attributes
+   *   An array of objects implementing AttributeInterface
    *
    * @return void
    */
