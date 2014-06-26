@@ -27,7 +27,6 @@ namespace Grafizzi\Graph\Tests;
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Cluster;
 use Grafizzi\Graph\Edge;
-use Grafizzi\Graph\Graph;
 use Grafizzi\Graph\Node;
 
 require 'vendor/autoload.php';
