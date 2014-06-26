@@ -65,13 +65,11 @@ $log->debug('label assigned to graph', array(
 
 $n1 = new Node($dic, 'n1');
 $nodeLabel = new Attribute($dic, 'label', 'Some node');
-// print_r($nodeLabel);
 $n1->setAttribute($nodeLabel);
 $g->addChild($n1);
 
 $n2 = new Node($dic, 'n2');
 $nodeLabel = new Attribute($dic, 'label', 'Other node');
-// print_r($nodeLabel);
 $n2->setAttribute($nodeLabel);
 $g->addChild($n2);
 

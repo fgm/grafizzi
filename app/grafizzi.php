@@ -29,7 +29,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 // Initialize the Composer autoloader.
-require 'vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 class Grafizzi {
   /**
