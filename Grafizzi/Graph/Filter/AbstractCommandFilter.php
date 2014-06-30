@@ -53,7 +53,6 @@ abstract class AbstractCommandFilter extends AbstractFilter {
    * @param array $args
    */
   public function __construct(array &$args = array()) {
-    parent::__construct($args);
     $this->commandOptions = $args;
   }
 
@@ -61,6 +60,7 @@ abstract class AbstractCommandFilter extends AbstractFilter {
    * @param string $input
    *
    * @return array
+   *
    * @throws \ErrorException
    */
   public function filter($input) {
@@ -86,8 +86,8 @@ abstract class AbstractCommandFilter extends AbstractFilter {
     fwrite($pipes[0], $input);
     fclose($pipes[0]);
     $ret = array(
-      'stdout' => stream_get_contents($pipes[1]),
-      'stderr' => stream_get_contents($pipes[2]),
+      stream_get_contents($pipes[1]),
+      stream_get_contents($pipes[2]),
     );
     fclose($pipes[1]);
     fclose($pipes[2]);

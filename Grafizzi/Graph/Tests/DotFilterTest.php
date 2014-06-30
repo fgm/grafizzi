@@ -55,10 +55,11 @@ class DotFilterTest extends BaseFilterTest {
    */
   public function testFilter() {
     $in = 'String test';
-    $out = $this->filters[0]->filter($in);
-    $this->assertInternalType('array', $out, 'Dot filter returns an array');
-    $this->assertArrayHasKey('stdout', $out);
-    $this->assertArrayHasKey('stderr', $out);
+    list($out, $err) = $this->filters[0]->filter($in);
+    $this->assertInternalType('string', $out, 'Dot filter returns string output');
+
+    // No error output expected.
+    $this->expectOutputString(null);
   }
 }
 

@@ -57,13 +57,13 @@ class StringFilterTest extends BaseFilterTest {
    */
   public function testFilter() {
     $in = 'String test';
-    $out = $this->filters[0]->filter($in);
-    $this->assertEquals($in, $out, 'String filter returns its input.');
+    list($stdout, $err) = $this->filters[0]->filter($in);
+    $this->assertEquals($in, $stdout, 'String filter returns its input.');
 
-    $out = $this->filters[1]->filter($in);
+    list($stdout, $err) = $this->filters[1]->filter($in);
     $expected = strrev($in);
-    $this->assertEquals($expected, $out, 'String filter with callback applies it.');
+    $this->assertEquals($expected, $stdout, 'String filter with callback applies it.');
     $this->assertEquals($expected, $this->out, 'String filter with out string assigns it.');
+    $this->assertEmpty($err, 'String filter does not return errors');
   }
 }
-

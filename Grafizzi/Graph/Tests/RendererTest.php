@@ -30,8 +30,13 @@ use \ErrorException;
 
 /**
  * Renderer test case.
+ *
+ * Note: at least in PHP3.7, when passing, expectOutputString is not
+ * included in the assertions count, but it is included when failing.
  */
 class RendererTest extends BaseGraphTest {
+
+  const ERASABLE = 'input should be overwritten';
 
   /**
    *
@@ -96,20 +101,28 @@ class RendererTest extends BaseGraphTest {
    * Tests rendering with a single filter.
    */
   public function testRenderOneFilter() {
-    // Callback can be a closure
-    $callback = function ($x) { return strrev($x); };
+    // Callback can be a closure.
+    $callback = function ($x) {
+      return strrev($x);
+    };
 
     // The value of this string should be overwritten by the filter.
-    $output = 'input';
+    $output = self::ERASABLE;
 
     $expected = $callback($this->renderer->pipe);
+
+    // Invoke filter via renderer, overwriting output and pipe.
     call_user_func(array($this->renderer, 'string'), array(
       'out' => &$output,
       'callback' => $callback,
     ));
 
+    $pipe = $this->renderer->pipe;
+    $this->assertInternalType('string', $pipe, "String filter returns string output");
     $this->assertEquals($expected, $this->renderer->pipe, "Filter with closure works on renderer pipe.");
-    $this->assertEquals($expected, $output, "Filter to string updates argument.");
+
+    // No error output.
+    $this->expectOutputString(null);
   }
 
   /**
@@ -119,26 +132,35 @@ class RendererTest extends BaseGraphTest {
     $callback = 'strrev';
 
     // The value of this string should be overwritten by the filter.
-    $output = 'input';
+    $output1 = $output2 = $output3 = self::ERASABLE;
 
-    $expected = $this->renderer->pipe;
+    $input = $this->renderer->pipe;
     $step1 = call_user_func(array($this->renderer, 'string'), array(
-      'out' => &$output,
-      'callback' => $callback,
-    ));
-    $r = call_user_func(array($step1, 'string'), array(
-      'out' => &$output,
+      'out' => &$output1,
       'callback' => $callback,
     ));
 
-    $this->assertEquals($expected, $this->renderer->pipe, "Chained filters with strrev work.");
+    $r = call_user_func(array($step1, 'string'), array(
+      'out' => &$output2,
+      'callback' => $callback,
+    ));
+
+    $this->assertEquals($input, $this->renderer->pipe, "Chained filters with strrev work.");
+
+    // Test a filter chain: string, then sink.
+    $pipe_input = $this->renderer->pipe;
 
     $r->string(array(
-      'out' => &$output,
+      'out' => &$output3,
       'callback' => $callback,
     ))->sink();
-    $this->assertEquals($callback($expected), $output, "Filter to string updates argument.");
-    $this->assertNull($this->renderer->pipe, 'Sink filter drops content.');
+
+    $this->assertEquals($callback($pipe_input), $output3, "String filter updates argument.");
+    $pipe = $this->renderer->pipe;
+    $this->assertEmpty($pipe, 'Sink filter drops content from stdout.');
+
+    // No error output from either filter.
+    $this->expectOutputString(null);
   }
 }
 

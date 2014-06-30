@@ -45,7 +45,8 @@ class SinkFilterTest extends BaseFilterTest {
    */
   public function testFilter() {
     $in = 'Sink test';
-    $out = $this->filters[0]->filter($in);
-    $this->assertNull($out, 'Sink filter returns NULL output.');
+    list($out, $err) = $this->filters[0]->filter($in);
+    $this->assertEmpty($out, 'Sink filter drops content from stdout.');
+    $this->assertEmpty($err, 'Sink filter does not output errors.');
   }
 }

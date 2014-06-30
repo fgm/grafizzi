@@ -28,6 +28,10 @@ use Pimple\Container;
 /**
  * A Renderer builds a rendering pipeline by instantiating Filters and providing
  * a pipe to chain invokations of their filter() methods.
+ *
+ * @method dot()
+ * @method string()
+ * @method sink()
  */
 class Renderer {
 
@@ -114,15 +118,19 @@ class Renderer {
    *   Throws exception if the filter name does not convert to a usable filter
    *   class.
    *
-   * @return \Grafizzi\Graph\Renderer
+   * @return $this
    */
   public function __call($name, $args) {
 
     $filter = isset($args[0])
       ? AbstractFilter::create($name, $args[0])
       : AbstractFilter::create($name);
+
     if ($filter) {
-      $this->pipe = $filter->filter($this->pipe);
+      list($this->pipe, $err) = $filter->filter($this->pipe);
+      if (!empty($err)) {
+        $this->dic['logger']->debug($err);
+      }
     }
     else {
       throw new \DomainException('Filter not found: ' . $name);

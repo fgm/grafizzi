@@ -32,24 +32,27 @@ abstract class AbstractFilter implements FilterInterface {
    */
   public $config;
 
+  /**
+   * Empty constructor provided because it is part of the interface.
+   *
+   * @param array $args
+   */
   public function __construct(array &$args = array()) {}
 
   /**
-   * Apply a configurable process to an input string and return the result.
-   *
-   * @param string $input
-   *
-   * @return string
+   * {@inheritdoc}
    */
-  public function filter($input) {}
+  abstract public function filter($input);
 
   /**
    * Factory method for concrete filters.
    *
    * @param string $name
    * @param array $args
-   * @throws DomainException
+   *
    * @return FilterInterface
+   *
+   * @throws \DomainException
    */
   public static function create($name, array &$args = array()) {
     $className = __NAMESPACE__ . '\\' . ucfirst($name) . 'Filter';

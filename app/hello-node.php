@@ -27,6 +27,7 @@ error_reporting(-1);
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Pimple\Container;
 
 // Initialize the Composer autoloader.
 require 'vendor/autoload.php';
@@ -36,7 +37,7 @@ $log = new Logger(basename(__FILE__, '.php'));
 // Change the minimum logging level using the Logger:: constants.
 $log->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
 
-$dic = new \Pimple(array(
+$dic = new Container(array(
   'logger' => $log,
   'directed' => false,
 ));

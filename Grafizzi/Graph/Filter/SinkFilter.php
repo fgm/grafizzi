@@ -35,6 +35,7 @@ class SinkFilter extends AbstractFilter implements FilterInterface {
    * {@inheritdoc}
    */
   public function filter($input) {
-    return null;
+    $ret = array(null, null);
+    return $ret;
   }
 }
