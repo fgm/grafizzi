@@ -23,6 +23,8 @@
 
 namespace Grafizzi\Graph;
 
+use Pimple\Container;
+
 class Edge extends AbstractElement {
 
   /**
@@ -65,7 +67,7 @@ class Edge extends AbstractElement {
   public $fDirected = true;
 
   /**
-   * @param \Pimple $dic
+   * @param \Pimple\Container $dic
    * @param \Grafizzi\Graph\Node $source
    * @param \Grafizzi\Graph\Node $destination
    * @param array $attributes
@@ -74,7 +76,7 @@ class Edge extends AbstractElement {
    *
    * @throws \InvalidArgumentException
    */
-  public function __construct(\Pimple $dic, Node $source, Node $destination,
+  public function __construct(Container $dic, Node $source, Node $destination,
     array $attributes = array(), $sourcePort = null, $destinationPort = null) {
     parent::__construct($dic);
     $this->sourceNode = $source;

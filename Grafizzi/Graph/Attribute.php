@@ -23,6 +23,8 @@
 
 namespace Grafizzi\Graph;
 
+use Pimple\Container;
+
 /**
  * An Element attribute.
  */
@@ -39,13 +41,13 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   public $fValue;
 
   /**
-   * @param \Pimple $dic
+   * @param \Pimple\Container $dic
    * @param string $name
    * @param mixed $value
    *
    * @see AttributeInterface::__construct()
    */
-  public function __construct(\Pimple $dic, $name, $value = null) {
+  public function __construct(Container $dic, $name, $value = null) {
     parent::__construct($dic);
     $this->setName($name);
     $this->setValue($value);

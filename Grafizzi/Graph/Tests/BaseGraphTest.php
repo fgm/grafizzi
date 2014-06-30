@@ -26,10 +26,12 @@ namespace Grafizzi\Graph\Tests;
 
 require 'vendor/autoload.php';
 
+use \Grafizzi\Graph\Graph;
+
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;
 
-use \Grafizzi\Graph\Graph;
+use Pimple\Container;
 
 /**
  * Base test case.
@@ -45,7 +47,7 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
   public $Graph;
 
   /**
-   * @var \Pimple
+   * @var \Pimple\Container
    */
   public $dic;
 
@@ -57,7 +59,7 @@ class BaseGraphTest extends \PHPUnit_Framework_TestCase {
 
     $log = new Logger(basename(__FILE__, '.php'));
     $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
-    $this->dic = new \Pimple(array(
+    $this->dic = new Container(array(
       'logger' => $log,
     ));
     $this->Graph = new Graph($this->dic, $name, $attributes);

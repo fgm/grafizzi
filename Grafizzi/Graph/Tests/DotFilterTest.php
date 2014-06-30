@@ -26,6 +26,7 @@ namespace Grafizzi\Graph\Tests;
 require 'vendor/autoload.php';
 
 use Grafizzi\Graph\Filter\DotFilter;
+use Pimple\Container;
 
 /**
  * DotFilter test case.
@@ -45,7 +46,7 @@ class DotFilterTest extends BaseFilterTest {
   protected function setUp() {
     parent::setUp();
     $dotFilter = new DotFilter();
-    $dotFilter->setDic(new \Pimple());
+    $dotFilter->setDic(new Container());
     $this->filters[] = $dotFilter;
   }
 

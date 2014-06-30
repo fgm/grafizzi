@@ -24,6 +24,7 @@
 namespace Grafizzi\Graph\Filter;
 
 use Grafizzi\Graph\Renderer;
+use Pimple\Container;
 
 /**
  * A CommandFilter for the dot main commands: dot, neato, (s)fdp, circo, twopi.
@@ -34,7 +35,7 @@ use Grafizzi\Graph\Renderer;
 class DotFilter extends AbstractCommandFilter {
 
   /**
-   * @var \Pimple
+   * @var \Pimple\Container
    */
   protected $dic;
 
@@ -74,7 +75,7 @@ class DotFilter extends AbstractCommandFilter {
     return $ret;
   }
 
-  public function setDic(\Pimple $dic) {
+  public function setDic(Container $dic) {
     $this->dic = $dic;
   }
 }

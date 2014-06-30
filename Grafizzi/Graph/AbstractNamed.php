@@ -22,6 +22,8 @@
  */
 namespace Grafizzi\Graph;
 
+use Pimple\Container;
+
 abstract class AbstractNamed implements NamedInterface {
 
   public $fName = null;
@@ -34,11 +36,11 @@ abstract class AbstractNamed implements NamedInterface {
   public $logger;
 
   /**
-   * @var \Pimple
+   * @var \Pimple\Container
    */
   protected $dic;
 
-  function __construct(\Pimple $dic) {
+  function __construct(Container $dic) {
     $this->dic = $dic;
     $this->logger = &$dic['logger'];
   }

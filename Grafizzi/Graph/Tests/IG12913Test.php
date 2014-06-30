@@ -48,7 +48,7 @@ class IG12913Test extends BaseGraphTest {
   public $Graph2;
 
   /**
-   * @var \Pimple
+   * @var \Pimple\Container
    */
   public $dic2;
 

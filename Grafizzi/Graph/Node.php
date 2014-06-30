@@ -23,6 +23,8 @@
 
 namespace Grafizzi\Graph;
 
+use Pimple\Container;
+
 class Node extends AbstractElement {
 
   /**
@@ -41,7 +43,7 @@ class Node extends AbstractElement {
    */
   public $fImplicit = false;
 
-  public function __construct(\Pimple $dic, $name, array $attributes = array()) {
+  public function __construct(Container $dic, $name, array $attributes = array()) {
     parent::__construct($dic);
     if (isset($attributes['implicit'])) {
       $this->fImplicit = $attributes['implicit'];

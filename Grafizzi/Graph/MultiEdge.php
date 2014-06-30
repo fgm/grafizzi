@@ -23,6 +23,8 @@
 
 namespace Grafizzi\Graph;
 
+use Pimple\Container;
+
 /**
  * A MultiEdge is a graph object made up of several nodes linked by edges, with
  * only one set of attributes. In GraphViz format, this means something like:
@@ -46,7 +48,7 @@ class MultiEdge extends AbstractElement {
    */
   public $fDirected = true;
 
-  public function __construct(\Pimple $dic, array $nodes, array $attributes = array()) {
+  public function __construct(Container $dic, array $nodes, array $attributes = array()) {
     parent::__construct($dic);
     $nonNodes = array_filter($nodes, function ($node) {
       return !($node instanceof Node);

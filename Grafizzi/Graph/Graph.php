@@ -23,6 +23,8 @@
 
 namespace Grafizzi\Graph;
 
+use Pimple\Container;
+
 class Graph extends AbstractElement implements GraphInterface {
 
   /**
@@ -47,11 +49,11 @@ class Graph extends AbstractElement implements GraphInterface {
   public $fDirected = true;
 
   /**
-   * @param \Pimple $dic
+   * @param \Pimple\Container $dic
    * @param string $name
    * @param array $attributes
    */
-  public function __construct(\Pimple $dic, $name = 'G', array $attributes = array()) {
+  public function __construct(Container $dic, $name = 'G', array $attributes = array()) {
     if (!isset($dic['directed'])) {
       $dic['directed'] = true;
     }
