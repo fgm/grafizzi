@@ -54,12 +54,9 @@ class DotFilterTest extends BaseFilterTest {
    * Tests DotFilter->filter()
    */
   public function testFilter() {
-    $in = 'String test';
-    list($out, $err) = $this->filters[0]->filter($in);
+    $in = 'digraph G { foo -> bar ; }';
+    list($out, ) = $this->filters[0]->filter($in);
     $this->assertInternalType('string', $out, 'Dot filter returns string output');
-
-    // No error output expected.
-    $this->expectOutputString(null);
   }
 }
 
