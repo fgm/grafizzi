@@ -69,6 +69,7 @@ class StringFilter extends AbstractFilter implements FilterInterface {
    * {@inheritdoc}
    */
   public function filter($input) {
+    /** @var string $stdout */
     $stdout = isset($this->callback)
       ? call_user_func($this->callback, $input)
       : $input;

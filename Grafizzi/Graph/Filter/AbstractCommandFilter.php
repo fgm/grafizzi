@@ -57,11 +57,7 @@ abstract class AbstractCommandFilter extends AbstractFilter {
   }
 
   /**
-   * @param string $input
-   *
-   * @return array
-   *
-   * @throws \ErrorException
+   * {@inheritdoc}
    */
   public function filter($input) {
     $args = '';

@@ -41,7 +41,7 @@ interface FilterInterface {
    *
    * @param string $input
    *
-   * @return array
+   * @return string[]
    *   - 0: the data output of the filter, normally to be used as the input to
    *     the next chained filter.
    *   - 1: the info output of the filter, possibly used for error reporting.
