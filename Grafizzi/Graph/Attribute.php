@@ -86,11 +86,7 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   }
 
   /**
-   *
-   * @param string $name
-   *
-   * @see AttributeInterface::getDefaultValue()
-   *
+   * {@inheritdoc}
    */
   public static function getDefaultValue($name) {
     $ret = isset(self::$fDefaults[$name])

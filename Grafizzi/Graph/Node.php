@@ -61,7 +61,7 @@ class Node extends AbstractElement {
   public function build($directed = null) {
     // Implicit nodes have no entry of their own.
     if ($this->fImplicit) {
-      return;
+       return '';
     }
     $type = $this->getType();
     $name = $this->getName();

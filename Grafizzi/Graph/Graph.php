@@ -69,7 +69,7 @@ class Graph extends AbstractElement implements GraphInterface {
   }
 
   /**
-   * @param bool $directed
+   * @param bool|null $directed
    *
    * @return string
    */
@@ -92,26 +92,58 @@ class Graph extends AbstractElement implements GraphInterface {
     $strict = $this->fStrict ? 'strict ' : '';
     $ret = "$elementIndent$strict$type $buildName {\n";
 
-    $builtCount = 0;
-    foreach ($this->fAttributes as $attribute) {
-      if ($built = $attribute->build($directed)) {
-        $ret .= "$childIndent$built;\n";
-        $builtCount++;
-      }
-    }
+    $ret_attributes = $this->buildAttributesHelper($this->fAttributes, $actualDirected, $childIndent);
+    $ret .= $ret_attributes;
 
-    $builtChildren = '';
-    foreach ($this->fChildren as $child) {
-      $builtChildren .= $child->build($actualDirected);
-    }
-    if ($builtCount && !empty($builtChildren)) {
+    $ret_children = $this->buildChildrenHelper($this->fChildren, $actualDirected);
+
+    if (!empty($ret_attributes) && !empty($ret_children)) {
       $ret .= "\n";
     }
-    $ret .= "$builtChildren$elementIndent} /* /$type $buildName */\n";
+    $ret .= "$ret_children$elementIndent} /* /$type $buildName */\n";
 
     // Restore the directed attribute if it was changed for build.
     if (isset($directed)) {
       $this->setDirected($savedDirected);
+    }
+    return $ret;
+  }
+
+  /**
+   * Helper for Graph::build(): build attributes.
+   *
+   * Unrelated with AbstractElement::buildAttributes().
+   *
+   * @param \Grafizzi\Graph\AttributeInterface[] $attributes
+   * @param bool $directed
+   * @param string $childIndent
+   *
+   * @return string
+   */
+  protected function buildAttributesHelper(array $attributes, $directed, $childIndent) {
+    $ret = '';
+    /** @var \Grafizzi\Graph\AttributeInterface $attribute */
+    foreach ($attributes as $attribute) {
+      if ($built = $attribute->build($directed)) {
+        $ret .= "$childIndent$built;\n";
+      }
+    }
+    return $ret;
+  }
+
+  /**
+   * Helper for Graph::build(): build children.
+   *
+   * @param \Grafizzi\Graph\AbstractElement[] $children
+   * @param bool $directed
+   *
+   * @return string
+   */
+  public function buildChildrenHelper(array $children, $directed) {
+    $ret = '';
+    /** @var \Grafizzi\Graph\AbstractElement $child */
+    foreach ($children as $child) {
+      $ret .= $child->build($directed);
     }
     return $ret;
   }

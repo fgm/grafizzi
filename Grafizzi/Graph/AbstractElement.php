@@ -29,10 +29,13 @@ namespace Grafizzi\Graph;
 abstract class AbstractElement extends AbstractNamed implements ElementInterface {
   const DEPTH_INDENT = 2;
 
+  /**
+   * @var \Grafizzi\Graph\AttributeInterface[]
+   */
   public $fAttributes = array();
 
   /**
-   * @var AbstractElement[] $fChildren
+   * @var \Grafizzi\Graph\AbstractElement[] $fChildren
    */
   public $fChildren = array();
 

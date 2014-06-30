@@ -54,6 +54,8 @@ class Renderer {
    *
    * @throws \ErrorException
    *
+   * @param \Pimple\container $dic
+   *
    * @return array
    *   An array of format names or false if dot cannot be run.
    */
@@ -69,7 +71,7 @@ class Renderer {
     $process = proc_open($dotCommand, $descriptorSpec, $pipes, NULL, NULL);
     if (!is_resource($process)) {
       if ($useExceptions) {
-        throw new \ErrorException('GraphViz "dot" command could not be run.', EER);
+        throw new \ErrorException('GraphViz "dot" command could not be run.');
       }
       // No need to define $formats otherwise: it is always defined further down.
     }
