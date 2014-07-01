@@ -58,5 +58,46 @@ class DotFilterTest extends BaseFilterTest {
     list($out, ) = $this->filters[0]->filter($in);
     $this->assertInternalType('string', $out, 'Dot filter returns string output');
   }
-}
 
+  public function testImageHappy() {
+    /** @var \Grafizzi\Graph\Filter\DotFilter $filter */
+    $filter = reset($this->filters);
+    $this->assertNull($filter->formats, "Filter formats is initially null");
+    $this->assertEquals(0, count($filter->formats), "Filter formats list is initially empty");
+
+    $image = $filter->image('svg');
+
+    $this->assertInternalType('array', $filter->formats, "Filter formats is an array");
+    $this->assertTrue(count($filter->formats) >= 1, "There is at least one format available from the DotFilter.");
+
+    // TODO check actual image generation once it is actually performed.
+    $this->assertTrue($image, 'Image generation succeeds.');
+  }
+
+  public function testImageSadFormatNoException() {
+    /** @var \Grafizzi\Graph\Filter\DotFilter $filter */
+    $filter = reset($this->filters);
+    $this->assertNull($filter->formats, "Filter formats is initially null");
+    $this->assertEquals(0, count($filter->formats), "Filter formats list is initially empty");
+
+    $image = $filter->image('some unlikely to be valid format');
+
+    $this->assertInternalType('array', $filter->formats, "Filter formats is an array");
+    $this->assertTrue(count($filter->formats) >= 1, "There is at least one format available from the DotFilter.");
+
+    $this->assertEmpty($image, "Image is not generated when the image format is invalid");
+  }
+
+  /**
+   * @expectedException \InvalidArgumentException
+   */
+  public function testImageSadFormatException() {
+    /** @var \Grafizzi\Graph\Filter\DotFilter $filter */
+    $filter = new DotFilter();
+    $dic = new Container();
+    $dic['use_exceptions'] = TRUE;
+    $filter->setDic($dic);
+
+    $image = $filter->image('some unlikely to be valid format');
+  }
+}

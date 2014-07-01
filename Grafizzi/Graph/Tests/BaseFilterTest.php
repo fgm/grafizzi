@@ -32,7 +32,7 @@ require 'vendor/autoload.php';
 abstract class BaseFilterTest extends \PHPUnit_Framework_TestCase {
 
   /**
-   * @var array
+   * @var \Grafizzi\Graph\Filter\FilterInterface[]
    *   Array of filters, implementing FilterInterface.
    */
   protected $filters = array();

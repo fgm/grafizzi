@@ -56,7 +56,7 @@ class Renderer {
    *
    * @param \Pimple\container $dic
    *
-   * @return array
+   * @return string[]
    *   An array of format names or false if dot cannot be run.
    */
   public static function getFormats(Container $dic) {
