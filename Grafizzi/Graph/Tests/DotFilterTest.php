@@ -33,6 +33,7 @@ use Pimple\Container;
  */
 class DotFilterTest extends BaseFilterTest {
 
+  const INVALID_FORMAT = 'some unlikely to be valid format';
   /**
    * File to copy to.
    *
@@ -77,13 +78,8 @@ class DotFilterTest extends BaseFilterTest {
   public function testImageSadFormatNoException() {
     /** @var \Grafizzi\Graph\Filter\DotFilter $filter */
     $filter = reset($this->filters);
-    $this->assertNull($filter->formats, "Filter formats is initially null");
-    $this->assertEquals(0, count($filter->formats), "Filter formats list is initially empty");
 
-    $image = $filter->image('some unlikely to be valid format');
-
-    $this->assertInternalType('array', $filter->formats, "Filter formats is an array");
-    $this->assertTrue(count($filter->formats) >= 1, "There is at least one format available from the DotFilter.");
+    $image = $filter->image(self::INVALID_FORMAT);
 
     $this->assertEmpty($image, "Image is not generated when the image format is invalid");
   }
@@ -98,6 +94,6 @@ class DotFilterTest extends BaseFilterTest {
     $dic['use_exceptions'] = TRUE;
     $filter->setDic($dic);
 
-    $image = $filter->image('some unlikely to be valid format');
+    $filter->image(self::INVALID_FORMAT);
   }
 }
