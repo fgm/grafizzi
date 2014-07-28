@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a1489a255210e283e776a645b71faf80",
+    "hash": "df2637eec0997a7d8d9b5e4a1aa970ef",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -76,16 +76,16 @@
         },
         {
             "name": "pimple/pimple",
-            "version": "v2.1.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Pimple.git",
-                "reference": "90b4710f115766d12e1a579b816c0974887b87a7"
+                "reference": "876bf0899d01feacd2a2e83f04641e51350099ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Pimple/zipball/90b4710f115766d12e1a579b816c0974887b87a7",
-                "reference": "90b4710f115766d12e1a579b816c0974887b87a7",
+                "url": "https://api.github.com/repos/fabpot/Pimple/zipball/876bf0899d01feacd2a2e83f04641e51350099ef",
+                "reference": "876bf0899d01feacd2a2e83f04641e51350099ef",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1.x-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -109,9 +109,7 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
@@ -120,7 +118,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2014-05-01 10:34:00"
+            "time": "2014-07-24 09:48:15"
         },
         {
             "name": "psr/log",
@@ -530,17 +528,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.5.0",
+            "version": "v2.5.2",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c"
+                "reference": "f868ecdbcc0276b6158dfbf08b9e98ce07f014e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b4b09c68ec2f2727574544ef0173684281a5033c",
-                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/f868ecdbcc0276b6158dfbf08b9e98ce07f014e1",
+                "reference": "f868ecdbcc0276b6158dfbf08b9e98ce07f014e1",
                 "shasum": ""
             },
             "require": {
@@ -575,12 +573,13 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-05-16 14:25:18"
+            "time": "2014-07-09 09:05:48"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.0"
     },
