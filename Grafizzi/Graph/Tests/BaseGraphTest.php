@@ -38,7 +38,7 @@ use Pimple\Container;
  *
  * Build a graph that all other test cases will need.
  */
-class BaseGraphTest extends \PHPUnit_Framework_TestCase {
+abstract class BaseGraphTest extends \PHPUnit_Framework_TestCase {
 
   /**
    *
