@@ -102,3 +102,7 @@ stray generated files by running:
 
 Have fun!
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/FGM/grafizzi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
