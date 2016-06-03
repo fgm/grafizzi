@@ -75,7 +75,13 @@ class DotFilter extends AbstractCommandFilter {
     return $ret;
   }
 
+  /**
+   * @param Container $dic
+   * 
+   * @return $this
+   */
   public function setDic(Container $dic) {
     $this->dic = $dic;
+    return $this;
   }
 }

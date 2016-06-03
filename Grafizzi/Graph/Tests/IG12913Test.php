@@ -25,7 +25,10 @@ namespace Grafizzi\Graph\Tests;
 
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Cluster;
+use Grafizzi\Graph\Filter\DotFilter;
+use Grafizzi\Graph\Filter\FilterInterface;
 use Grafizzi\Graph\Node;
+use Pimple\Container;
 
 require 'vendor/autoload.php';
 
@@ -74,27 +77,39 @@ class IG12913Test extends BaseGraphTest {
   }
 
   /**
+   * @param DotFilter $filter
+   * @param string $format
+   */
+  protected function withDicException(DotFilter $filter, $format) {
+    try {
+      $filter->image($format);
+      $this->fail('Invalid format image did not throw an exception.');
+    }
+    catch (\InvalidArgumentException $e) {
+      $this->assertInstanceOf('InvalidArgumentException', $e, 'Invalid argument for invalid format.');
+    }
+  }
+
+  /**
+   * @param DotFilter $filter
+   * @param string $format
+   */
+  protected function withDicNoException(DotFilter $filter, $format) {
+    try {
+      $result = $filter->image($format);
+      $this->assertFalse($result, 'Unavailable format image.');
+    }
+    catch (\InvalidArgumentException $e) {
+      $this->fail('Invalid format image threw an exception.');
+    }  }
+
+  /**
    * Tests Graph->image()
    */
   public function testImage() {
-    $this->markTestSkipped('Needs changing after move of image() from Graph to filters.');
-
-//    $format = 'unavailable_format';
-//    try {
-//      print_r($this->Graph);
-//      $result = $this->Graph->image($format);
-//      $this->fail('Invalid format image did not throw an exception.');
-//    }
-//    catch (\InvalidArgumentException $e) {
-//      $this->assertInstanceOf('InvalidArgumentException', $e, 'Invalid argument for invalid format.');
-//    }
-//
-//    try {
-//      $result = $this->Graph2->image($format);
-//      $this->assertFalse($result, 'Unavailable format image.');
-//    }
-//    catch (\InvalidArgumentException $e) {
-//      $this->fail('Invalid format image threw an exception.');
-//    }
+    $dotFilter = new DotFilter();
+    $format = DotFilterTest::INVALID_FORMAT;
+    $this->withDicException($dotFilter->setDic(new Container(array('use_exceptions' => true))), $format);
+    $this->withDicNoException($dotFilter->setDic(new Container(array('use_exceptions' => false))), $format);
   }
 }

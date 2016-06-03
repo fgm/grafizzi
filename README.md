@@ -8,8 +8,8 @@ Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/FGM/grafizzi/badges/quality-score.png?s=95ce57b528611f1f89868672f04e3af65ba73801)](https://scrutinizer-ci.com/g/FGM/grafizzi/)
 [![Dependencies](https://www.versioneye.com/user/projects/553f5cb36f8344416200004e/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553f5cb36f8344416200004e)
 
-1) Using Grafizzi in your PHP GraphViz projects
------------------------------------------------
+
+# 1) Using Grafizzi in your PHP GraphViz projects
 
 Grafizzi is available from https://github.com/FGM/grafizzi and declared
 on http://packagist.org, making it available to your projects using Composer.
@@ -19,8 +19,7 @@ Just declare `osinet/grafizzi: *` in the `require` section of your
 autoloader map it will generate for your project.
 
 
-2) Working on Grafizzi itself
------------------------------
+# 2) Working on Grafizzi itself
 
 ### Installing Grafizzi for development
 
@@ -31,10 +30,11 @@ Git repository.
 
     git clone https://github.com/FGM/grafizzi.git
 
+
 #### b) Download the dependencies
 
 Once you have a clone of the Grafizzi repository, you need to install its
-dependencies, using the Composer package dependency manager. Download Composer 
+dependencies, using the Composer package dependency manager. Download Composer
 following the instructions on http://getcomposer.org/ , typically like this:
 
     curl -s http://getcomposer.org/installer | php
@@ -42,10 +42,13 @@ following the instructions on http://getcomposer.org/ , typically like this:
 Then run:
 
     php composer.phar install
- 
+
+Note that Grafizzi is available for PHP &ge; 5.3, including 7.x.
+
+
 #### c) Check your System Configuration
 
-Now make sure that your local system is properly configured for Grafizzi. To do 
+Now make sure that your local system is properly configured for Grafizzi. To do
 this, execute:
 
     php app/hello-node.php
@@ -69,30 +72,33 @@ You should see a very basic GraphViz source:
 If you get any warnings or recommendations, or nothing at all, check your PHP
 error log, and fix these now before moving on.
 
-###  Generating documentation
------------------------------
 
-If your system includes the make command, and GraphViz itself, you can generate
-a fully indexed source documentation by running:
+###  Generating documentation
+
+If your system includes the `make` and `doxygen' commands, and GraphViz itself,
+you can generate a fully indexed source documentation by running:
 
     make docs
-    
-This will generate a HTML documentation with internal search engine in the 
-doxygen/ directory. Use it by browsing to doxygen/html/index.html
 
-The documentation and search engine are  even usable over file:/// URLs, so you
-do not need a web server to access it.
+This will generate a HTML documentation with internal search engine in the
+doxygen/ directory. Use it by browsing to `doxygen/html/index.html`.
+
+The documentation and search engine are  even usable over `file:///` URLs, so
+you do not need a web server to access it.
+
 
 ### Running tests
------------------
 
-If you want to make sure that Grafizzi runs fine on your system, make sure 
-that PHPunit 3.5 or later is installed on your system, and run:
+If you want to make sure that Grafizzi runs fine on your system, make sure
+that PHPunit 4.6 or later is installed on your system, and run:
 
     make test
 
+Note that the Composer installation in dev mode will have installed PHPunit in
+your `vendor` folder.
+
+
 ### Cleaning up
----------------
 
 You can remove php_error.log, the generated doxygen docs directory, and many
 stray generated files by running:
