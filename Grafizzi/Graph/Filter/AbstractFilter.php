@@ -37,7 +37,7 @@ abstract class AbstractFilter implements FilterInterface {
    *
    * @param array $args
    */
-  public function __construct(array &$args = array()) {}
+  public function __construct(array $args = array()) {}
 
   /**
    * {@inheritdoc}

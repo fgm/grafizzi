@@ -33,7 +33,7 @@ interface FilterInterface {
    *
    * @return \Grafizzi\Graph\Filter\FilterInterface
    */
-  public function __construct(array &$args = array());
+  public function __construct(array $args = array());
 
   /**
    *

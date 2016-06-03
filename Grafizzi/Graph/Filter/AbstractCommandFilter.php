@@ -52,7 +52,7 @@ abstract class AbstractCommandFilter extends AbstractFilter {
    *
    * @param array $args
    */
-  public function __construct(array &$args = array()) {
+  public function __construct(array $args = array()) {
     $this->commandOptions = $args;
   }
 
@@ -74,9 +74,14 @@ abstract class AbstractCommandFilter extends AbstractFilter {
     );
     $pipes = array();
 
-    $process = proc_open($command, $descriptorSpec, $pipes, NULL, NULL);
+    // Option "bypass_shell" only works on Windows.
+    $process = proc_open($command, $descriptorSpec, $pipes, NULL, NULL, array('bypass_shell' => true));
+
+    // Highly unlikely to happen outside Windows unless /bin/sh is missing.
+    // Look for /bin/sh in this file (near line 810 in PHP 7.x):
+    // https://github.com/php/php-src/blob/master/ext/standard/proc_open.c
     if (!is_resource($process)) {
-      throw new \ErrorException('"$command" command could not be run.');
+      throw new \ErrorException('"$command" command could not be run (no resource).');
     }
 
     fwrite($pipes[0], $input);
@@ -87,7 +92,11 @@ abstract class AbstractCommandFilter extends AbstractFilter {
     );
     fclose($pipes[1]);
     fclose($pipes[2]);
-    proc_close($process);
+    $status = proc_close($process);
+    // http://tldp.org/LDP/abs/html/exitcodes.html#EXITCODESREF
+    if ($status === 127) {
+      throw new \ErrorException("''$command' command could not be run (exit 127)'.");
+    }
 
     return $ret;
   }

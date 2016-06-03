@@ -51,7 +51,7 @@ class StringFilter extends AbstractFilter implements FilterInterface {
    *   $args[0] is the only used element in this array.
    * @throws \InvalidArgumentException
    */
-  public function __construct(array &$args = array()) {
+  public function __construct(array $args = array()) {
     if (isset($args['out'])) {
       $this->string = &$args['out'];
     }

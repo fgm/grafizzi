@@ -19,7 +19,7 @@
   verbose="true">
 
   <filter>
-    <whitelist>
+    <whitelist addUncoveredFilesFromWhitelist="true">
       <directory>Grafizzi/</directory>
       </whitelist>
     </filter>

@@ -83,7 +83,6 @@ class IG12913Test extends BaseGraphTest {
   protected function withDicException(DotFilter $filter, $format) {
     try {
       $filter->image($format);
-      $this->fail('Invalid format image did not throw an exception.');
     }
     catch (\InvalidArgumentException $e) {
       $this->assertInstanceOf('InvalidArgumentException', $e, 'Invalid argument for invalid format.');
@@ -95,13 +94,9 @@ class IG12913Test extends BaseGraphTest {
    * @param string $format
    */
   protected function withDicNoException(DotFilter $filter, $format) {
-    try {
-      $result = $filter->image($format);
-      $this->assertFalse($result, 'Unavailable format image.');
-    }
-    catch (\InvalidArgumentException $e) {
-      $this->fail('Invalid format image threw an exception.');
-    }  }
+    $result = $filter->image($format);
+    $this->assertFalse($result, 'Unavailable format image.');
+  }
 
   /**
    * Tests Graph->image()
