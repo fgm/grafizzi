@@ -24,7 +24,8 @@
 namespace Grafizzi\Graph\Filter;
 
 /**
- * Filters implemented as an executable file
+ * Filters implemented as an executable file.
+ *
  * - nop -p <file>+ : check and optionally pretty-print graph files
  *   - p : just check, no output
  *   - concatenate them on stdout
@@ -45,14 +46,14 @@ abstract class AbstractCommandFilter extends AbstractFilter {
    *
    * @var array
    */
-  public $commandOptions = array();
+  public $commandOptions = [];
 
   /**
    * An array of options passed on the call line of the filter command.
    *
    * @param array $args
    */
-  public function __construct(array $args = array()) {
+  public function __construct(array $args = []) {
     $this->commandOptions = $args;
   }
 
@@ -62,20 +63,20 @@ abstract class AbstractCommandFilter extends AbstractFilter {
   public function filter($input) {
     $args = '';
     foreach ($this->commandOptions as $k => $v) {
-      $args .= " $k$v";
+      $args .= ' ' . escapeshellarg("${k}${v}");
     }
 
     $command = static::$commandName . $args;
 
-    $descriptorSpec = array(
-      0 => array('pipe', 'r'),
-      1 => array('pipe', 'w'),
-      2 => array('pipe', 'w'),
-    );
-    $pipes = array();
+    $descriptorSpec = [
+      0 => ['pipe', 'r'],
+      1 => ['pipe', 'w'],
+      2 => ['pipe', 'w'],
+    ];
+    $pipes = [];
 
     // Option "bypass_shell" only works on Windows.
-    $process = proc_open($command, $descriptorSpec, $pipes, NULL, NULL, array('bypass_shell' => true));
+    $process = proc_open($command, $descriptorSpec, $pipes, NULL, NULL, ['bypass_shell' => true]);
 
     // Highly unlikely to happen outside Windows unless /bin/sh is missing.
     // Look for /bin/sh in this file (near line 810 in PHP 7.x):
@@ -86,10 +87,10 @@ abstract class AbstractCommandFilter extends AbstractFilter {
 
     fwrite($pipes[0], $input);
     fclose($pipes[0]);
-    $ret = array(
+    $ret = [
       stream_get_contents($pipes[1]),
       stream_get_contents($pipes[2]),
-    );
+    ];
     fclose($pipes[1]);
     fclose($pipes[2]);
     $status = proc_close($process);
