@@ -11,13 +11,37 @@ Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 
 # 1) Using Grafizzi in your PHP GraphViz projects
 
-Grafizzi is available from https://github.com/FGM/grafizzi and declared
-on http://packagist.org, making it available to your projects using Composer.
+## Installing it in your project.
 
-Just declare `osinet/grafizzi: *` in the `require` section of your
-`composer.json` and Composer will fetch Grafizzi and include it in the
-autoloader map it will generate for your project.
+```bash
+$ composer require osinet/grafizzi
+```
 
+## Generating graphs with Grafizzi
+
+1. Create a Pimple instance, passing it an instance for your PSR/3 logger of choice
+  (e.g. [Monolog]) in the `logger` key, and possibly other arguments like 
+  `directed` to specify if you want to build a directed graph.
+1. Create a `Graph` instance, passing it the container.
+1. Add `Subgraph`, `Node` and `Edge` instances to the graph using the 
+  `addChild()` method. Each of these take the container and an array of 
+  `Attribute` instances in their constructor, or you can add them using 
+  `setAttribute()` after construction. Attribute instances are reusable on
+  multiple elements.
+1. Invoke the `build()` method on the graph instance to obtain a string 
+   containing your Graphviz dot-file, which you can then output to a file or
+   pipe to `dot`, `neato` or your Graphviz command of choice.
+1. Optional: use a chain of `Filter` instances to filter the result, for example
+   to run Graphviz from your PHP script (`DotFilter`), or "tee" it between a
+   filter pipe and a string (`StringFilter`).
+   
+You can take inspiration from the examples provided in the `app/` directory:
+
+* `app/hello_node.php` builds a minimal graph showing a lot of logging
+* `app/grafizzi.php` builds a graph for the Grafizzi hierarchy of `Filter` 
+  classes.
+  
+[Monolog]: https://github.com/Seldaek/monolog
 
 # 2) Working on Grafizzi itself
 
@@ -43,7 +67,7 @@ Then run:
 
     php composer.phar install
 
-Note that Grafizzi is available for PHP &ge; 5.3, including 7.x.
+Note that Grafizzi is available for PHP &ge; 5.4, including 7.1.x and HHVM.
 
 
 #### c) Check your System Configuration
@@ -100,8 +124,8 @@ your `vendor` folder.
 
 ### Cleaning up
 
-You can remove php_error.log, the generated doxygen docs directory, and many
-stray generated files by running:
+You can remove php_error.log, the generated doxygen docs directory, the 
+generated coverage reports, and many stray generated files by running:
 
     make clean
 

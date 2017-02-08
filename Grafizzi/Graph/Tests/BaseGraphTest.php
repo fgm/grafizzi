@@ -31,6 +31,7 @@ use \Grafizzi\Graph\Graph;
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;
 
+use PHPUnit\Framework\TestCase;
 use Pimple\Container;
 
 /**
@@ -38,7 +39,7 @@ use Pimple\Container;
  *
  * Build a graph that all other test cases will need.
  */
-abstract class BaseGraphTest extends \PHPUnit_Framework_TestCase {
+abstract class BaseGraphTest extends TestCase {
 
   /**
    *

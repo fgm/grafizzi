@@ -24,6 +24,7 @@
 namespace Grafizzi\Graph\Tests;
 
 use Grafizzi\Graph\Filter\AbstractCommandFilter;
+use PHPUnit\Framework\TestCase;
 
 require 'vendor/autoload.php';
 
@@ -32,31 +33,25 @@ class PseudoCommandFilter extends AbstractCommandFilter {}
 /**
  * Class AbstractCommandFilterTest
  */
-class AbstractCommandFilterTest extends \PHPUnit_Framework_TestCase {
+class AbstractCommandFilterTest extends TestCase {
 
   public function testFilterArguments() {
-    // echo is both a Linux, MacOS, and Windows command.
+    // echo is both a Linux, macOS, and Windows command.
     PseudoCommandFilter::$commandName = 'echo';
-    $args = array('-' => 'n', 'foo' => '=bar');
+    $args = ['+' => 'x', 'foo' => '=bar'];
     $filter = new PseudoCommandFilter($args);
     $output_lines = $filter->filter("");
     $output = implode("\n", $output_lines);
-    $this->assertEquals("foo=bar\n", $output);
+    $this->assertEquals("+x foo=bar\n\n", $output);
   }
 
+  /**
+   * @expectedException \ErrorException
+   */
   public function testUnavailableCommand() {
     // Since this is the name of this package, it is unlikely to exist.
     PseudoCommandFilter::$commandName = 'grafizzi';
     $filter = new PseudoCommandFilter();
-    try {
-      $filter->filter("");
-      $this->fail("Nonexistent command did not trigger an exception.");
-    }
-    catch (\ErrorException $e) {
-      // 'Caught expected exception for nonexistent command.
-    }
-    catch (\Exception $e) {
-      $this->fail('Caught unexpected exception for nonexistent command.');
-    }
+    $filter->filter("");
   }
 }

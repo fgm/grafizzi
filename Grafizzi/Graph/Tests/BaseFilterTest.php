@@ -23,13 +23,15 @@
 
 namespace Grafizzi\Graph\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 require 'vendor/autoload.php';
 
 /**
  *
  * @author marand
  */
-abstract class BaseFilterTest extends \PHPUnit_Framework_TestCase {
+abstract class BaseFilterTest extends TestCase {
 
   /**
    * @var \Grafizzi\Graph\Filter\FilterInterface[]
