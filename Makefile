@@ -28,7 +28,7 @@ all:
 # Simple cleaning: delete locally generated files.
 clean:  
 	find . \( -name php_errors.log -o -name "*.dot" -o -name "*.svg" \) -delete
-	rm -fr doxygen 
+	rm -fr coverage* doxygen 
 
 docs:
 	doxygen Grafizzi.dox
