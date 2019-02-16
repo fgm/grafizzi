@@ -35,8 +35,8 @@ class SubgraphTest extends BaseCompositeTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp($name = 'G', $attributes = array()) {
-    parent::setUp();
+  protected function setUp() : void {
+    parent::setUpExtended();
     $base_name = 'sub';
     $this->type = 'subgraph';
     $this->name = $base_name;

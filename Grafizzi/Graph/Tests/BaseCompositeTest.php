@@ -54,7 +54,7 @@ abstract class BaseCompositeTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() {
+  protected function tearDown() : void {
     $this->Subgraph = null;
     parent::tearDown();
   }

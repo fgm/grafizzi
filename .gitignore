@@ -16,3 +16,5 @@ phpunit.xml
 ocular.phar
 coverage/
 coverage.clover
+.phpunit.result.cache
+php.log

@@ -8,7 +8,6 @@
   convertNoticesToExceptions="true"
   convertWarningsToExceptions="true"
   forceCoversAnnotation="false"
-  mapTestClassNameToCoveredClassName="false"
   printerFile="phpunit/src/TextUI/ResultPrinter.php"
   processIsolation="false"
   stopOnError="false"
@@ -19,7 +18,9 @@
   verbose="true">
 
   <filter>
-    <whitelist addUncoveredFilesFromWhitelist="true">
+    <whitelist
+      addUncoveredFilesFromWhitelist="true"
+      processUncoveredFilesFromWhitelist="true">
       <directory>Grafizzi/</directory>
       <exclude>
         <directory suffix="Test.php">./</directory>

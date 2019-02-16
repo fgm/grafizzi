@@ -48,8 +48,8 @@ class EdgeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp($name = 'G', $attributes = array()) {
-    parent::setUp();
+  protected function setUp() : void {
+    parent::setUpExtended();
     $src = new Node($this->dic, 'source');
     $dst = new Node($this->dic, 'destination');
     $this->Attribute = new Attribute($this->dic, 'label', 'Source to Destination');
@@ -63,7 +63,7 @@ class EdgeTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() {
+  protected function tearDown() : void {
     $this->Edge = null;
     parent::tearDown();
   }

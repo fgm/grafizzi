@@ -55,7 +55,7 @@ abstract class BaseGraphTest extends TestCase {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp($name = 'G', $attributes = array()) {
+  protected function setUpExtended($name = 'G', $attributes = array()) {
     parent::setUp();
 
     $log = new Logger(basename(__FILE__, '.php'));
@@ -83,7 +83,7 @@ abstract class BaseGraphTest extends TestCase {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() {
+  protected function tearDown() : void {
     $this->Graph = null;
     parent::tearDown();
   }

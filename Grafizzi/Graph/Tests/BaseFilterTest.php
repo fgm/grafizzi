@@ -42,7 +42,7 @@ abstract class BaseFilterTest extends TestCase {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() {
+  protected function tearDown() : void {
     $this->filters = array();
     parent::tearDown();
   }

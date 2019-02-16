@@ -52,8 +52,8 @@ strict digraph G {
 
 EOT;
 
-  public function setUp($name = 'G', $attributes = array()) {
-    parent::setUp('G', array('strict' => true));
+  public function setUp() : void {
+    parent::setUpExtended('G', array('strict' => true));
     $g = $this->Graph;
     $dic = $this->dic;
     $g->setDirected(true);

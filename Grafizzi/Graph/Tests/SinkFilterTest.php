@@ -35,7 +35,7 @@ class SinkFilterTest extends BaseFilterTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
     $this->filters[] = new SinkFilter();
   }

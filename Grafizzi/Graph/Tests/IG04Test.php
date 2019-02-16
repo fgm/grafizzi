@@ -41,8 +41,8 @@ require 'vendor/autoload.php';
  */
 class IG04Test extends BaseGraphTest {
 
-  public function setUp($name = 'G', $attributes = array()) {
-    parent::setUp('G');
+  public function setUp() : void {
+    parent::setUpExtended('G');
     $this->Graph->setDirected(true);
     $graph = &$this->Graph;
     $dic = $this->dic;
