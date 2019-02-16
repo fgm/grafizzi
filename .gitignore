@@ -15,6 +15,6 @@ phpunit.xml
 # Continuous integration artefacts
 ocular.phar
 coverage/
-coverage.clover
+coverage.*
 .phpunit.result.cache
 php.log

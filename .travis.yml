@@ -9,16 +9,18 @@ before_install:
     - sudo apt-get install -y graphviz
 
 before_script:
-    - "curl -s http://getcomposer.org/installer | php"
-    - "COMPOSER_ROOT_VERSION=dev-master php composer.phar install"
+    - composer install
 
-script: vendor/bin/phpunit --coverage-clover=coverage.clover
+script:
+    - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
 
 matrix:
   allow_failures:
-    - php:
-      - "7.3"
+    - php: []

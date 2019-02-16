@@ -17,6 +17,10 @@
   testSuiteLoaderFile="phpunit/src/Runner/StandardTestSuiteLoader.php"
   verbose="true">
 
+  <logging>
+    <log type="coverage-clover" target="coverage.xml" />
+    </logging>
+
   <filter>
     <whitelist
       addUncoveredFilesFromWhitelist="true"
