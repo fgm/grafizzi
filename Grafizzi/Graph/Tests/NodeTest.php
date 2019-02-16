@@ -42,8 +42,8 @@ class NodeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp($name = 'G', $attributes = array()) {
-    parent::setUp();
+  protected function setUp() : void {
+    parent::setUpExtended();
 
     $this->Node = new Node($this->dic, 'n1');
   }
@@ -51,7 +51,7 @@ class NodeTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() {
+  protected function tearDown() : void {
     // TODO Auto-generated NodeTest::tearDown()
     $this->Node = null;
 

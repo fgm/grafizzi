@@ -55,14 +55,14 @@ class IG12913Test extends BaseGraphTest {
    */
   public $dic2;
 
-  public function setUp($name = 'G', $attributes = array()) {
-    parent::setUp('G');
+  public function setUp() : void {
+    parent::setUpExtended('G');
     $this->Graph2 = $this->Graph;
     $this->dic2 = $this->dic;
     $this->dic2['use_exceptions'] = false;
     unset($this->dic, $this->Graph);
 
-    parent::setUp('G');
+    parent::setUpExtended('G');
     $this->dic['use_exceptions'] = true;
 
     $this->Graph->addChild($cluster1 = new Cluster($this->dic, 1));

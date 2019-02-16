@@ -41,15 +41,15 @@ class AttributeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp($name = 'G', $attributes = array()) {
-    parent::setUp();
+  protected function setUp() : void {
+    parent::setUpExtended();
     $this->Attribute = new Attribute($this->dic, 'label', 'A plain label');
   }
 
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() {
+  protected function tearDown() : void {
     $this->Attribute = null;
     parent::tearDown();
   }
