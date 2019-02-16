@@ -38,8 +38,8 @@ require 'vendor/autoload.php';
  */
 class IG02Test extends BaseGraphTest {
 
-  public function setUp($name = 'G', $attributes = array()) {
-    parent::setUp('structs');
+  public function setUp() : void {
+    parent::setUpExtended('structs');
     $this->Graph->setDirected(true);
     $graph = &$this->Graph;
     $dic = $this->dic;

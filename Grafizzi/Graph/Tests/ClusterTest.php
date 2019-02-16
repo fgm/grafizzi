@@ -35,8 +35,8 @@ class ClusterTest extends BaseCompositeTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp($name = 'G', $attributes = array()) {
-    parent::setUp();
+  protected function setUp() : void {
+    parent::setUpExtended();
     $base_name = 'foo';
     $this->type = 'cluster';
     $this->name = "{$this->type}_{$base_name}";

@@ -45,10 +45,8 @@ class AbstractCommandFilterTest extends TestCase {
     $this->assertEquals("+x foo=bar\n\n", $output);
   }
 
-  /**
-   * @expectedException \ErrorException
-   */
   public function testUnavailableCommand() {
+    $this->expectException(\ErrorException::class);
     // Since this is the name of this package, it is unlikely to exist.
     PseudoCommandFilter::$commandName = 'grafizzi';
     $filter = new PseudoCommandFilter();

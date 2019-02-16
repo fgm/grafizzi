@@ -44,7 +44,7 @@ class DotFilter extends AbstractCommandFilter {
    *
    * @var array
    */
-  public $formats = null;
+  public $formats = [];
 
   public static $commandName = 'dot';
 
@@ -56,7 +56,7 @@ class DotFilter extends AbstractCommandFilter {
    * @return boolean
    */
   public function image($format) {
-    if (!isset($this->formats)) {
+    if (empty($this->formats)) {
       // In case of failure, this will hold an empty array, not null.
       $this->formats = Renderer::getFormats($this->dic);
     }
@@ -77,7 +77,7 @@ class DotFilter extends AbstractCommandFilter {
 
   /**
    * @param Container $dic
-   * 
+   *
    * @return $this
    */
   public function setDic(Container $dic) {

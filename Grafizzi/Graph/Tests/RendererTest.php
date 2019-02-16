@@ -47,8 +47,8 @@ class RendererTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp($name = 'G', $attributes = array()) {
-    parent::setUp($name, $attributes);
+  protected function setUp() : void {
+    parent::setUpExtended();
     $this->renderer = new Renderer($this->dic);
     $this->renderer->pipe = $this->Graph->build();
   }
@@ -56,7 +56,7 @@ class RendererTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() {
+  protected function tearDown() : void {
     $this->renderer = null;
     parent::tearDown();
   }
@@ -118,11 +118,11 @@ class RendererTest extends BaseGraphTest {
     ));
 
     $pipe = $this->renderer->pipe;
-    $this->assertInternalType('string', $pipe, "String filter returns string output");
+    $this->assertIsString($pipe, "String filter returns string output");
     $this->assertEquals($expected, $this->renderer->pipe, "Filter with closure works on renderer pipe.");
 
     // No error output.
-    $this->expectOutputString(null);
+    $this->expectOutputString("");
   }
 
   /**
@@ -160,7 +160,7 @@ class RendererTest extends BaseGraphTest {
     $this->assertEmpty($pipe, 'Sink filter drops content from stdout.');
 
     // No error output from either filter.
-    $this->expectOutputString(null);
+    $this->expectOutputString("");
   }
 }
 

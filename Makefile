@@ -23,15 +23,21 @@ all:
 	@echo "  \"make clean\" to delete test results."
 	@echo "  \"make docs\" to generate documentation."
 	@echo "  \"make test\" to run the test suite."
+	@echo "  \"make cover\" to run the test suite with code coverage"
 	@echo "  \"make purge\" to remove the composer files."
 
 # Simple cleaning: delete locally generated files.
 clean:  
-	find . \( -name php_errors.log -o -name "*.dot" -o -name "*.svg" \) -delete
-	rm -fr coverage* doxygen 
+	find . \( -name "php*.log" -o -name "*.dot" \) -delete
+	# Avoid deleting SVGs in php-code-coverage
+	find Grafizzi \( -name "*.svg" \) -delete
+	rm -fr coverage* doxygen .phpunit.result.cache
 
 docs:
 	doxygen Grafizzi.dox
+
+cover:
+	vendor/bin/phpunit -v Grafizzi --coverage-html=coverage -c phpunit.xml.dist
 
 test:
 	vendor/bin/phpunit -v Grafizzi

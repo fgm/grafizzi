@@ -34,6 +34,10 @@ use \Grafizzi\Graph\Graph;
  */
 class GraphTest extends BaseGraphTest {
 
+  public function setUp() : void {
+    parent::setUpExtended();
+  }
+
   /**
    * Tests Graph->build()
    */

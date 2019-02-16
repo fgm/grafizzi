@@ -55,8 +55,8 @@ strict digraph Bug {
 
 EOT;
 
-  public function setUp($name = 'G', $attributes = array()) {
-    parent::setUp('Bug', array('strict' => true));
+  public function setUp() : void {
+    parent::setUpExtended('Bug', array('strict' => true));
     $g = $this->Graph;
     $dic = $this->dic;
     $g->setDirected(true);
