@@ -6,6 +6,7 @@ Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 [![Build Status](https://secure.travis-ci.org/fgm/grafizzi.png?branch=master)](http://travis-ci.org/fgm/grafizzi)
 [![codecov](https://codecov.io/gh/fgm/grafizzi/branch/master/graph/badge.svg)](https://codecov.io/gh/fgm/grafizzi)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/fgm/grafizzi/badges/quality-score.png?s=95ce57b528611f1f89868672f04e3af65ba73801)](https://scrutinizer-ci.com/g/fgm/grafizzi/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi?ref=badge_shield)
 
 
 # 1) Using Grafizzi in your PHP GraphViz projects
@@ -130,3 +131,7 @@ generated coverage reports, and many stray generated files by running:
 
 
 Have fun!
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi?ref=badge_large)
