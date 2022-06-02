@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\BaseGraphTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -43,26 +43,31 @@ abstract class BaseGraphTest extends TestCase {
 
   /**
    *
-   * @var Graph
+   * @var ?Graph
    */
-  public $Graph;
+  public ?Graph $Graph;
 
   /**
    * @var \Pimple\Container
    */
-  public $dic;
+  public Container $dic;
 
   /**
    * Prepares the environment before running a test.
+   *
+   * @param string $name
+   * @param array<string,bool> $attributes
+   *
+   * @return void
    */
-  protected function setUpExtended($name = 'G', $attributes = array()) {
+  protected function setUpExtended(string $name = 'G', array $attributes = []): void {
     parent::setUp();
 
     $log = new Logger(basename(__FILE__, '.php'));
     $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
-    $this->dic = new Container(array(
+    $this->dic = new Container([
       'logger' => $log,
-    ));
+    ]);
     $this->Graph = new Graph($this->dic, $name, $attributes);
   }
 
@@ -74,7 +79,7 @@ abstract class BaseGraphTest extends TestCase {
    * @param string $message
    *   The assertion message.
    */
-  public function check($expected, $message) {
+  public function check(string $expected, string $message): void {
     $build = $this->Graph->build();
     $this->Graph->logger->debug("\n\n$build\n\n");
     $this->assertEquals($expected, $build, $message);
@@ -83,8 +88,9 @@ abstract class BaseGraphTest extends TestCase {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() : void {
-    $this->Graph = null;
+  protected function tearDown(): void {
+    $this->Graph = NULL;
     parent::tearDown();
   }
+
 }

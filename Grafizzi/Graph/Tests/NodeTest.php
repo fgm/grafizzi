@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\NodeTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -35,14 +35,14 @@ class NodeTest extends BaseGraphTest {
 
   /**
    *
-   * @var Node
+   * @var ?Node
    */
-  private $Node;
+  private ?Node $Node;
 
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() : void {
+  protected function setUp(): void {
     parent::setUpExtended();
 
     $this->Node = new Node($this->dic, 'n1');
@@ -51,9 +51,9 @@ class NodeTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() : void {
+  protected function tearDown(): void {
     // TODO Auto-generated NodeTest::tearDown()
-    $this->Node = null;
+    $this->Node = NULL;
 
     parent::tearDown();
   }
@@ -61,14 +61,14 @@ class NodeTest extends BaseGraphTest {
   /**
    * Tests Node->__construct()
    */
-  public function test__construct() {
+  public function test__construct(): void {
     $this->assertEquals('n1', $this->Node->getName());
   }
 
   /**
    * Tests Node->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     // Test unbound node build.
     $expected = <<<EOT
 n1;
@@ -84,7 +84,8 @@ EOT;
 
 EOT;
     $build = $this->Node->build();
-    $this->assertEquals($expected, $build, "Node bound at level 1 built correctly.");
+    $this->assertEquals($expected, $build,
+      "Node bound at level 1 built correctly.");
 
     // Test build of node within a root graph.
     $expected = <<<EOT
@@ -94,15 +95,16 @@ digraph G {
 
 EOT;
     $build = $this->Graph->build();
-    $this->assertEquals($expected, $build, "Graph with a single node built correctly.");
+    $this->assertEquals($expected, $build,
+      "Graph with a single node built correctly.");
   }
 
   // Normal attributes list.
-  public function testBuildAttributesNormal() {
-    $this->Node->setAttributes(array(
+  public function testBuildAttributesNormal(): void {
+    $this->Node->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'baz', 'quux'),
-    ));
+    ]);
     $expected = <<<EOT
 n1 [ foo=bar, baz=quux ];
 
@@ -112,12 +114,12 @@ EOT;
   }
 
   // Attribute list with empty title in middle.
-  public function testBuildAttributesEmptyMiddle() {
-    $this->Node->setAttributes(array(
+  public function testBuildAttributesEmptyMiddle(): void {
+    $this->Node->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'title', ''),
       new Attribute($this->dic, 'baz', 'quux'),
-    ));
+    ]);
     $expected = <<<EOT
 n1 [ foo=bar, baz=quux ];
 
@@ -127,10 +129,10 @@ EOT;
   }
 
   // Attribute list with empty title as single attribute.
-  public function testBuildAttributesOnlyEmpty() {
-    $this->Node->setAttributes(array(
+  public function testBuildAttributesOnlyEmpty(): void {
+    $this->Node->setAttributes([
       new Attribute($this->dic, 'title', ''),
-    ));
+    ]);
     $expected = <<<EOT
 n1;
 
@@ -140,12 +142,12 @@ EOT;
   }
 
   // Attribute list with empty title as last attribute.
-  public function testBuildAttributesEmptyLast() {
-    $this->Node->setAttributes(array(
+  public function testBuildAttributesEmptyLast(): void {
+    $this->Node->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'baz', 'quux'),
       new Attribute($this->dic, 'title', ''),
-    ));
+    ]);
     $expected = <<<EOT
 n1 [ foo=bar, baz=quux ];
 
@@ -157,14 +159,15 @@ EOT;
   /**
    * Tests Node::getAllowedChildTypes()
    */
-  public function testGetAllowedChildTypes() {
+  public function testGetAllowedChildTypes(): void {
     $this->assertEmpty(Node::getAllowedChildTypes());
   }
 
   /**
    * Tests Node::getType()
    */
-  public function testGetType() {
+  public function testGetType(): void {
     $this->assertEquals('node', $this->Node->getType());
   }
+
 }

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG12Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,38 +40,46 @@ require 'vendor/autoload.php';
  */
 class IG12Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
     parent::setUpExtended('structs');
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
-    $letters = array('G', 'E', 'B', 'F', 'R', 'H', 'Y', 'A', 'C');
+    $g->setDirected(TRUE);
+    $letters = ['G', 'E', 'B', 'F', 'R', 'H', 'Y', 'A', 'C'];
 
     $nodeShape = new Attribute($dic, 'shape', 'record');
-    $nodes = array();
+    $nodes = [];
     foreach ($letters as $offset => $letter) {
-      $g->addChild($nodes[$offset] = new Node($dic, "node$offset", array(
+      $g->addChild($nodes[$offset] = new Node($dic, "node$offset", [
         $nodeShape,
         new Attribute($dic, 'label', "<f0> |<f1> $letter|<f2> "),
-      )));
+      ]));
     }
 
-    $edgeAttributes = array();
-    $g->addChild(new Edge($dic, $nodes[0], $nodes[4], $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $nodes[0], $nodes[1], $edgeAttributes, 'f0', 'f1'));
-    $g->addChild(new Edge($dic, $nodes[1], $nodes[2], $edgeAttributes, 'f0', 'f1'));
-    $g->addChild(new Edge($dic, $nodes[1], $nodes[3], $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $nodes[2], $nodes[8], $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $nodes[2], $nodes[7], $edgeAttributes, 'f0', 'f1'));
-    $g->addChild(new Edge($dic, $nodes[4], $nodes[6], $edgeAttributes, 'f2', 'f1'));
-    $g->addChild(new Edge($dic, $nodes[4], $nodes[5], $edgeAttributes, 'f0', 'f1'));
+    $edgeAttributes = [];
+    $g->addChild(new Edge($dic, $nodes[0], $nodes[4], $edgeAttributes, 'f2',
+      'f1'));
+    $g->addChild(new Edge($dic, $nodes[0], $nodes[1], $edgeAttributes, 'f0',
+      'f1'));
+    $g->addChild(new Edge($dic, $nodes[1], $nodes[2], $edgeAttributes, 'f0',
+      'f1'));
+    $g->addChild(new Edge($dic, $nodes[1], $nodes[3], $edgeAttributes, 'f2',
+      'f1'));
+    $g->addChild(new Edge($dic, $nodes[2], $nodes[8], $edgeAttributes, 'f2',
+      'f1'));
+    $g->addChild(new Edge($dic, $nodes[2], $nodes[7], $edgeAttributes, 'f0',
+      'f1'));
+    $g->addChild(new Edge($dic, $nodes[4], $nodes[6], $edgeAttributes, 'f2',
+      'f1'));
+    $g->addChild(new Edge($dic, $nodes[4], $nodes[5], $edgeAttributes, 'f0',
+      'f1'));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<EOT
 digraph structs {
   node0 [ shape=record, label="<f0> |<f1> G|<f2> " ];
@@ -96,4 +104,5 @@ digraph structs {
 EOT;
     $this->check($expected, "Image_GraphViz test 12 passed.");
   }
+
 }

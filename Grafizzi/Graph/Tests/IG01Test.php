@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG01Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,26 +40,26 @@ require 'vendor/autoload.php';
  */
 class IG01Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended();
-    $this->Graph->setDirected(false);
-    $edgeDefinitions = array(
-      array('run', 'intr'),
-      array('run', 'kernel'),
-      array('intr', 'runbl'),
-      array('runbl', 'run'),
-      array('kernel', 'zombie'),
-      array('kernel', 'sleep'),
-      array('kernel', 'runmem'),
-      array('sleep', 'swap'),
-      array('sleep', 'runmem'),
-      array('swap', 'runswap'),
-      array('runswap', 'new'),
-      array('runswap', 'runmem'),
-      array('new', 'runmem'),
-    );
+    $this->Graph->setDirected(FALSE);
+    $edgeDefinitions = [
+      ['run', 'intr'],
+      ['run', 'kernel'],
+      ['intr', 'runbl'],
+      ['runbl', 'run'],
+      ['kernel', 'zombie'],
+      ['kernel', 'sleep'],
+      ['kernel', 'runmem'],
+      ['sleep', 'swap'],
+      ['sleep', 'runmem'],
+      ['swap', 'runswap'],
+      ['runswap', 'new'],
+      ['runswap', 'runmem'],
+      ['new', 'runmem'],
+    ];
     foreach ($edgeDefinitions as $edgeDefinition) {
-      list($src, $dst) = $edgeDefinition;
+      [$src, $dst] = $edgeDefinition;
       $this->Graph->logger->debug("Adding edge $src -- $dst");
       $srcNode = new Node($this->dic, $src, Node::implicit());
       $this->Graph->addChild($srcNode);
@@ -73,7 +73,7 @@ class IG01Test extends BaseGraphTest {
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<EOT
 graph G {
   run -- intr;
@@ -94,4 +94,5 @@ graph G {
 EOT;
     $this->check($expected, "Image_GraphViz test 1 passed.");
   }
+
 }

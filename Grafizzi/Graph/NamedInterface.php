@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\NamedInterface: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -24,7 +24,7 @@
 namespace Grafizzi\Graph;
 
 interface NamedInterface {
-  public function build($directed = null);
+  public function build(?bool $directed = null): string;
 
   /**
    * Output a string in the default GraphViz format.
@@ -33,11 +33,11 @@ interface NamedInterface {
    * - strings containing a space or an escape are double-quoted
    * - strings remaining alphanumeric after this are not quoted
    *
-   * @param string $string
+   * @param mixed $value
    *
    * @return string
    */
-  public static function escape($string);
+  public static function escape($value): string;
 
   /**
    * The name of the function as used in the build process.
@@ -46,7 +46,7 @@ interface NamedInterface {
    *
    * @return string
    */
-  public function getBuildName();
+  public function getBuildName(): string;
 
   /**
    * The name of the object as used by all methods.
@@ -55,7 +55,7 @@ interface NamedInterface {
    *
    * @return string
    */
-  public function getName();
+  public function getName(): string;
 
   /**
    * The name of the object type in GraphViz: attribute, node, edge, cluster...
@@ -66,12 +66,13 @@ interface NamedInterface {
    *
    * @return string
    */
-  public function getType();
+  public function getType(): string;
 
   /**
-   * @param string $name
+   * @param mixed $name
+   *   Will be stringified
    *
-   * @return mixed
+   * @return void
    */
-  public function setName($name);
+  public function setName($name): void;
 }

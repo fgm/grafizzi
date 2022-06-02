@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\DotFilterTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -34,17 +34,18 @@ use Pimple\Container;
 class DotFilterTest extends BaseFilterTest {
 
   const INVALID_FORMAT = 'some unlikely to be valid format';
+
   /**
    * File to copy to.
    *
    * @var string
    */
-  private $out = null;
+  private ?string $out = NULL;
 
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() : void {
+  protected function setUp(): void {
     parent::setUp();
     $dotFilter = new DotFilter();
     $dotFilter->setDic(new Container());
@@ -53,38 +54,43 @@ class DotFilterTest extends BaseFilterTest {
 
   /**
    * Tests DotFilter->filter()
+   *
+   * @throws \ErrorException
    */
-  public function testFilter() {
+  public function testFilter(): void {
     $in = 'digraph G { foo -> bar ; }';
-    list($out, ) = $this->filters[0]->filter($in);
-    $this->assertIsString($out, 'Dot filter returns string output');
+    [$this->out,] = $this->filters[0]->filter($in);
+    $this->assertIsString($this->out, 'Dot filter returns string output');
   }
 
-  public function testImageHappy() {
+  public function testImageHappy(): void {
     /** @var \Grafizzi\Graph\Filter\DotFilter $filter */
     $filter = reset($this->filters);
     $this->assertEmpty($filter->formats, "Filter formats is initially null");
-    $this->assertEquals(0, count($filter->formats), "Filter formats list is initially empty");
+    $this->assertCount(0, $filter->formats,
+      "Filter formats list is initially empty");
 
     $image = $filter->image('svg');
 
     $this->assertIsArray($filter->formats, "Filter formats is an array");
-    $this->assertTrue(count($filter->formats) >= 1, "There is at least one format available from the DotFilter.");
+    $this->assertTrue(count($filter->formats) >= 1,
+      "There is at least one format available from the DotFilter.");
 
     // TODO check actual image generation once it is actually performed.
     $this->assertTrue($image, 'Image generation succeeds.');
   }
 
-  public function testImageSadFormatNoException() {
+  public function testImageSadFormatNoException(): void {
     /** @var \Grafizzi\Graph\Filter\DotFilter $filter */
     $filter = reset($this->filters);
 
     $image = $filter->image(self::INVALID_FORMAT);
 
-    $this->assertEmpty($image, "Image is not generated when the image format is invalid");
+    $this->assertEmpty($image,
+      "Image is not generated when the image format is invalid");
   }
 
-  public function testImageSadFormatException() {
+  public function testImageSadFormatException(): void {
     $this->expectException(\InvalidArgumentException::class);
     /** @var \Grafizzi\Graph\Filter\DotFilter $filter */
     $filter = new DotFilter();
@@ -94,4 +100,5 @@ class DotFilterTest extends BaseFilterTest {
 
     $filter->image(self::INVALID_FORMAT);
   }
+
 }

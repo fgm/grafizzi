@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Node: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -28,22 +28,32 @@ use Pimple\Container;
 class Node extends AbstractElement {
 
   /**
+   * Node is implicit: it can be used in edge creations, but has no entry of
+   * its own.
+   *
+   * @var bool
+   */
+  public bool $fImplicit = false;
+
+  /**
    * Helper to simplify construction of implicit nodes.
    *
-   * @return array
+   * @return array<string,bool>
    */
-  public static function implicit() {
-    return array('implicit' => true);
+  public static function implicit(): array {
+    return ['implicit' => true];
   }
 
   /**
-   * Node is implicit: it can be used in edge creations, but has no entry of its own.
-   *
-   * @var boolean
+   * @param \Pimple\Container $dic
+   * @param mixed $name
+   * @param array<int|string,bool|\Grafizzi\Graph\AttributeInterface> $attributes
    */
-  public $fImplicit = false;
-
-  public function __construct(Container $dic, $name, array $attributes = array()) {
+  public function __construct(
+    Container $dic,
+    $name,
+    array $attributes = []
+  ) {
     parent::__construct($dic);
     if (isset($attributes['implicit'])) {
       $this->fImplicit = $attributes['implicit'];
@@ -58,18 +68,21 @@ class Node extends AbstractElement {
   /**
    * @see AbstractElement::build()
    */
-  public function build($directed = null) {
+  public function build(?bool $directed = NULL): string {
     // Implicit nodes have no entry of their own.
     if ($this->fImplicit) {
-       return '';
+      return '';
     }
     $type = $this->getType();
     $name = $this->getName();
     $this->logger->debug("Building $type $name, depth {$this->fDepth}.");
-    $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
+    $attributes = array_map(function (AttributeInterface $attribute) use (
+      $directed
+    ) {
       return $attribute->build($directed);
     }, $this->fAttributes);
-    $ret = str_repeat(' ', $this->fDepth * self::DEPTH_INDENT) . $this->escape($name);
+    $ret = str_repeat(' ',
+        $this->fDepth * self::DEPTH_INDENT) . $this->escape($name);
     if (!empty($attributes)) {
       $builtAttributes = implode(', ', array_filter($attributes));
       if (!empty($builtAttributes)) {
@@ -80,12 +93,15 @@ class Node extends AbstractElement {
     return $ret;
   }
 
-  public static function getAllowedChildTypes() {
-    return array();
+  /**
+   * @return array<string>
+   */
+  public static function getAllowedChildTypes(): array {
+    return [];
   }
 
-  public function getType() {
-    $ret = 'node';
-    return $ret;
+  public function getType(): string {
+    return 'node';
   }
+
 }

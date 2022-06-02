@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Attribute: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -29,15 +29,19 @@ use Pimple\Container;
  * An Element attribute.
  */
 class Attribute extends AbstractNamed implements AttributeInterface {
+
   /**
    * A hash of default values for allowed attributes.
    *
    * If it is empty, any attribute is allowed.
    *
-   * @var array
+   * @var array<string,mixed>
    */
-  public static $fDefaults = array();
+  public static $fDefaults = [];
 
+  /**
+   * @var mixed
+   */
   public $fValue;
 
   /**
@@ -47,59 +51,65 @@ class Attribute extends AbstractNamed implements AttributeInterface {
    *
    * @see AttributeInterface::__construct()
    */
-  public function __construct(Container $dic, $name, $value = null) {
+  public function __construct(
+    Container $dic,
+    string $name,
+    $value = NULL
+  ) {
     parent::__construct($dic);
     $this->setName($name);
     $this->setValue($value);
   }
 
   /**
-   * @todo FIXME escape name, value more carefully
-   *
    * @param boolean $directed
    *   Needed for signature conformity,but actually ignored.
    *
-   * @return null|string
+   * @return string
+   * @todo FIXME escape name, value more carefully
+   *
    */
-  public function build($directed = null) {
+  public function build(?bool $directed = NULL): string {
     $name = $this->getName();
     $this->logger->debug("Building attribute " . $name);
     $value = $this->getValue();
     if ('title' == $name && empty($value)) {
-      $ret = null;
+      $ret = '';
     }
     else {
-      $escape = in_array($name, array('label', 'headlabel', 'taillabel'));
-      $ret = "$name=" . self::escape($value, $escape);
+      $escape = in_array($name, ['label', 'headlabel', 'taillabel']);
+      $ret = "$name=" . self::escape($value ?? '', $escape);
     }
     return $ret;
   }
 
   /**
-   * @see AttributeInterface::getAllowedNames()
+   * @return array<string>
    *
-   * @return array
+   * @see AttributeInterface::getAllowedNames()
    */
-  public static function getAllowedNames() {
-    $ret = self::$fDefaults;
+  public static function getAllowedNames(): array {
+    $ret = array_keys(self::$fDefaults);
     return $ret;
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @return mixed
    */
-  public static function getDefaultValue($name) {
-    $ret = isset(self::$fDefaults[$name])
-      ? self::$fDefaults[$name]
-      : null;
+  public static function getDefaultValue(string $name) {
+    $ret = self::$fDefaults[$name] ?? NULL;
     return $ret;
   }
 
-  public function getType() {
-    $ret = 'attribute';
-    return $ret;
+  public function getType(): string {
+    return 'attribute';
   }
 
+  /**
+   * @return mixed
+   */
   public function getValue() {
     return $this->fValue;
   }
@@ -107,12 +117,13 @@ class Attribute extends AbstractNamed implements AttributeInterface {
   /**
    * In addition to basic behavior, validate name.
    *
+   * @throws AttributeNameException
    * @see AbstractNamed::setName()
    *
-   * @throws AttributeNameException
    */
-  public function setName($name) {
-    if (!empty(self::$fDefaults) && !array_key_exists($name, self::$fDefaults)) {
+  public function setName($name): void {
+    if (!empty(self::$fDefaults) && !array_key_exists($name,
+        self::$fDefaults)) {
       $message = "Invalid attribute $name.";
       $this->logger->error($message);
       throw new AttributeNameException($message);
@@ -127,12 +138,13 @@ class Attribute extends AbstractNamed implements AttributeInterface {
    *
    * @see AttributeInterface::setValue()
    */
-  public function setValue($value = null) {
+  public function setValue($value = NULL) {
     $this->logger->debug("{$this->fName}->value = "
-      . print_r($value, true) . ".");
+      . print_r($value, TRUE) . ".");
     if (!isset($value) && isset(self::$fDefaults[$this->fName])) {
       $value = self::$fDefaults[$this->fName];
     }
     $this->fValue = $value;
   }
+
 }

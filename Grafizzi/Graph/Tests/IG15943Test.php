@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG15943Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,26 +40,26 @@ require 'vendor/autoload.php';
  */
 class IG15943Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
-    parent::setUpExtended('G', array('strict' => true));
+    parent::setUpExtended('G', ['strict' => TRUE]);
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
+    $g->setDirected(TRUE);
 
-    $nullTitle = array(new Attribute($dic, 'title', null));
+    $nullTitle = [new Attribute($dic, 'title', NULL)];
 
     $g->addChild($node5 = new Node($dic, 'node5'));
     $g->addChild($clusterA = new Cluster($dic, 'A'));
     $clusterA->addChild($node0 = new Node($dic, 'node0', $nullTitle));
     $clusterA->addChild($node1 = new Node($dic, 'node1', $nullTitle));
-    $clusterA->addChild($clusterB = new Cluster($dic, 'B', array(
+    $clusterA->addChild($clusterB = new Cluster($dic, 'B', [
       new Attribute($dic, 'label', 'Cluster B'),
-    )));
+    ]));
 
-    $clusterB->addChild($node2 = new Node($dic, 'node2', array(
+    $clusterB->addChild($node2 = new Node($dic, 'node2', [
       new Attribute($dic, 'color', 'blue'),
-    )));
+    ]));
     $clusterB->addChild($node3 = new Node($dic, 'node3', $nullTitle));
 
     $clusterA->addChild($clusterC = new Cluster($dic, 'C', $nullTitle));
@@ -78,7 +78,7 @@ class IG15943Test extends BaseGraphTest {
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<'EOT'
 strict digraph G {
   node5;
@@ -108,4 +108,5 @@ strict digraph G {
 EOT;
     $this->check($expected, "Image_GraphViz test 15943 passed.");
   }
+
 }

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\AttributeInterface: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -28,10 +28,10 @@ namespace Grafizzi\Graph;
  */
 interface AttributeInterface extends NamedInterface {
   /**
-   * @return array
+   * @return array<string>
    *   An array of USASCII strings.
    */
-  public static function getAllowedNames();
+  public static function getAllowedNames(): array;
 
   /**
    * Return the default value for an attribute if not set.
@@ -39,8 +39,10 @@ interface AttributeInterface extends NamedInterface {
    * Note: null is not a valid default value.
    *
    * @param string $name
+   *
+   * @return mixed
    */
-  public static function getDefaultValue($name);
+  public static function getDefaultValue(string $name);
 
   /**
    * @return mixed

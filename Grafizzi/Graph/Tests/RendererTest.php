@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\RendererTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,14 +40,14 @@ class RendererTest extends BaseGraphTest {
 
   /**
    *
-   * @var Renderer
+   * @var ?Renderer
    */
-  private $renderer;
+  private ?Renderer $renderer;
 
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() : void {
+  protected function setUp(): void {
     parent::setUpExtended();
     $this->renderer = new Renderer($this->dic);
     $this->renderer->pipe = $this->Graph->build();
@@ -56,26 +56,27 @@ class RendererTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() : void {
-    $this->renderer = null;
+  protected function tearDown(): void {
+    $this->renderer = NULL;
     parent::tearDown();
   }
 
   /**
    * Tests Renderer::getFormats()
    */
-  public function testGetFormats() {
+  public function testGetFormats(): void {
     $dic = $this->dic;
-    $dic['use_exceptions'] = false;
+    $dic['use_exceptions'] = FALSE;
     $formats = Renderer::getFormats($dic);
-    $this->assertTrue(is_array($formats), 'Renderer::getFormats() returns an array when exceptions are not used.');
+    $this->assertTrue(is_array($formats),
+      'Renderer::getFormats() returns an array when exceptions are not used.');
 
-    $dic['use_exceptions'] = true;
+    $dic['use_exceptions'] = TRUE;
     try {
       $formats = Renderer::getFormats($dic);
-      $this->assertTrue(is_array($formats) && !empty($formats), 'Renderer::getFormats() returns a non-empty array when exceptions are used.');
-    }
-    catch (ErrorException $e) {
+      $this->assertTrue(is_array($formats) && !empty($formats),
+        'Renderer::getFormats() returns a non-empty array when exceptions are used.');
+    } catch (ErrorException $e) {
       $this->fail('Renderer::getFormats() could not find dot and threw an ErrorException.');
     }
   }
@@ -86,23 +87,24 @@ class RendererTest extends BaseGraphTest {
    * - must throw DomainException
    * - must not overwrite source data
    */
-  public function test__call() {
+  public function test__call(): void {
     $expected = $out = 'Some data';
     try {
-      $out = call_user_func(array($this->renderer, 'nonexistent'));
+      $out = call_user_func([$this->renderer, 'nonexistent']);
+    } catch (\DomainException $e) {
+      $this->assertInstanceOf('\\DomainException', $e,
+        'Rendering non existent filter throws DomainException');
     }
-    catch (\DomainException $e) {
-      $this->assertInstanceOf('\\DomainException', $e, 'Rendering non existent filter throws DomainException');
-    }
-    $this->assertEquals($expected, $out, 'Output is not overwritten by non existent filter.');
+    $this->assertEquals($expected, $out,
+      'Output is not overwritten by non existent filter.');
   }
 
   /**
    * Tests rendering with a single filter.
    */
-  public function testRenderOneFilter() {
+  public function testRenderOneFilter(): void {
     // Callback can be a closure.
-    $callback = function ($x) {
+    $callback = function ($x): string {
       return strrev($x);
     };
 
@@ -112,14 +114,15 @@ class RendererTest extends BaseGraphTest {
     $expected = $callback($this->renderer->pipe);
 
     // Invoke filter via renderer, overwriting output and pipe.
-    call_user_func(array($this->renderer, 'string'), array(
+    call_user_func([$this->renderer, 'string'], [
       'out' => &$output,
       'callback' => $callback,
-    ));
+    ]);
 
     $pipe = $this->renderer->pipe;
     $this->assertIsString($pipe, "String filter returns string output");
-    $this->assertEquals($expected, $this->renderer->pipe, "Filter with closure works on renderer pipe.");
+    $this->assertEquals($expected, $this->renderer->pipe,
+      "Filter with closure works on renderer pipe.");
 
     // No error output.
     $this->expectOutputString("");
@@ -128,39 +131,41 @@ class RendererTest extends BaseGraphTest {
   /**
    * Test the fluent filter interface.
    */
-  public function testRenderChainedFilters() {
+  public function testRenderChainedFilters(): void {
     $callback = 'strrev';
 
     // The value of this string should be overwritten by the filter.
     $output1 = $output2 = $output3 = self::ERASABLE;
 
     $input = $this->renderer->pipe;
-    $step1 = call_user_func(array($this->renderer, 'string'), array(
+    $step1 = call_user_func([$this->renderer, 'string'], [
       'out' => &$output1,
       'callback' => $callback,
-    ));
+    ]);
 
-    $r = call_user_func(array($step1, 'string'), array(
+    $r = call_user_func([$step1, 'string'], [
       'out' => &$output2,
       'callback' => $callback,
-    ));
+    ]);
 
-    $this->assertEquals($input, $this->renderer->pipe, "Chained filters with strrev work.");
+    $this->assertEquals($input, $this->renderer->pipe,
+      "Chained filters with strrev work.");
 
     // Test a filter chain: string, then sink.
     $pipe_input = $this->renderer->pipe;
 
-    $r->string(array(
+    $r->string([
       'out' => &$output3,
       'callback' => $callback,
-    ))->sink();
+    ])->sink();
 
-    $this->assertEquals($callback($pipe_input), $output3, "String filter updates argument.");
+    $this->assertEquals($callback($pipe_input), $output3,
+      "String filter updates argument.");
     $pipe = $this->renderer->pipe;
     $this->assertEmpty($pipe, 'Sink filter drops content from stdout.');
 
     // No error output from either filter.
     $this->expectOutputString("");
   }
-}
 
+}

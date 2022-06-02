@@ -4,7 +4,7 @@
  * @file
  * grafizzi.php: a demo of the Grafizzi library applied to Grafizzi itself.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -71,7 +71,7 @@ class Grafizzi {
     $this->r = new Renderer($dic);
   }
 
-  public function addData() {
+  public function addData(): void {
     $dic = $this->dic;
     $class = array(new Attribute($dic, 'shape', 'box'));
     $interface = array(new Attribute($dic, 'shape', 'ellipse'));
@@ -99,7 +99,7 @@ class Grafizzi {
    * This example does not intercept error output: since this is output via the
    * logger, configure the logger accordingly if error capture is desired.
    */
-  public function render() {
+  public function render(): ?string {
     // 1. Build the DOT source
     $this->r->pipe = $this->g->build();
 

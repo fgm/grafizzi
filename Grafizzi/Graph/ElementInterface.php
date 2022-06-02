@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\ElementInterface: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -36,7 +36,7 @@ interface ElementInterface extends NamedInterface {
    * @return ElementInterface
    *   Return the object on which the method is invoked, to allow chaining.
    */
-  public function addChild(ElementInterface $child);
+  public function addChild(ElementInterface $child): ElementInterface;
 
   /**
    * Increment the depth of the object by $extra.
@@ -51,43 +51,43 @@ interface ElementInterface extends NamedInterface {
   /**
    * Nodes do not have children, only attributes.
    *
-   * @return array
+   * @return array<string>
    */
-  public static function getAllowedChildTypes();
+  public static function getAllowedChildTypes(): array;
 
   /**
    *
    * @param string $name
    *
-   * @return AttributeInterface
+   * @return ?AttributeInterface
    */
-  public function getAttributeByName($name);
+  public function getAttributeByName($name): ?AttributeInterface;
 
   /**
+   * @param mixed $name
+   *   Will be stringified.
    *
-   * @param string $name
-   *
-   * @return ElementInterface
+   * @return \Grafizzi\Graph\ElementInterface|null
    */
-  public function getChildByName($name);
+  public function getChildByName($name): ?ElementInterface;
 
   /**
    * Return the parent element for the graph to which this element belongs.
    *
    * An unbound element returns null.
    *
-   * @return ElementInterface
+   * @return ?ElementInterface
    */
-  public function getParent();
+  public function getParent(): ?ElementInterface;
 
   /**
    * Return the root element for the graph to which this element belongs.
    *
    * An unbound element returns itself.
    *
-   * @return ElementInterface
+   * @return ?ElementInterface
    */
-  public function getRoot();
+  public function getRoot(): ?ElementInterface;
 
   /**
    * A helper for removeAttributeByName().
@@ -96,7 +96,7 @@ interface ElementInterface extends NamedInterface {
    *
    * @return void
    */
-  public function removeAttribute(AttributeInterface $attribute);
+  public function removeAttribute(AttributeInterface $attribute): void;
 
   /**
    * Silently fail, like unset, when removing an unassigned attribute.
@@ -105,7 +105,7 @@ interface ElementInterface extends NamedInterface {
    *
    * @return void
    */
-  public function removeAttributeByName($name);
+  public function removeAttributeByName(string $name): void;
 
   /**
    * A helper for removeChildByName().
@@ -114,18 +114,18 @@ interface ElementInterface extends NamedInterface {
    *
    * @param ElementInterface $child
    *
-   * @return ElementInterface
+   * @return ?ElementInterface
    */
-  public function removeChild(ElementInterface $child);
+  public function removeChild(ElementInterface $child): ?ElementInterface;
 
   /**
    * Silently fail, like unset, when removing an unassigned attribute.
    *
    * @param string $name
    *
-   * @return ElementInterface
+   * @return ?ElementInterface
    */
-  public function removeChildByName($name);
+  public function removeChildByName(string $name): ?ElementInterface;
 
   /**
    * @todo decide what to do with duplicates.
@@ -136,22 +136,22 @@ interface ElementInterface extends NamedInterface {
    *
    * @return void
    */
-  public function setAttribute(AttributeInterface $attribute);
+  public function setAttribute(AttributeInterface $attribute): void;
 
   /**
    * @throws AttributeNameException
    *
-   * @param array $attributes
+   * @param array<\Grafizzi\Graph\AttributeInterface> $attributes
    *   An array of objects implementing AttributeInterface
    *
    * @return void
    */
-  public function setAttributes(array $attributes);
+  public function setAttributes(array $attributes): void;
 
   /**
    * @param ElementInterface $parent
    *
    * @return void
    */
-  public function setParent(ElementInterface $parent);
+  public function setParent(ElementInterface $parent): void;
 }

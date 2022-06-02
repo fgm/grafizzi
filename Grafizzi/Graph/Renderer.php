@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * @file
  * Grafizzi\Graph\Renderer: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -27,9 +27,9 @@ use Pimple\Container;
 
 /**
  * A Renderer builds a rendering pipeline by instantiating Filters and providing
- * a pipe to chain invokations of their filter() methods.
+ * a pipe to chain invocations of their filter() methods.
  *
- * @method dot()
+ * @method dot(array $args = [])
  * @method string()
  * @method sink()
  */
@@ -40,33 +40,33 @@ class Renderer {
    *
    * @var \Pimple\Container
    */
-  public $dic;
+  public Container $dic;
 
   /**
    * The channel between filters.
    *
-   * @var string
+   * @var ?string
    */
-  public $pipe = null;
+  public ?string $pipe = NULL;
 
   /**
    * Helper to enumerate GraphViz format filters on the current system.
    *
-   * @throws \ErrorException
-   *
-   * @param \Pimple\container $dic
+   * @param \Pimple\Container $dic
    *
    * @return string[]
    *   An array of format names or false if dot cannot be run.
+   * @throws \ErrorException
+   *
    */
   public static function getFormats(Container $dic) {
     $dotCommand = 'dot -Tinvalid';
     $useExceptions = !empty($dic['use_exceptions']);
-    $descriptorSpec = array(
-        0 => array('pipe', 'r'),
-        1 => array('pipe', 'w'),
-        2 => array('pipe', 'w'),
-    );
+    $descriptorSpec = [
+      0 => ['pipe', 'r'],
+      1 => ['pipe', 'w'],
+      2 => ['pipe', 'w'],
+    ];
 
     $process = proc_open($dotCommand, $descriptorSpec, $pipes, NULL, NULL);
     if (!is_resource($process)) {
@@ -87,7 +87,7 @@ class Renderer {
         throw new \ErrorException('GraphViz did not return a usable formats list.');
       }
       else {
-        $formats = array();
+        $formats = [];
       }
     }
     else {
@@ -109,34 +109,31 @@ class Renderer {
   /**
    * Magic method: apply filter methods by simple name.
    *
-   * @see Grafizzi\Graph\Filter\AbstractFilter::create()
-   *
    * @param string $name
    *   The simple name for a filter. Will be converted to an actual class name.
-   * @param array $args
+   * @param array<string> $args
    *   An array of arguments to pass to the filter method.
    *
-   * @throws \DomainException
+   * @return $this
+   * @throws \ErrorException
    *   Throws exception if the filter name does not convert to a usable filter
    *   class.
    *
-   * @return $this
+   * @throws \DomainException*@see Grafizzi\Graph\Filter\AbstractFilter::create()
+   *
    */
-  public function __call($name, $args) {
+  public function __call(string $name, array $args) {
 
+    // Cannot be null: an exception would be thrown instead.
     $filter = isset($args[0])
       ? AbstractFilter::create($name, $args[0])
       : AbstractFilter::create($name);
 
-    if ($filter) {
-      list($this->pipe, $err) = $filter->filter($this->pipe);
-      if (!empty($err)) {
-        $this->dic['logger']->debug($err);
-      }
-    }
-    else {
-      throw new \DomainException('Filter not found: ' . $name);
+    [$this->pipe, $err] = $filter->filter($this->pipe);
+    if (!empty($err)) {
+      $this->dic['logger']->debug($err);
     }
     return $this;
   }
+
 }

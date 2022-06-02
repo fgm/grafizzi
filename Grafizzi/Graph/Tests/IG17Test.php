@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG17Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -44,44 +44,46 @@ require 'vendor/autoload.php';
  */
 class IG17Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
     parent::setUpExtended();
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
+    $g->setDirected(TRUE);
 
-    $nullTitle = array(new Attribute($dic, 'title', NULL));
+    $nullTitle = [new Attribute($dic, 'title', NULL)];
 
     // Global
-    $g->addChild($start = new Node($dic, 'start', array(
+    $g->addChild($start = new Node($dic, 'start', [
       new Attribute($dic, 'shape', 'Mdiamond'),
-    )));
-    $g->addChild($end = new Node($dic, 'end', array(
+    ]));
+    $g->addChild($end = new Node($dic, 'end', [
       new Attribute($dic, 'shape', 'Msquare'),
-    )));
+    ]));
 
-    $nodes = array();
+    $nodes = [];
 
     // cluster0
-    $g->addChild($cluster0 = new Cluster($dic, 0, array(
+    $g->addChild($cluster0 = new Cluster($dic, 0, [
       new Attribute($dic, 'style', 'filled'),
       new Attribute($dic, 'color', 'lightgrey'),
       new Attribute($dic, 'label', 'process #1'),
-    )));
-    for ($i = 0 ; $i < 4 ; $i++) {
+    ]));
+    for ($i = 0; $i < 4; $i++) {
       $nodeName = "a$i";
-      $cluster0->addChild($nodes[$nodeName] = new Node($dic, $nodeName, $nullTitle));
+      $cluster0->addChild($nodes[$nodeName] = new Node($dic, $nodeName,
+        $nullTitle));
     }
 
     // cluster1
-    $g->addChild($cluster1 = new Cluster($dic, 1, array(
+    $g->addChild($cluster1 = new Cluster($dic, 1, [
       new Attribute($dic, 'color', 'blue'),
       new Attribute($dic, 'label', 'process #2'),
-    )));
-    for ($i = 0 ; $i < 4 ; $i++) {
+    ]));
+    for ($i = 0; $i < 4; $i++) {
       $nodeName = "b$i";
-      $cluster1->addChild($nodes[$nodeName] = new Node($dic, $nodeName, $nullTitle));
+      $cluster1->addChild($nodes[$nodeName] = new Node($dic, $nodeName,
+        $nullTitle));
     }
 
     $g->addChild(new Edge($dic, $nodes['a0'], $nodes['a1']));
@@ -104,7 +106,7 @@ class IG17Test extends BaseGraphTest {
   /**
    * Tests g->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<'EOT'
 digraph G {
   start [ shape=Mdiamond ];
@@ -146,4 +148,5 @@ digraph G {
 EOT;
     $this->check($expected, "Image_graphViz test 17 passed.");
   }
+
 }

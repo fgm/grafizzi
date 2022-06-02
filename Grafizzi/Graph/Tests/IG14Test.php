@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG14Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,35 +40,36 @@ require 'vendor/autoload.php';
  */
 class IG14Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
     parent::setUpExtended('structs');
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
+    $g->setDirected(TRUE);
 
     $recordShape = new Attribute($dic, 'shape', 'record');
-    $g->addChild($struct1 = new Node($dic, 'struct1', array(
+    $g->addChild($struct1 = new Node($dic, 'struct1', [
       $recordShape,
       new Attribute($dic, 'label', '<f0> left|<f1> middle|<f2> right'),
-    )));
-    $g->addChild($struct2 = new Node($dic, 'struct2', array(
+    ]));
+    $g->addChild($struct2 = new Node($dic, 'struct2', [
       $recordShape,
       new Attribute($dic, 'label', '<f0> one|<f1> two'),
-    )));
-    $g->addChild($struct3 = new Node($dic, 'struct3', array(
+    ]));
+    $g->addChild($struct3 = new Node($dic, 'struct3', [
       $recordShape,
-      new Attribute($dic, 'label', "hello\nworld | { b |{c|<here> d|e}| f}| g | h"),
-    )));
+      new Attribute($dic, 'label',
+        "hello\nworld | { b |{c|<here> d|e}| f}| g | h"),
+    ]));
 
-    $g->addChild(new Edge($dic, $struct1, $struct2, array(), 'f1', 'f0'));
-    $g->addchild(new Edge($dic, $struct1, $struct3, array(), 'f1', 'here'));
+    $g->addChild(new Edge($dic, $struct1, $struct2, [], 'f1', 'f0'));
+    $g->addchild(new Edge($dic, $struct1, $struct3, [], 'f1', 'here'));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<'EOT'
 digraph structs {
   struct1 [ shape=record, label="<f0> left|<f1> middle|<f2> right" ];
@@ -81,4 +82,5 @@ digraph structs {
 EOT;
     $this->check($expected, "Image_GraphViz test 14 passed.");
   }
+
 }

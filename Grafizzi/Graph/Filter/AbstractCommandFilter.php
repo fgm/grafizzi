@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Filter\AbstractCommandFilter: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -39,19 +39,19 @@ namespace Grafizzi\Graph\Filter;
  */
 abstract class AbstractCommandFilter extends AbstractFilter {
 
-  public static $commandName;
+  public static string $commandName;
 
   /**
    * Options passed on the command line.
    *
-   * @var array
+   * @var array<string,mixed>
    */
-  public $commandOptions = [];
+  public array $commandOptions = [];
 
   /**
    * An array of options passed on the call line of the filter command.
    *
-   * @param array $args
+   * @param array<string,mixed> $args
    */
   public function __construct(array $args = []) {
     $this->commandOptions = $args;
@@ -60,7 +60,7 @@ abstract class AbstractCommandFilter extends AbstractFilter {
   /**
    * {@inheritdoc}
    */
-  public function filter($input) {
+  public function filter(string $input): array {
     $args = '';
     foreach ($this->commandOptions as $k => $v) {
       $args .= ' ' . escapeshellarg("${k}${v}");

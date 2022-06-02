@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG05Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,33 +40,33 @@ require 'vendor/autoload.php';
  */
 class IG05Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended();
-    $this->Graph->setDirected(true);
-    $this->Graph->addChild($a = new Node($this->dic, 'a', array(
+    $this->Graph->setDirected(TRUE);
+    $this->Graph->addChild($a = new Node($this->dic, 'a', [
       new Attribute($this->dic, 'shape', 'polygon'),
       new Attribute($this->dic, 'sides', 5),
       new Attribute($this->dic, 'peripheries', 3),
       new Attribute($this->dic, 'color', 'lightblue'),
       new Attribute($this->dic, 'style', 'filled'),
-    )));
+    ]));
 
     // TODO : support automatic (undeclared) nodes in edges, to remove $b
     $this->Graph->addChild($b = new Node($this->dic, 'b', Node::implicit()));
-    $this->Graph->addChild($c = new Node($this->dic, 'c', array(
+    $this->Graph->addChild($c = new Node($this->dic, 'c', [
       new Attribute($this->dic, 'shape', 'polygon'),
       new Attribute($this->dic, 'sides', 4),
       new Attribute($this->dic, 'skew', .4),
       new Attribute($this->dic, 'label', 'hello world'),
-    )));
-    $this->Graph->addChild($d = new Node($this->dic, 'd', array(
+    ]));
+    $this->Graph->addChild($d = new Node($this->dic, 'd', [
       new Attribute($this->dic, 'shape', 'invtriangle'),
-    )));
-    $this->Graph->addChild($e = new Node($this->dic, 'e', array(
+    ]));
+    $this->Graph->addChild($e = new Node($this->dic, 'e', [
       new Attribute($this->dic, 'shape', 'polygon'),
       new Attribute($this->dic, 'sides', 4),
       new Attribute($this->dic, 'distortion', .7),
-    )));
+    ]));
     $this->Graph->addChild(new Edge($this->dic, $a, $b));
     $this->Graph->addChild(new Edge($this->dic, $b, $c));
     $this->Graph->addChild(new Edge($this->dic, $b, $d));
@@ -76,7 +76,7 @@ class IG05Test extends BaseGraphTest {
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<EOT
 digraph G {
   a [ shape=polygon, sides=5, peripheries=3, color=lightblue, style=filled ];
@@ -91,4 +91,5 @@ digraph G {
 EOT;
     $this->check($expected, "Image_GraphViz test 5 passed.");
   }
+
 }

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG19286Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,7 +40,7 @@ require 'vendor/autoload.php';
  */
 class IG19286Test extends BaseGraphTest {
 
-  public $expected = <<<EOT
+  public string $expected = <<<EOT
 strict digraph G {
   subgraph cluster_c1_id {
     label=c1_title;
@@ -52,24 +52,25 @@ strict digraph G {
 
 EOT;
 
-  public function setUp() : void {
-    parent::setUpExtended('G', array('strict' => true));
+  public function setUp(): void {
+    parent::setUpExtended('G', ['strict' => TRUE]);
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
+    $g->setDirected(TRUE);
 
-    $g->addChild($c1_id = new Cluster($dic, 'c1_id', array(
+    $g->addChild($c1_id = new Cluster($dic, 'c1_id', [
       new Attribute($dic, 'label', 'c1_title'),
-    )));
-    $g->addChild($s1_id = new Subgraph($dic, 's1_id', array(
+    ]));
+    $g->addChild($s1_id = new Subgraph($dic, 's1_id', [
       new Attribute($dic, 'label', 's1_title'),
-    )));
+    ]));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $this->check($this->expected, "Image_GraphViz bug test 19286 passed.");
   }
+
 }

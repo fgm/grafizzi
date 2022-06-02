@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\SinkFilterTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -43,7 +43,7 @@ class SinkFilterTest extends BaseFilterTest {
   /**
    * Tests SinkFilter->filter()
    */
-  public function testFilter() {
+  public function testFilter(): void {
     $in = 'Sink test';
     list($out, $err) = $this->filters[0]->filter($in);
     $this->assertEmpty($out, 'Sink filter drops content from stdout.');

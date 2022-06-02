@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG15019Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -42,7 +42,9 @@ require 'vendor/autoload.php';
  */
 class IG15019Test extends BaseGraphTest {
 
-  public $expected = <<<EOT
+  const CLUSTER_NAME = 0;
+
+  public string $expected = <<<EOT
 strict digraph Bug {
   subgraph cluster_0 {
     fontcolor=black;
@@ -55,37 +57,38 @@ strict digraph Bug {
 
 EOT;
 
-  public function setUp() : void {
-    parent::setUpExtended('Bug', array('strict' => true));
+  public function setUp(): void {
+    parent::setUpExtended('Bug', ['strict' => TRUE]);
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
+    $g->setDirected(TRUE);
 
-    $g->addChild($cluster0 = new Cluster($dic, 0, array(
+    $g->addChild($cluster0 = new Cluster($dic, self::CLUSTER_NAME, [
       new Attribute($dic, 'fontcolor', 'black'),
       new Attribute($dic, 'style', 'filled'),
       new Attribute($dic, 'label', 'Cluster'),
-    )));
+    ]));
     $cluster0->addChild($node = new Node($dic, 'Node'));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $this->check($this->expected, "Image_GraphViz bug test 15019 passed.");
   }
 
   /**
    * @depends testBuild
    */
-  public function testBuild2() {
-    // 0 is the id of the cluster in setUp().
-    $cluster0 = $this->Graph->getChildByName(0);
+  public function testBuild2(): void {
+    $cluster0 = $this->Graph->getChildByName(self::CLUSTER_NAME);
     $this->assertNotNull($cluster0, "Numbered cluster found in graph.");
     // Add the same attribute a second time.
     $cluster0->setAttribute(new Attribute($this->dic, 'style', 'filled'));
 
-    $this->check($this->expected, "Image_GraphViz bug test 15019 redone passed.");
+    $this->check($this->expected,
+      "Image_GraphViz bug test 15019 redone passed.");
   }
+
 }
