@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG02Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -38,28 +38,29 @@ require 'vendor/autoload.php';
  */
 class IG02Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended('structs');
-    $this->Graph->setDirected(true);
+    $this->Graph->setDirected(TRUE);
     $graph = &$this->Graph;
     $dic = $this->dic;
 
     $plainText = new Attribute($dic, 'shape', 'plaintext');
 
-    $graph->addChild($nStruct1 = new Node($dic, 'struct1', array(
+    $graph->addChild($nStruct1 = new Node($dic, 'struct1', [
       $plainText,
       new Attribute($dic, 'label', '<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
    <TR><TD>left</TD><TD PORT="f1">mid dle</TD><TD PORT="f2">right</TD></TR>
-</TABLE>')
-    )));
+</TABLE>'),
+    ]));
 
-    $graph->addChild($nStruct2 = new Node($dic, 'struct2', array(
+    $graph->addChild($nStruct2 = new Node($dic, 'struct2', [
       $plainText,
       new Attribute($dic, 'label', '<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
    <TR><TD PORT="f0">one</TD><TD>two</TD></TR>
-</TABLE>'))));
+</TABLE>'),
+    ]));
 
-    $graph->addChild($nStruct3 = new Node($dic, 'struct3', array(
+    $graph->addChild($nStruct3 = new Node($dic, 'struct3', [
       $plainText,
       new Attribute($dic, 'label', '<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
    <TR>
@@ -75,19 +76,19 @@ class IG02Test extends BaseGraphTest {
       <TD COLSPAN="3">f</TD>
    </TR>
 </TABLE>'),
-    )));
+    ]));
 
     $emptyTitle = new Attribute($dic, 'title', '');
     $graph->addChild($edge12 = new Edge($dic, $nStruct1, $nStruct2,
-      array($emptyTitle), 'f1', 'f0'));
+      [$emptyTitle], 'f1', 'f0'));
     $graph->addChild($edge13 = new Edge($dic, $nStruct1, $nStruct3,
-      array($emptyTitle), 'f2', 'here'));
+      [$emptyTitle], 'f2', 'here'));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<EOT
 digraph structs {
   struct1 [ shape=plaintext, label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
@@ -117,4 +118,5 @@ digraph structs {
 EOT;
     $this->check($expected, "Image_GraphViz test 2 passed.");
   }
+
 }

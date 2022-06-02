@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Filter\StringFilter: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -27,31 +27,32 @@ namespace Grafizzi\Graph\Filter;
  * A Grafizzi filter that also outputs its result to the passed-in string.
  *
  * Since it has to be passed by reference, the argument to use is like:
- * array('out' => &$some_string).
+ * ['out' => &$some_string].
  */
 class StringFilter extends AbstractFilter implements FilterInterface {
 
   /**
    * The reference to the variable in which to copy the result.
    *
-   * @var string
+   * @var ?string
    */
-  public $string = null;
+  public ?string $string = NULL;
 
   /**
    * An optional callable to be invoked on the data.
    *
-   * @var callable
+   * @var ?callable
    *   It receives the input and returns its after filtering.
    */
-  public $callback = null;
+  public $callback = NULL;
 
   /**
-   * @param array $args
-   *   $args[0] is the only used element in this array.
+   * @param array<string,mixed> $args
+   *   Valid keys are 'args' and 'callback'.
+   *
    * @throws \InvalidArgumentException
    */
-  public function __construct(array $args = array()) {
+  public function __construct(array $args = []) {
     if (isset($args['out'])) {
       $this->string = &$args['out'];
     }
@@ -68,7 +69,7 @@ class StringFilter extends AbstractFilter implements FilterInterface {
   /**
    * {@inheritdoc}
    */
-  public function filter($input) {
+  public function filter($input): array {
     /** @var string $stdout */
     $stdout = isset($this->callback)
       ? call_user_func($this->callback, $input)
@@ -76,7 +77,8 @@ class StringFilter extends AbstractFilter implements FilterInterface {
     if (isset($this->string)) {
       $this->string = $stdout;
     }
-    $ret = array($stdout, null);
+    $ret = [$stdout, ''];
     return $ret;
   }
+
 }

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Filter\FilterInterface: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -29,11 +29,11 @@ namespace Grafizzi\Graph\Filter;
 interface FilterInterface {
 
   /**
-   * @param array $args
+   * @param array<string,mixed> $args
    *
    * @return \Grafizzi\Graph\Filter\FilterInterface
    */
-  public function __construct(array $args = array());
+  public function __construct(array $args = []);
 
   /**
    *
@@ -46,5 +46,5 @@ interface FilterInterface {
    *     the next chained filter.
    *   - 1: the info output of the filter, possibly used for error reporting.
    */
-  public function filter($input);
+  public function filter(string $input): array;
 }

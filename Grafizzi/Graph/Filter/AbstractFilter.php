@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Filter\AbstractFilter: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -26,37 +26,35 @@ namespace Grafizzi\Graph\Filter;
 abstract class AbstractFilter implements FilterInterface {
 
   /**
-   * Configuration of the filter instance.
-   *
-   * @var array
+   * @var array<string,mixed>
    */
-  public $config;
+  protected array $args;
 
   /**
-   * Empty constructor provided because it is part of the interface.
-   *
-   * @param array $args
+   * @param array<string,mixed> $args
    */
-  public function __construct(array $args = array()) {}
+  public function __construct(array $args = []) {
+    $this->args = $args;
+  }
 
   /**
    * {@inheritdoc}
    */
-  abstract public function filter($input);
+  abstract public function filter(string $input): array;
 
   /**
    * Factory method for concrete filters.
    *
    * @param string $name
-   * @param array $args
+   * @param array<string,mixed> $args
    *
    * @return FilterInterface
    *
    * @throws \DomainException
    */
-  public static function create($name, array &$args = array()) {
+  public static function create(string $name, array &$args = []) {
     $className = __NAMESPACE__ . '\\' . ucfirst($name) . 'Filter';
-    if (class_exists($className, true)) {
+    if (class_exists($className, TRUE)) {
       $ret = new $className($args);
     }
     else {
@@ -64,4 +62,5 @@ abstract class AbstractFilter implements FilterInterface {
     }
     return $ret;
   }
+
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
@@ -35,7 +35,7 @@ class PseudoCommandFilter extends AbstractCommandFilter {}
  */
 class AbstractCommandFilterTest extends TestCase {
 
-  public function testFilterArguments() {
+  public function testFilterArguments(): void {
     // echo is both a Linux, macOS, and Windows command.
     PseudoCommandFilter::$commandName = 'echo';
     $args = ['+' => 'x', 'foo' => '=bar'];
@@ -45,7 +45,7 @@ class AbstractCommandFilterTest extends TestCase {
     $this->assertEquals("+x foo=bar\n\n", $output);
   }
 
-  public function testUnavailableCommand() {
+  public function testUnavailableCommand(): void {
     $this->expectException(\ErrorException::class);
     // Since this is the name of this package, it is unlikely to exist.
     PseudoCommandFilter::$commandName = 'grafizzi';

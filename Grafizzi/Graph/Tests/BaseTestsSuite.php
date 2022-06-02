@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\BaseTestSuite: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -24,19 +24,21 @@
 
 namespace Grafizzi\Graph\Tests;
 
+use PHPUnit\Framework\TestSuite;
+
 require 'vendor/autoload.php';
 
 /**
  * Static test suite.
  */
-class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
+class BaseTestsSuite extends TestSuite {
 
   /**
    * Extend PHPUnit addTestSuite to add test classes from the current namespace.
    *
    * @see PHPUnit_Framework_TestSuite::addTestSuite()
    */
-  public function addTestSuite($testClass) {
+  public function addTestSuite($testClass): void {
     parent::addTestSuite(__NAMESPACE__ . "\\$testClass");
   }
 
@@ -47,19 +49,19 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
     $this->setName('BaseTestsSuite');
 
     // Original unit tests for Grafizzi.
-    $unitTests = array(
+    $unitTests = [
       'Attribute', 'Cluster', 'Edge',     'Graph',
       'MultiEdge', 'Node',    'Subgraph', 'escape',
       'Renderer',
       'SinkFilter', 'StringFilter',
-    );
+    ];
     foreach ($unitTests as $unit) {
       $this->addTestSuite("{$unit}Test");
     }
 
     // Image_GraphViz tests adapted for Grafizzi.
     // Note: Image_GraphViz tests skip many numbers between 7 and 20.
-    $igTests = array(
+    $igTests = [
       // Base tests
       '01', '02', '03', '04', '05', '06', '09',
       '12', '14', '16', '17', '19', '20', '20b',
@@ -67,7 +69,7 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
       '15019', '15943', '16872', '18676', '19286',
       // Feature request tests
       '12913',
-    );
+    ];
 
     foreach ($igTests as $igTest) {
       $this->addTestSuite("IG{$igTest}Test");
@@ -77,7 +79,7 @@ class BaseTestsSuite extends \PHPUnit_Framework_TestSuite {
   /**
    * Creates the suite.
    */
-  public static function suite() {
+  public static function suite(): self {
     return new self();
   }
 }

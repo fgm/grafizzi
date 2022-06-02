@@ -1,5 +1,6 @@
-# IDE files
+# IDE and OS files
 .idea
+.DS_Store
 
 # Generated documentation
 doxygen

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\AbstractNamed: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -20,13 +20,14 @@
  * along with Grafizzi, in the COPYING.LESSER.txt file.  If not, see
  * <http://www.gnu.org/licenses/>
  */
+
 namespace Grafizzi\Graph;
 
 use Pimple\Container;
 
 abstract class AbstractNamed implements NamedInterface {
 
-  public $fName = null;
+  public string $fName = '';
 
   /**
    * A shortcut to the injected logger.
@@ -46,55 +47,69 @@ abstract class AbstractNamed implements NamedInterface {
   }
 
   /**
+   * @param mixed $any
+   *
+   * @return string
+   */
+  public static function stringify($any): string {
+    if (is_string($any)) {
+      return $any;
+    }
+    if (is_object($any) && method_exists($any, '__toString')) {
+      return $any->__toString();
+    }
+    if (is_bool($any)) {
+      return $any ? 'true' : 'false';
+    }
+    return "$any";
+  }
+
+  /**
    * Will also handle numbers and booleans, and any object with a __toString().
    *
-   * @param string $string
-   *   The string to escape.
+   * @param mixed $value
    * @param boolean $pseudoHtml
    *   Wrap GraphViz-style pseudo-HTML text.
    *
    * @return string
    */
-  public static function escape($string, $pseudoHtml = false) {
-    $keywords = array(
+  public static function escape($value, bool $pseudoHtml = FALSE): string {
+    $keywords = [
       'digraph',
       'edge',
       'graph',
       'node',
       'strict',
       'subgraph',
-    );
+    ];
 
-    $wrapping = false;
+    $wrapping = FALSE;
 
-    // 1. Handle keywords specifically, convert anything else to string.
-    $s = trim(strtolower($string));
-    if (in_array($s, $keywords)) {
-      $wrapping = 'dquote';
-      $s = $string;
-    } elseif (!isset($string)) {
+    // 1. Stringify anything.
+    $s = static::stringify($value);
+    $kwDetector = trim(strtolower($s));
+    if ($kwDetector === '') {
       $s = 'false';
-    } elseif (is_bool($string)) {
-      $s = $string ? 'true' : 'false';
-    } else {
-      $s = (string) $string;
-      if (!self::validateId($s)) {
-        $wrapping = 'dquote';
-      }
     }
 
-    // 2. Wrap requested pseudo-html if it contains at least one terminated element.
-    if ($pseudoHtml && (strpos($s, '</') !== false || strpos($s, '/>') !== false)) {
+    // 2. Handle keywords specifically.
+    if (in_array($kwDetector, $keywords) || !self::validateId($kwDetector)) {
+      $wrapping = 'dquote';
+    }
+
+    // 3. Wrap requested pseudo-html if it contains at least one terminated element.
+    if ($pseudoHtml && (strpos($s, '</') !== FALSE
+        || strpos($s, '/>') !== FALSE)) {
       $wrapping = 'html';
     }
 
-    // 3. Normalize quotes and new lines
+    // 4. Normalize quotes and new lines
     if ($wrapping != 'html') {
-      $s = str_replace(array("\r\n", "\n", "\r", '"'),
-                       array('\n',   '\n', '\n', '\"'), $s);
+      $s = str_replace(["\r\n", "\n", "\r", '"'],
+        ['\n', '\n', '\n', '\"'], $s);
     }
 
-    // 4. Wrap in double quotes if needed.
+    // 5. Wrap in double quotes if needed.
     switch ($wrapping) {
       case 'dquote':
         $s = '"' . $s . '"';
@@ -114,32 +129,32 @@ abstract class AbstractNamed implements NamedInterface {
   /**
    * Helper for escape(). Validate non-quoted id.
    *
-   * @see escape()
-   *
    * @param string $id
    *
    * @return boolean
+   * @see escape()
+   *
    */
   protected static function validateId($id) {
     $regex = '^([a-z_][a-z_0-9]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$';
-    $ret = preg_match("/$regex/i", $id) ? true : false;
+    $ret = (bool) preg_match("/$regex/i", $id);
     return $ret;
   }
 
   /**
    * @see NamedInterface::getBuildName()
    */
-  public function getBuildName() {
+  public function getBuildName(): string {
     return $this->escape($this->getName());
   }
 
   /**
+   * @throws AttributeNameException
    * @see NamedInterface::getName()
    *
-   * @throws AttributeNameException
    */
-  public function getName() {
-    if (!isset($this->fName)) {
+  public function getName(): string {
+    if ($this->fName === '') {
       $message = 'Getting name for unnamed object.';
       $this->logger->error($message);
       throw new AttributeNameException($message);
@@ -150,8 +165,9 @@ abstract class AbstractNamed implements NamedInterface {
   /**
    * @see NamedInterface::setName()
    */
-  public function setName($name) {
+  public function setName($name): void {
     $this->logger->debug($this->getType() . " attribute name set to $name.");
-    $this->fName = $name;
+    $this->fName = $this->stringify($name);
   }
+
 }

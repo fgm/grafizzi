@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG19Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -44,67 +44,68 @@ require 'vendor/autoload.php';
  */
 class IG19Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
     parent::setUpExtended();
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
-    $g->setAttributes(array(
+    $g->setDirected(TRUE);
+    $g->setAttributes([
       new Attribute($dic, 'size', 8.6),
       new Attribute($dic, 'ratio', 'fill'),
-    ));
+    ]);
 
-    $nullTitle = array(new Attribute($dic, 'title', NULL));
+    $nullTitle = [new Attribute($dic, 'title', NULL)];
 
-    $g->addChild($nFan = new Node($dic, 'fan', array('implicit' => TRUE)));
+    $g->addChild($nFan = new Node($dic, 'fan', ['implicit' => TRUE]));
 
-    $g->addChild($error = new Cluster($dic, 'error.h', array(
+    $g->addChild($error = new Cluster($dic, 'error.h', [
       new Attribute($dic, 'label', 'error.h'),
-    )));
+    ]));
     $error->addChild($nInterp_err = new Node($dic, 'interp_err', $nullTitle));
 
-    $g->addChild($sfio = new Cluster($dic, 'sfio.h', array(
-      new Attribute($dic, 'label', 'sfio.h')
-    )));
+    $g->addChild($sfio = new Cluster($dic, 'sfio.h', [
+      new Attribute($dic, 'label', 'sfio.h'),
+    ]));
     $sfio->addChild($nSfprintf = new Node($dic, 'sfprintf', $nullTitle));
 
-    $g->addChild($ciafan = new Cluster($dic, 'ciafan.c', array(
+    $g->addChild($ciafan = new Cluster($dic, 'ciafan.c', [
       new Attribute($dic, 'label', 'ciafan.c'),
-    )));
+    ]));
     $ciafan->addChild($nCiafan = new Node($dic, 'ciafan', $nullTitle));
     $ciafan->addChild($nComputefan = new Node($dic, 'computefan', $nullTitle));
     $ciafan->addChild($nIncrement = new Node($dic, 'increment', $nullTitle));
 
-    $g->addChild($util = new Cluster($dic, 'util.c', array(
+    $g->addChild($util = new Cluster($dic, 'util.c', [
       new Attribute($dic, 'label', 'util.c'),
-    )));
+    ]));
     $util->addChild($nStringdup = new Node($dic, 'stringdup', $nullTitle));
     $util->addChild($nFatal = new Node($dic, 'fatal', $nullTitle));
     $util->addChild($nDebug = new Node($dic, 'debug', $nullTitle));
 
-    $g->addChild($query = new Cluster($dic, 'query.h', array(
+    $g->addChild($query = new Cluster($dic, 'query.h', [
       new Attribute($dic, 'label', 'query.h'),
-    )));
+    ]));
     $query->addChild($nRef = new Node($dic, 'ref', $nullTitle));
     $query->addChild($nDef = new Node($dic, 'def', $nullTitle));
 
     // No label on this cluster.
     $g->addChild($field = new Cluster($dic, 'field.h'));
-    $field->addChild($nGet_sym_fields = new Node($dic, 'get_sym_fields', $nullTitle));
+    $field->addChild($nGet_sym_fields = new Node($dic, 'get_sym_fields',
+      $nullTitle));
 
-    $g->addChild($stdio = new Cluster($dic, 'stdio.h', array(
+    $g->addChild($stdio = new Cluster($dic, 'stdio.h', [
       new Attribute($dic, 'label', 'stdio.h'),
-    )));
+    ]));
     $stdio->addChild($nStdprintf = new Node($dic, 'stdprintf', $nullTitle));
     $stdio->addChild($nStdsprintf = new Node($dic, 'stdsprintf', $nullTitle));
 
     $g->addChild($libc = new Cluster($dic, '<libc.a>'));
     $libc->addChild($nGetopt = new Node($dic, 'getopt', $nullTitle));
 
-    $g->addChild($stdlib = new Cluster($dic,'stdlib.h', array(
+    $g->addChild($stdlib = new Cluster($dic, 'stdlib.h', [
       new Attribute($dic, 'label', 'stdlib.h'),
-    )));
+    ]));
     $stdlib->addChild($nExit = new Node($dic, 'exit', $nullTitle));
     $stdlib->addChild($nMalloc = new Node($dic, 'malloc', $nullTitle));
     $stdlib->addChild($nFree = new Node($dic, 'free', $nullTitle));
@@ -116,9 +117,9 @@ class IG19Test extends BaseGraphTest {
     $g->addChild($index = new Cluster($dic, 'index.h'));
     $index->addChild($nInit_index = new Node($dic, 'init_index', $nullTitle));
 
-    $g->addChild($string = new Cluster($dic, 'string.h', array(
+    $g->addChild($string = new Cluster($dic, 'string.h', [
       new Attribute($dic, 'label', 'string.h'),
-    )));
+    ]));
     $string->addChild($nStrcpy = new Node($dic, 'strcpy', $nullTitle));
     $string->addChild($nStrlen = new Node($dic, 'strlen', $nullTitle));
     $string->addChild($nStrcmp = new Node($dic, 'strcmp', $nullTitle));
@@ -169,7 +170,7 @@ class IG19Test extends BaseGraphTest {
   /**
    * Tests g->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<'EOT'
 digraph G {
   size=8.6;
@@ -280,4 +281,5 @@ digraph G {
 EOT;
     $this->check($expected, "Image_graphViz test 19 passed.");
   }
+
 }

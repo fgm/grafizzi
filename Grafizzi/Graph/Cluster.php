@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Cluster: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -25,7 +25,7 @@ namespace Grafizzi\Graph;
 
 class Cluster extends Subgraph {
 
-  public function getBuildName() {
+  public function getBuildName(): string {
     $name = $this->getName();
     if (strpos($name, 'cluster') !== 0) {
       $name = "cluster_$name";

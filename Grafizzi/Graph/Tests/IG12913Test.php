@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG12913Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -55,7 +55,7 @@ class IG12913Test extends BaseGraphTest {
    */
   public $dic2;
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended('G');
     $this->Graph2 = $this->Graph;
     $this->dic2 = $this->dic;
@@ -63,29 +63,29 @@ class IG12913Test extends BaseGraphTest {
     unset($this->dic, $this->Graph);
 
     parent::setUpExtended('G');
-    $this->dic['use_exceptions'] = true;
+    $this->dic['use_exceptions'] = TRUE;
 
     $this->Graph->addChild($cluster1 = new Cluster($this->dic, 1));
-    $cluster1->addChild($node1 = new Node($this->dic, 'Node1', array(
+    $cluster1->addChild($node1 = new Node($this->dic, 'Node1', [
       new Attribute($this->dic, 'label', 'Node1'),
-    )));
+    ]));
 
-    $this->Graph2->addChild($cluster2 = new Cluster($this->dic2, 2));
-    $cluster2->addChild($node2 = new Node($this->dic2, 'Node2', array(
+    $this->Graph2->addChild($cluster2 = new Cluster($this->dic2, '2'));
+    $cluster2->addChild($node2 = new Node($this->dic2, 'Node2', [
       new Attribute($this->dic2, 'label', 'Node2'),
-    )));
+    ]));
   }
 
   /**
    * @param DotFilter $filter
    * @param string $format
    */
-  protected function withDicException(DotFilter $filter, $format) {
+  protected function withDicException(DotFilter $filter, string $format): void {
     try {
       $filter->image($format);
-    }
-    catch (\InvalidArgumentException $e) {
-      $this->assertInstanceOf('InvalidArgumentException', $e, 'Invalid argument for invalid format.');
+    } catch (\InvalidArgumentException $e) {
+      $this->assertInstanceOf('InvalidArgumentException', $e,
+        'Invalid argument for invalid format.');
     }
   }
 
@@ -93,7 +93,7 @@ class IG12913Test extends BaseGraphTest {
    * @param DotFilter $filter
    * @param string $format
    */
-  protected function withDicNoException(DotFilter $filter, $format) {
+  protected function withDicNoException(DotFilter $filter, string $format): void {
     $result = $filter->image($format);
     $this->assertFalse($result, 'Unavailable format image.');
   }
@@ -101,10 +101,13 @@ class IG12913Test extends BaseGraphTest {
   /**
    * Tests Graph->image()
    */
-  public function testImage() {
+  public function testImage(): void {
     $dotFilter = new DotFilter();
     $format = DotFilterTest::INVALID_FORMAT;
-    $this->withDicException($dotFilter->setDic(new Container(array('use_exceptions' => true))), $format);
-    $this->withDicNoException($dotFilter->setDic(new Container(array('use_exceptions' => false))), $format);
+    $this->withDicException(
+      $dotFilter->setDic(new Container(['use_exceptions' => true])), $format);
+    $this->withDicNoException(
+      $dotFilter->setDic(new Container(['use_exceptions' => false])), $format);
   }
+
 }

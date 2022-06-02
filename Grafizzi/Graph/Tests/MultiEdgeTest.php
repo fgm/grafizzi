@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\MultiEdgeTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -43,20 +43,21 @@ class MultiEdgeTest extends BaseGraphTest {
 
   /**
    *
-   * @var MultiEdge
+   * @var ?MultiEdge
    */
-  private $MultiEdge;
+  private ?MultiEdge $MultiEdge;
 
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() : void {
+  protected function setUp(): void {
     parent::setUpExtended();
 
-    $this->Graph->setDirected(false);
-    $nodes = array();
-    for ($i = 0 ; $i < 4 ; $i++) {
-      $this->Graph->addChild($nodes[] = new Node($this->dic, "n$i", Node::implicit()));
+    $this->Graph->setDirected(FALSE);
+    $nodes = [];
+    for ($i = 0; $i < 4; $i++) {
+      $this->Graph->addChild($nodes[] = new Node($this->dic, "n$i",
+        Node::implicit()));
     }
 
     // Test case is n0 -- n1 -- n2 -- n3 -- n0, so append n0
@@ -67,32 +68,34 @@ class MultiEdgeTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() : void {
-    $this->MultiEdge = null;
+  protected function tearDown(): void {
+    $this->MultiEdge = NULL;
     parent::tearDown();
   }
 
   /**
    * Tests MultiEdge->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     // Test unbound multiedge.
-$expected = <<<EOT
+    $expected = <<<EOT
 n0 -- n1 -- n2 -- n3 -- n0;
 
 EOT;
-    $build = $this->MultiEdge->build(false);
-    $this->assertEquals($expected, $build, "Unbound undirected multiedge without attributes built correctly.");
+    $build = $this->MultiEdge->build(FALSE);
+    $this->assertEquals($expected, $build,
+      "Unbound undirected multiedge without attributes built correctly.");
 
     // Test bound multiedge.
-    $this->Graph->setDirected(false);
+    $this->Graph->setDirected(FALSE);
     $this->Graph->addChild($this->MultiEdge);
     $expected = <<<EOT
   n0 -- n1 -- n2 -- n3 -- n0;
 
 EOT;
     $build = $this->MultiEdge->build();
-    $this->assertEquals($expected, $build, "Undirected multiedge bound to root graph without attributes built correctly.");
+    $this->assertEquals($expected, $build,
+      "Undirected multiedge bound to root graph without attributes built correctly.");
 
     // Test full graph build.
     $expected = <<<EOT
@@ -102,12 +105,13 @@ graph G {
 
 EOT;
     $build = $this->Graph->build();
-    $this->assertEquals($expected, $build, "Graph with undirected multiedge without attributes built correctly.");
+    $this->assertEquals($expected, $build,
+      "Graph with undirected multiedge without attributes built correctly.");
 
     // Test full graph with attributes.
-    $this->MultiEdge->setAttributes(array(
+    $this->MultiEdge->setAttributes([
       new Attribute($this->dic, 'label', 'Multiedge label'),
-    ));
+    ]);
     $expected = <<<EOT
 graph G {
   n0 -- n1 -- n2 -- n3 -- n0 [ label="Multiedge label" ];
@@ -115,77 +119,80 @@ graph G {
 
 EOT;
     $build = $this->Graph->build();
-    $this->assertEquals($expected, $build, "Graph with undirected multiedge with attributes built correctly.");
+    $this->assertEquals($expected, $build,
+      "Graph with undirected multiedge with attributes built correctly.");
   }
 
   // Normal attributes list on unbound multiedge.
-  public function testBuildAttributesNormal() {
-    $this->MultiEdge->setAttributes(array(
+  public function testBuildAttributesNormal(): void {
+    $this->MultiEdge->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'baz', 'quux'),
-    ));
+    ]);
     $expected = <<<EOT
 n0 -- n1 -- n2 -- n3 -- n0 [ foo=bar, baz=quux ];
 
 EOT;
-    $actual = $this->MultiEdge->build(false);
+    $actual = $this->MultiEdge->build(FALSE);
     $this->assertEquals($expected, $actual);
   }
 
   // Attribute list with empty title in middle on unbound multiedge.
-  public function testBuildAttributesEmptyMiddle() {
-    $this->MultiEdge->setAttributes(array(
+  public function testBuildAttributesEmptyMiddle(): void {
+    $this->MultiEdge->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'title', ''),
       new Attribute($this->dic, 'baz', 'quux'),
-    ));
+    ]);
     $expected = <<<EOT
 n0 -- n1 -- n2 -- n3 -- n0 [ foo=bar, baz=quux ];
 
 EOT;
-    $actual = $this->MultiEdge->build(false);
+    $actual = $this->MultiEdge->build(FALSE);
     $this->assertEquals($expected, $actual);
   }
 
   // Attribute list with empty title as single attribute on unbound multiedge.
-  public function testBuildAttributesOnlyEmpty() {
-    $this->MultiEdge->setAttributes(array(
+  public function testBuildAttributesOnlyEmpty(): void {
+    $this->MultiEdge->setAttributes([
       new Attribute($this->dic, 'title', ''),
-    ));
+    ]);
     $expected = <<<EOT
 n0 -- n1 -- n2 -- n3 -- n0;
 
 EOT;
-    $actual = $this->MultiEdge->build(false);
+    $actual = $this->MultiEdge->build(FALSE);
     $this->assertEquals($expected, $actual);
   }
 
   // Attribute list with empty title as last attribute on unbound multiedge.
-  public function testBuildAttributesEmptyLast() {
-    $this->MultiEdge->setAttributes(array(
+  public function testBuildAttributesEmptyLast(): void {
+    $this->MultiEdge->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'baz', 'quux'),
       new Attribute($this->dic, 'title', ''),
-    ));
+    ]);
     $expected = <<<EOT
 n0 -- n1 -- n2 -- n3 -- n0 [ foo=bar, baz=quux ];
 
 EOT;
-    $actual = $this->MultiEdge->build(false);
+    $actual = $this->MultiEdge->build(FALSE);
     $this->assertEquals($expected, $actual);
   }
 
   /**
    * Tests MultiEdge::getAllowedChildTypes()
    */
-  public function testGetAllowedChildTypes() {
-    $this->assertEmpty(MultiEdge::getAllowedChildTypes(), 'MultiEdge does not support children.');
+  public function testGetAllowedChildTypes(): void {
+    $this->assertEmpty(MultiEdge::getAllowedChildTypes(),
+      'MultiEdge does not support children.');
   }
 
   /**
    * Tests MultiEdge->getType()
    */
-  public function testGetType() {
+  public function testGetType(): void {
     $this->assertEquals('multiedge', $this->MultiEdge->getType());
   }
+
 }

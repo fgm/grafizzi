@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\BaseCompositeTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -41,29 +41,29 @@ abstract class BaseCompositeTest extends BaseGraphTest {
   protected $name;
 
   /**
-   * @var Subgraph
+   * @var ?Subgraph
    */
-  protected $Subgraph;
+  protected ?Subgraph $Subgraph;
 
   /**
    * @var string
    *   The type of subgraph being tested.
    */
-  protected $type;
+  protected string $type;
 
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() : void {
-    $this->Subgraph = null;
+  protected function tearDown(): void {
+    $this->Subgraph = NULL;
     parent::tearDown();
   }
 
-  public function testBuild() {
+  public function testBuild(): void {
     $n11 = new Node($this->dic, 'node11');
     $n12 = new Node($this->dic, 'node12');
     $e11_12 = new Edge($this->dic, $n11, $n12);
-    foreach (array($n11, $n12, $e11_12) as $element) {
+    foreach ([$n11, $n12, $e11_12] as $element) {
       $this->Subgraph->addChild($element);
     }
     $expected = <<<EOT
@@ -76,7 +76,8 @@ subgraph {$this->name} {
 EOT;
 
     $build = $this->Subgraph->build();
-    $this->assertEquals($expected, $build, "Unbound {$this->type} (2 nodes, 1 edge) built correctly.");
+    $this->assertEquals($expected, $build,
+      "Unbound {$this->type} (2 nodes, 1 edge) built correctly.");
 
     // Test bound subgraph build.
     $this->Graph->addChild($this->Subgraph);
@@ -89,7 +90,8 @@ EOT;
 
 EOT;
     $build = $this->Subgraph->build();
-    $this->assertEquals($expected, $build, "Bound {$this->type} (2 nodes, 1 edge) built correctly.");
+    $this->assertEquals($expected, $build,
+      "Bound {$this->type} (2 nodes, 1 edge) built correctly.");
 
     // Test graph with bound subgraph.
     $expected = <<<EOT
@@ -103,22 +105,26 @@ digraph G {
 
 EOT;
     $build = $this->Graph->build();
-    $this->assertEquals($expected, $build, "Graph with 1 {$this->type} (2 nodes, 1 edge) built correctly.");
+    $this->assertEquals($expected, $build,
+      "Graph with 1 {$this->type} (2 nodes, 1 edge) built correctly.");
   }
 
   /**
    * Tests Subgraph->getBuildName()
    */
-  public function testGetBuildName() {
+  public function testGetBuildName(): void {
     $buildName = $this->Subgraph->getBuildName();
-    $this->assertEquals($this->name, $buildName, "{$this->type} name matches the expected format.");
+    $this->assertEquals($this->name, $buildName,
+      "{$this->type} name matches the expected format.");
   }
 
   /**
    * Tests Subgraph->getType()
    */
-  public function testGetType() {
+  public function testGetType(): void {
     $type = $this->Subgraph->getType();
-    $this->assertEquals('subgraph', $type, "Type of {$this->type} is \"subgraph\".");
+    $this->assertEquals('subgraph', $type,
+      "Type of {$this->type} is \"subgraph\".");
   }
+
 }

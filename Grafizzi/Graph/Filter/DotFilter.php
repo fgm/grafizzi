@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Filter\DotFilter: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -37,25 +37,30 @@ class DotFilter extends AbstractCommandFilter {
   /**
    * @var \Pimple\Container
    */
-  protected $dic;
+  protected Container $dic;
 
   /**
    * Valid output formats.
    *
-   * @var array
+   * @var array<string>
    */
-  public $formats = [];
-
-  public static $commandName = 'dot';
+  public array $formats = [];
 
   /**
-   * @throws \InvalidArgumentException
+   * The name of the external command to run.
    *
+   * @var string
+   */
+  public static string $commandName = 'dot';
+
+  /**
    * @param string $format
    *
    * @return boolean
+   * @throws \InvalidArgumentException
+   * @throws \ErrorException
    */
-  public function image($format) {
+  public function image($format): bool {
     if (empty($this->formats)) {
       // In case of failure, this will hold an empty array, not null.
       $this->formats = Renderer::getFormats($this->dic);

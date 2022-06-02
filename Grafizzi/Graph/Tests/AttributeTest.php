@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\AttributeTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -34,9 +34,9 @@ class AttributeTest extends BaseGraphTest {
 
   /**
    *
-   * @var Attribute
+   * @var ?Attribute
    */
-  private $Attribute;
+  private ?Attribute $Attribute = null;
 
   /**
    * Prepares the environment before running a test.
@@ -57,7 +57,7 @@ class AttributeTest extends BaseGraphTest {
   /**
    * Tests Attribute->__construct()
    */
-  public function test__construct() {
+  public function test__construct(): void {
     $this->assertEquals('label', $this->Attribute->getName());
     $this->assertEquals('A plain label', $this->Attribute->getValue());
   }
@@ -65,7 +65,7 @@ class AttributeTest extends BaseGraphTest {
   /**
    * Tests Attribute->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $ret = $this->Attribute->build($this->Graph->getDirected());
     $this->assertEquals('label="A plain label"', $ret);
 
@@ -75,21 +75,21 @@ class AttributeTest extends BaseGraphTest {
 
     $title = new Attribute($this->dic, 'title', '');
     $ret = $title->build($this->Graph->getDirected());
-    $this->assertNull($ret, 'Empty title built as null.');
+    $this->assertEmpty($ret, 'Empty title built as empty.');
 
   }
 
   /**
    * Tests Attribute::getAllowedNames()
    */
-  public function testGetAllowedNames() {
+  public function testGetAllowedNames(): void {
     $this->assertEmpty(Attribute::getAllowedNames());
   }
 
   /**
    * Tests Attribute::getDefaultValue()
    */
-  public function testGetDefaultValue() {
+  public function testGetDefaultValue(): void {
     $name = $this->Attribute->getName();
     $this->assertNull(Attribute::getDefaultValue($name));
   }
@@ -97,21 +97,21 @@ class AttributeTest extends BaseGraphTest {
   /**
    * Tests Attribute::getType()
    */
-  public function testGetType() {
+  public function testGetType(): void {
     $this->assertEquals('attribute', $this->Attribute->getType());
   }
 
   /**
    * Tests Attribute->getValue()
    */
-  public function testGetValue() {
+  public function testGetValue(): void {
     $this->assertEquals('A plain label', $this->Attribute->getValue());
   }
 
   /**
    * Tests Attribute->setName()
    */
-  public function testSetName() {
+  public function testSetName(): void {
     $this->Attribute->setName('font');
     $this->assertEquals('font', $this->Attribute->getName());
   }
@@ -121,10 +121,9 @@ class AttributeTest extends BaseGraphTest {
    *
    * @depends testSetName
    */
-  public function testSetValue() {
+  public function testSetValue(): void {
     $name = 'Times New Roman';
     $this->Attribute->setValue($name);
     $this->assertEquals($name, $this->Attribute->getValue());
   }
 }
-

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\EdgeTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -36,9 +36,9 @@ use Grafizzi\Graph\Node;
 class EdgeTest extends BaseGraphTest {
 
   /**
-   * @var Edge
+   * @var ?Edge
    */
-  private $Edge;
+  private ?Edge $Edge;
 
   /**
    * @var Attribute
@@ -48,14 +48,15 @@ class EdgeTest extends BaseGraphTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() : void {
+  protected function setUp(): void {
     parent::setUpExtended();
     $src = new Node($this->dic, 'source');
     $dst = new Node($this->dic, 'destination');
-    $this->Attribute = new Attribute($this->dic, 'label', 'Source to Destination');
+    $this->Attribute = new Attribute($this->dic, 'label',
+      'Source to Destination');
     $this->Edge = new Edge($this->dic, $src, $dst);
     $this->Edge->setAttribute($this->Attribute);
-    foreach (array($src, $dst, $this->Edge) as $child) {
+    foreach ([$src, $dst, $this->Edge] as $child) {
       $this->Graph->addChild($child);
     }
   }
@@ -63,16 +64,17 @@ class EdgeTest extends BaseGraphTest {
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() : void {
-    $this->Edge = null;
+  protected function tearDown(): void {
+    $this->Edge = NULL;
     parent::tearDown();
   }
 
   /**
    * Tests Edge->__construct()
    */
-  public function test__construct() {
-    $this->assertEquals($this->Attribute, $this->Edge->getAttributeByName('label'),
+  public function test__construct(): void {
+    $this->assertEquals($this->Attribute,
+      $this->Edge->getAttributeByName('label'),
       'Edge is correctly labeled');
   }
 
@@ -81,7 +83,7 @@ class EdgeTest extends BaseGraphTest {
    *
    * @TODO test graph build
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $dot = $this->Edge->build($this->Graph->getDirected());
     $this->assertEquals(<<<EOT
   source -> destination [ label="Source to Destination" ];
@@ -95,15 +97,16 @@ EOT
    *
    * @param string $expected
    *   The expected GraphViz output.
-   * @param array $edges
+   * @param array<array<string>> $edges
    *
-   * @internal param array $toSet An array of edges to add.*   An array of edges to add.
+   * @internal param array $toSet An array of edges to add.*   An array of
+   *   edges to add.
    */
-  public function buildTestHelper($expected, array $edges) {
+  public function buildTestHelper(string $expected, array $edges): void {
     $this->Edge->removeAttribute($this->Attribute);
-    $toSet = array();
+    $toSet = [];
     foreach ($edges as $edge) {
-      list($name, $value) = $edge;
+      [$name, $value] = $edge;
       $toSet[] = new Attribute($this->dic, $name, $value);
     }
     $this->Edge->setAttributes($toSet);
@@ -111,69 +114,69 @@ EOT
     $this->assertEquals($expected, $actual);
   }
 
-  public function testBuildAttributesNormal() {
+  public function testBuildAttributesNormal(): void {
     $expected = <<<EOT
   source -> destination [ foo=bar, baz=quux ];
 
 EOT;
-    $this->buildTestHelper($expected, array(
-      array('foo', 'bar'),
-      array('baz', 'quux'),
-    ));
+    $this->buildTestHelper($expected, [
+      ['foo', 'bar'],
+      ['baz', 'quux'],
+    ]);
   }
 
   // Attribute list with empty title in middle on edge bound to root graph.
-  public function testBuildAttributesEmptyMiddle() {
+  public function testBuildAttributesEmptyMiddle(): void {
     $expected = <<<EOT
   source -> destination [ foo=bar, baz=quux ];
 
 EOT;
 
-    $this->buildTestHelper($expected, array(
-      array('foo', 'bar'),
-      array('title', ''),
-      array('baz', 'quux'),
-    ));
+    $this->buildTestHelper($expected, [
+      ['foo', 'bar'],
+      ['title', ''],
+      ['baz', 'quux'],
+    ]);
   }
 
   // Attribute list with empty title as single attribute on edge bound to root graph.
-  public function testBuildAttributesOnlyEmpty() {
+  public function testBuildAttributesOnlyEmpty(): void {
     $expected = <<<EOT
   source -> destination;
 
 EOT;
 
-    $this->buildTestHelper($expected, array(
-      array('title', ''),
-    ));
+    $this->buildTestHelper($expected, [
+      ['title', ''],
+    ]);
   }
 
   // Attribute list with empty title as last attribute on edge bound to root graph.
-  public function testBuildAttributesEmptyLast() {
+  public function testBuildAttributesEmptyLast(): void {
     $expected = <<<EOT
   source -> destination [ foo=bar, baz=quux ];
 
 EOT;
 
-    $this->buildTestHelper($expected, array(
-      array('foo', 'bar'),
-      array('baz', 'quux'),
-      array('title', ''),
-    ));
+    $this->buildTestHelper($expected, [
+      ['foo', 'bar'],
+      ['baz', 'quux'],
+      ['title', ''],
+    ]);
   }
 
   /**
    * Tests Edge::getAllowedChildTypes()
    */
-  public function testGetAllowedChildTypes() {
+  public function testGetAllowedChildTypes(): void {
     $this->assertEmpty(Edge::getAllowedChildTypes());
   }
 
   /**
    * Tests Edge::getType()
    */
-  public function testGetType() {
+  public function testGetType(): void {
     $this->assertEquals('edge', $this->Edge->getType());
   }
-}
 
+}

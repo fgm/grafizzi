@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\GraphTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -34,14 +34,14 @@ use \Grafizzi\Graph\Graph;
  */
 class GraphTest extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended();
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $graph = $this->Graph->build();
     $this->assertEquals(<<<EOT
 digraph G {
@@ -52,11 +52,11 @@ EOT
   }
 
   // Normal attributes list.
-  public function testBuildAttributesNormal() {
-    $this->Graph->setAttributes(array(
+  public function testBuildAttributesNormal(): void {
+    $this->Graph->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'baz', 'quux'),
-    ));
+    ]);
     $expected = <<<EOT
 digraph G {
   foo=bar;
@@ -69,12 +69,12 @@ EOT;
   }
 
   // Attribute list with empty title in middle.
-  public function testBuildAttributesEmptyMiddle() {
-    $this->Graph->setAttributes(array(
+  public function testBuildAttributesEmptyMiddle(): void {
+    $this->Graph->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'title', ''),
       new Attribute($this->dic, 'baz', 'quux'),
-    ));
+    ]);
     $expected = <<<EOT
 digraph G {
   foo=bar;
@@ -87,10 +87,10 @@ EOT;
   }
 
   // Attribute list with empty title as single attribute.
-  public function testBuildAttributesOnlyEmpty() {
-    $this->Graph->setAttributes(array(
-        new Attribute($this->dic, 'title', ''),
-    ));
+  public function testBuildAttributesOnlyEmpty(): void {
+    $this->Graph->setAttributes([
+      new Attribute($this->dic, 'title', ''),
+    ]);
     $expected = <<<EOT
 digraph G {
 } /* /digraph G */
@@ -101,12 +101,12 @@ EOT;
   }
 
   // Attribute list with empty title as last attribute.
-  public function testBuildAttributesEmptyLast() {
-    $this->Graph->setAttributes(array(
+  public function testBuildAttributesEmptyLast(): void {
+    $this->Graph->setAttributes([
       new Attribute($this->dic, 'foo', 'bar'),
       new Attribute($this->dic, 'baz', 'quux'),
       new Attribute($this->dic, 'title', ''),
-    ));
+    ]);
     $expected = <<<EOT
 digraph G {
   foo=bar;
@@ -121,38 +121,38 @@ EOT;
   /**
    * Tests Graph::getAllowedChildTypes()
    */
-  public function testGetAllowedChildTypes() {
+  public function testGetAllowedChildTypes(): void {
     $types = Graph::getAllowedChildTypes();
     $this->assertTrue(is_array($types) && count($types) == 5,
       'Five child types allowed for Graphs.');
     ksort($types);
-    $expectedTypes = array(
+    $expectedTypes = [
       'cluster',
       'edge',
       'multiedge',
       'node',
       'subgraph',
-    );
+    ];
     $this->assertEquals($expectedTypes, $types);
   }
 
   /**
    * Tests Graph->getDirected()
    */
-  public function testGetDirected() {
+  public function testGetDirected(): void {
     $dir = $this->Graph->getDirected();
-    $this->assertEquals(true, $dir, "Graph is directed by default.");
+    $this->assertEquals(TRUE, $dir, "Graph is directed by default.");
   }
 
   /**
    * Tests Graph::getType()
    */
-  public function testGetType() {
-    $this->Graph->setDirected(false);
+  public function testGetType(): void {
+    $this->Graph->setDirected(FALSE);
     $type = $this->Graph->getType();
     $this->assertEquals('graph', $type, 'Graph type is "graph".');
 
-    $this->Graph->setDirected(true);
+    $this->Graph->setDirected(TRUE);
     $type = $this->Graph->getType();
     $this->assertEquals('digraph', $type, 'Graph type is "digraph".');
   }
@@ -160,9 +160,10 @@ EOT;
   /**
    * Tests Graph->setDirected()
    */
-  public function testSetDirected() {
-    $this->Graph->setDirected(false);
+  public function testSetDirected(): void {
+    $this->Graph->setDirected(FALSE);
     $this->assertFalse($this->Graph->getDirected(),
       "Setting directed to false changes the result of getDirected().");
   }
+
 }

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG20bTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -41,26 +41,26 @@ require 'vendor/autoload.php';
  */
 class IG20bTest extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
     parent::setUpExtended();
     $graph = $this->Graph;
     $dic = $this->dic;
-    $graph->setDirected(true);
-    $graph->setAttributes(array(
-      new Attribute($dic, 'compound', true),
-    ));
+    $graph->setDirected(TRUE);
+    $graph->setAttributes([
+      new Attribute($dic, 'compound', TRUE),
+    ]);
 
-    $nullTitle = array(new Attribute($dic, 'title', NULL));
-    $nodes = array();
+    $nullTitle = [new Attribute($dic, 'title', NULL)];
+    $nodes = [];
 
     $graph->addChild($cluster0 = new Cluster($dic, 0, $nullTitle));
-    foreach (array('a', 'b', 'c', 'd') as $name) {
+    foreach (['a', 'b', 'c', 'd'] as $name) {
       $cluster0->addChild($nodes[$name] = new Node($dic, $name));
     }
 
     $graph->addChild($cluster1 = new Cluster($dic, 1, $nullTitle));
-    foreach (array('e', 'f', 'g') as $name) {
+    foreach (['e', 'f', 'g'] as $name) {
       $cluster1->addChild($nodes[$name] = new Node($dic, $name));
     }
 
@@ -70,27 +70,28 @@ class IG20bTest extends BaseGraphTest {
 
     // Note how we use getBuildName() instead of getName() for lhead/ltail,
     // because this are the strings GraphViz expects.
-    $graph->addChild(new Edge($dic, $nodes['b'], $nodes['f'], array(
+    $graph->addChild(new Edge($dic, $nodes['b'], $nodes['f'], [
       new Attribute($dic, 'lhead', $cluster1->getBuildName()),
-    )));
+    ]));
     $graph->addChild(new Edge($dic, $nodes['c'], $nodes['d']));
-    $graph->addChild(new Edge($dic, $nodes['c'], $nodes['g'], array(
+    $graph->addChild(new Edge($dic, $nodes['c'], $nodes['g'], [
       new Attribute($dic, 'ltail', $cluster0->getBuildName()),
       new Attribute($dic, 'lhead', $cluster1->getBuildName()),
-    )));
-    $graph->addChild(new Edge($dic, $nodes['c'],  $nodes['e'], array(
+    ]));
+    $graph->addChild(new Edge($dic, $nodes['c'], $nodes['e'], [
       new Attribute($dic, 'ltail', $cluster0->getBuildName()),
-    )));
+    ]));
     $graph->addChild(new Edge($dic, $nodes['e'], $nodes['g']));
     $graph->addChild(new Edge($dic, $nodes['e'], $nodes['f']));
     $graph->addChild(new Edge($dic, $nodes['d'], $nodes['e']));
-    $graph->addChild(new Edge($dic, $nodes['d'], $nodes['h'] = new Node($dic, 'h', array('implicit' => true))));
+    $graph->addChild(new Edge($dic, $nodes['d'],
+      $nodes['h'] = new Node($dic, 'h', ['implicit' => TRUE])));
   }
 
   /**
    * Tests g->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<'EOT'
 digraph G {
   compound=true;
@@ -122,4 +123,5 @@ digraph G {
 EOT;
     $this->check($expected, "Image_graphViz test 20b passed.");
   }
+
 }

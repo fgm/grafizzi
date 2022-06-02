@@ -9,15 +9,15 @@ Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi?ref=badge_shield)
 
 
-# 1) Using Grafizzi in your PHP GraphViz projects
+## Using Grafizzi in your PHP GraphViz projects
 
-## Installing it in your project.
+### Installing it in your project.
 
 ```bash
 $ composer require osinet/grafizzi
 ```
 
-## Generating graphs with Grafizzi
+### Generating graphs with Grafizzi
 
 1. Create a Pimple instance, passing it an instance for your PSR/3 logger of choice
   (e.g. [Monolog]) in the `logger` key, and possibly other arguments like 
@@ -43,11 +43,11 @@ You can take inspiration from the examples provided in the `app/` directory:
   
 [Monolog]: https://github.com/Seldaek/monolog
 
-# 2) Working on Grafizzi itself
+## Working on Grafizzi itself
 
 ### Installing Grafizzi for development
 
-#### a) Obtain the Grafizzi sources
+#### Obtain the Grafizzi sources
 
 With Grafizzi being very new, the easiest way to get started is to clone the
 Git repository.
@@ -55,7 +55,7 @@ Git repository.
     git clone https://github.com/fgm/grafizzi.git
 
 
-#### b) Download the dependencies
+#### Download the dependencies
 
 Once you have a clone of the Grafizzi repository, you need to install its
 dependencies, using the Composer package dependency manager. Download Composer
@@ -67,10 +67,10 @@ Then run:
 
     php composer.phar install
 
-Note that Grafizzi is available for PHP &ge; 5.4, including 7.1.x and HHVM.
+Note that Grafizzi is available for PHP &ge; 7.4, including 8.1.x.
 
 
-#### c) Check your System Configuration
+#### Check your System Configuration
 
 Now make sure that your local system is properly configured for Grafizzi. To do
 this, execute:
@@ -78,7 +78,7 @@ this, execute:
     php app/hello-node.php
 
 You should see a detailed debug execution trace. On a POSIX system, you can get
-just the resulting GraphViz source by redirecting stderr to /dev/null:
+just the resulting GraphViz source by redirecting _stderr_ to `/dev/null`:
 
     php app/hello-node.php 2> /dev/null
 
@@ -95,6 +95,15 @@ You should see a very basic GraphViz source:
 
 If you get any warnings or recommendations, or nothing at all, check your PHP
 error log, and fix these now before moving on.
+
+### Verifying the Grafizzi code
+
+If your system includes the `make` command, after installing,
+run:
+
+    make lint
+
+You should get a green bar with zero warnings.
 
 
 ###  Generating documentation
@@ -135,3 +144,16 @@ Have fun!
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi?ref=badge_large)
+
+## Changelog
+
+- 0.0.3: 
+  - Dropped PHP < 7.4 support, added PHP 8.1+ support
+  - Upgraded to PHPunit 9.5.x
+  - Clean to PHPstan level 6
+- 0.0.2: 
+  - Dropped PHP 5.x support, upgraded to PHP 7.2/7.3 
+  - Upgraded to PHPUnit 8.x
+- 0.0.1:
+  - Removed runtime dependency on Monolog
+  - Upgraded to PHP/PHPunit 5.x.

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\escapeTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -35,15 +35,15 @@ class escapeTest extends BaseGraphTest {
   /**
    * Tests escape()
    */
-  public function testEscape() {
-    $testSet = array(
+  public function testEscape(): void {
+    $testSet = [
       'foo' => 'foo',
       'foo bar' => '"foo bar"',
       "foo'bar" => '"foo\'bar"',
       'foo"bar' => '"foo\"bar"',
       // Newline in non-pseudo-HTML mode: escaped
       "foo\nbar" => '"foo\nbar"',
-    );
+    ];
 
     foreach ($testSet as $in => $expected) {
       $actual = AbstractNamed::escape($in);
@@ -51,8 +51,8 @@ class escapeTest extends BaseGraphTest {
     }
   }
 
-  public function testEscapePseudoHtml() {
-    $testEscaped = array(
+  public function testEscapePseudoHtml():void {
+    $testEscaped = [
       // Test pseudo-HTML label: needs to be <>-wrapped.
       '<b>Label</b>' => '<<b>Label</b>>',
       // Test non-pseudo-HTML, non-ID label: needs to be dquote-wrapped.
@@ -61,11 +61,11 @@ class escapeTest extends BaseGraphTest {
       'nmtoken' => 'nmtoken',
       // Newline in pseudo-HTML: not converted
       "<b>One\nTwo</b>" => "<<b>One\nTwo</b>>",
-    );
+    ];
     foreach ($testEscaped as $in => $expected) {
-      $actual = AbstractNamed::escape($in, true);
+      $actual = AbstractNamed::escape($in, TRUE);
       $this->assertEquals($expected, $actual);
     }
   }
-}
 
+}

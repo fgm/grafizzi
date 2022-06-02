@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\AbstractElement: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -27,17 +27,18 @@ namespace Grafizzi\Graph;
  * Status: working, some possibly useless code. Handle error situations better.
  */
 abstract class AbstractElement extends AbstractNamed implements ElementInterface {
+
   const DEPTH_INDENT = 2;
 
   /**
    * @var \Grafizzi\Graph\AttributeInterface[]
    */
-  public $fAttributes = array();
+  public array $fAttributes = [];
 
   /**
-   * @var \Grafizzi\Graph\AbstractElement[] $fChildren
+   * @var \Grafizzi\Graph\ElementInterface[] $fChildren
    */
-  public $fChildren = array();
+  public array $fChildren = [];
 
   /**
    * The nesting level of the element.
@@ -46,14 +47,14 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    *
    * @var int
    */
-  public $fDepth = 0;
+  public int $fDepth = 0;
 
   /**
    * The parent element, when bound, or null otherwise.
    *
-   * @var ElementInterface
+   * @var ?ElementInterface
    */
-  public $fParent = null;
+  public ?ElementInterface $fParent = NULL;
 
   /**
    * Possibly not needed with an efficient garbage collector, but might help in
@@ -64,8 +65,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   public function __destruct() {
     try {
       $name = $this->getName();
-    }
-    catch (AttributeNameException $e) {
+    } catch (AttributeNameException $e) {
       $name = 'unnamed';
     }
     $type = $this->getType();
@@ -81,7 +81,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * {@inheritdoc}
    */
-  public function addChild(ElementInterface $child) {
+  public function addChild(ElementInterface $child): ElementInterface {
     $name = $this->getName();
     $childName = $child->getName();
     $childType = $child->getType();
@@ -115,17 +115,19 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
    *
    * Ignores $directed.
    *
-   * @see NamedInterface::build()
-   *
    * @param bool $directed
    *
    * @return string
+   * @see NamedInterface::build()
+   *
    */
-  public function build($directed = null) {
+  public function build(?bool $directed = NULL): string {
     $type = $this->getType();
     $name = $this->getName();
     $this->logger->debug("Building element $name.");
-    $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
+    $attributes = array_map(function (AttributeInterface $attribute) use (
+      $directed
+    ) {
       return $attribute->build($directed);
     }, $this->fAttributes);
     $name = $this->escape($name);
@@ -136,13 +138,17 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * @param array $attributes
+   * @param array<string,string> $attributes
    * @param string $type
    * @param string $name
    *
    * @return string
    */
-  protected function buildAttributes($attributes, $type, $name) {
+  protected function buildAttributes(
+    array $attributes,
+    string $type,
+    string $name
+  ): string {
     $ret = '';
     if (!empty($attributes)) {
       $builtAttributes = implode(', ', array_filter($attributes));
@@ -167,42 +173,44 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   }
 
   /**
-   * {@inheritdoc}
+   * @return array<string>
    */
-  public static function getAllowedChildTypes() {
-    return array();
+  public static function getAllowedChildTypes(): array {
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getAttributeByName($name) {
-    $ret = isset($this->fAttributes[$name]) ? $this->fAttributes[$name] : null;
-    $this->logger->debug("Getting attribute [$name]: " . print_r($ret, true) . ".");
+  public function getAttributeByName($name): ?AttributeInterface {
+    $ret = $this->fAttributes[$name] ?? NULL;
+    $this->logger->debug("Getting attribute [$name]: " . print_r($ret,
+        TRUE) . ".");
+    return $ret;
+  }
+
+  /**
+   * @param mixed $name
+   *   Will be stringified.
+   *
+   * @return ?\Grafizzi\Graph\ElementInterface
+   */
+  public function getChildByName($name): ?ElementInterface {
+    $ret = $this->fChildren[$name] ?? NULL;
     return $ret;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getChildByName($name) {
-    $ret = isset($this->fChildren[$name])
-      ? $this->fChildren[$name]
-      : null;
-    return $ret;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getParent() {
+  public function getParent(): ?ElementInterface {
     return $this->fParent;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getRoot() {
+  public function getRoot(): ?ElementInterface {
     $current = $this;
     // Beware of priorities: do not remove parentheses.
     while (($parent = $current->getParent()) instanceof ElementInterface) {
@@ -214,9 +222,9 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * {@inheritdoc}
    */
-  public function removeAttribute(AttributeInterface $attribute) {
+  public function removeAttribute(AttributeInterface $attribute): void {
     $name = $attribute->getName();
-    if (!isset($name)) {
+    if (empty($name)) {
       $message = 'Trying to remove unnamed attribute.';
       $this->logger->warning($message);
       throw new AttributeNameException($message);
@@ -227,7 +235,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * {@inheritdoc}
    */
-  public function removeAttributeByName($name) {
+  public function removeAttributeByName($name): void {
     $this->logger->debug("Removing attribute [$name].");
     unset($this->fAttributes[$name]);
   }
@@ -235,9 +243,9 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * {@inheritdoc}
    */
-  public function removeChild(ElementInterface $child) {
+  public function removeChild(ElementInterface $child): ?ElementInterface {
     $name = $child->getName();
-    if (!isset($name)) {
+    if (empty($name)) {
       $message = 'Trying to remove unnamed child.';
       $this->logger->warning($message);
       throw new ChildNameException($message);
@@ -249,16 +257,16 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * {@inheritdoc}
    */
-  public function removeChildByName($name) {
+  public function removeChildByName($name): ?ElementInterface {
     $this->logger->debug("Removing child [$name].");
     if (isset($this->fChildren[$name])) {
       $child = $this->fChildren[$name];
-      $child->adjustDepth(- $this->fDepth - 1);
+      $child->adjustDepth(-$this->fDepth - 1);
       unset($this->fChildren[$name]);
       $ret = $child;
     }
     else {
-      $ret = null;
+      $ret = NULL;
     }
     return $ret;
   }
@@ -266,20 +274,23 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * {@inheritdoc}
    */
-  public function setAttribute(AttributeInterface $attribute) {
-      $name = $attribute->getName();
-      if (!isset($name)) {
-        $message = 'Trying to set unnamed attribute.';
-        $this->logger->warning($message, debug_backtrace(false));
-        throw new ChildNameException($message);
-      }
+  public function setAttribute(AttributeInterface $attribute): void {
+    $name = $attribute->getName();
+    if (empty($name)) {
+      $message = 'Trying to set unnamed attribute.';
+      $this->logger->warning($message, debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT));
+      throw new ChildNameException($message);
+    }
     $this->fAttributes[$name] = $attribute;
   }
 
   /**
-   * {@inheritdoc}
+   * @param array<\Grafizzi\Graph\AttributeInterface> $attributes
+   *   An array of objects implementing AttributeInterface
+   *
+   * @return void
    */
-  public function setAttributes(array $attributes) {
+  public function setAttributes(array $attributes): void {
     foreach ($attributes as $attribute) {
       if (!in_array('Grafizzi\\Graph\\AttributeInterface', class_implements($attribute))) {
         $message = 'Trying to set non-attribute as an attribute';
@@ -293,7 +304,7 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
   /**
    * {@inheritdoc}
    */
-  public function setParent(ElementInterface $parent) {
+  public function setParent(ElementInterface $parent): void {
     $this->fParent = $parent;
   }
 

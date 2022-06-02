@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG16Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -40,69 +40,70 @@ require 'vendor/autoload.php';
  */
 class IG16Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
     parent::setUpExtended();
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
-    $g->setAttributes(array(
+    $g->setDirected(TRUE);
+    $g->setAttributes([
       new Attribute($dic, 'nodesep', 0.05),
       new Attribute($dic, 'rankdir', 'LR'),
-    ));
+    ]);
 
     $recordShape = new Attribute($dic, 'shape', 'record');
 
-    $g->addChild($node0 = new Node($dic, 'node0', array(
+    $g->addChild($node0 = new Node($dic, 'node0', [
       $recordShape,
-      new Attribute($dic, 'label', '<f0> |<f1> |<f2> |<f3> |<f4> |<f5> |<f6> | '),
+      new Attribute($dic, 'label',
+        '<f0> |<f1> |<f2> |<f3> |<f4> |<f5> |<f6> | '),
       new Attribute($dic, 'height', 2.5),
-    )));
-    $g->addChild($node1 = new Node($dic, 'node1', array(
+    ]));
+    $g->addChild($node1 = new Node($dic, 'node1', [
       $recordShape,
       new Attribute($dic, 'label', '{<n> n14 | 719 |<p> }'),
-    )));
-    $g->addChild($node2 = new Node($dic, 'node2', array(
+    ]));
+    $g->addChild($node2 = new Node($dic, 'node2', [
       $recordShape,
       new Attribute($dic, 'label', '{<n> a1 | 805 |<p> }'),
-    )));
-    $g->addChild($node3 = new Node($dic, 'node3', array(
+    ]));
+    $g->addChild($node3 = new Node($dic, 'node3', [
       $recordShape,
       new Attribute($dic, 'label', '{<n> i9 | 718 |<p> }'),
-    )));
-    $g->addChild($node4 = new Node($dic, 'node4', array(
+    ]));
+    $g->addChild($node4 = new Node($dic, 'node4', [
       $recordShape,
       new Attribute($dic, 'label', '{<n> e5 | 989 |<p> }'),
-    )));
-    $g->addChild($node5 = new Node($dic, 'node5', array(
+    ]));
+    $g->addChild($node5 = new Node($dic, 'node5', [
       $recordShape,
       new Attribute($dic, 'label', '{<n> t20 | 959 |<p> }'),
-    )));
-    $g->addChild($node6 = new Node($dic, 'node6', array(
+    ]));
+    $g->addChild($node6 = new Node($dic, 'node6', [
       $recordShape,
       new Attribute($dic, 'label', '{<n> o15 | 794 |<p> }'),
-    )));
-    $g->addChild($node7 = new Node($dic, 'node7', array(
+    ]));
+    $g->addChild($node7 = new Node($dic, 'node7', [
       $recordShape,
       new Attribute($dic, 'label', '{<n> s19 | 659 |<p> }'),
-    )));
+    ]));
 
-  $nullTitle = array(
-    new Attribute($dic, 'title', null),
-  );
-  $g->addChild(new Edge($dic, $node0, $node1, $nullTitle, 'f0', 'n'));
-  $g->addChild(new Edge($dic, $node0, $node2, $nullTitle, 'f1', 'n'));
-  $g->addChild(new Edge($dic, $node0, $node3, $nullTitle, 'f2', 'n'));
-  $g->addChild(new Edge($dic, $node0, $node4, $nullTitle, 'f5', 'n'));
-  $g->addChild(new Edge($dic, $node0, $node5, $nullTitle, 'f6', 'n'));
-  $g->addChild(new Edge($dic, $node2, $node6, $nullTitle, 'p', 'n'));
-  $g->addChild(new Edge($dic, $node4, $node7, $nullTitle, 'p', 'n'));
+    $nullTitle = [
+      new Attribute($dic, 'title', NULL),
+    ];
+    $g->addChild(new Edge($dic, $node0, $node1, $nullTitle, 'f0', 'n'));
+    $g->addChild(new Edge($dic, $node0, $node2, $nullTitle, 'f1', 'n'));
+    $g->addChild(new Edge($dic, $node0, $node3, $nullTitle, 'f2', 'n'));
+    $g->addChild(new Edge($dic, $node0, $node4, $nullTitle, 'f5', 'n'));
+    $g->addChild(new Edge($dic, $node0, $node5, $nullTitle, 'f6', 'n'));
+    $g->addChild(new Edge($dic, $node2, $node6, $nullTitle, 'p', 'n'));
+    $g->addChild(new Edge($dic, $node4, $node7, $nullTitle, 'p', 'n'));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<'EOT'
 digraph G {
   nodesep=0.05;
@@ -128,4 +129,5 @@ digraph G {
 EOT;
     $this->check($expected, "Image_GraphViz test 16 passed.");
   }
+
 }

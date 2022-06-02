@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\StringFilterTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -42,28 +42,33 @@ class StringFilterTest extends BaseFilterTest {
   /**
    * Prepares the environment before running a test.
    */
-  protected function setUp() : void {
+  protected function setUp(): void {
     parent::setUp();
     $this->filters[] = new StringFilter();
-    $args = array(
+    $args = [
       'out' => &$this->out,
-      'callback' => function ($x) { return strrev($x) ; },
-    );
+      'callback' => function ($x): string {
+        return strrev($x);
+      },
+    ];
     $this->filters[] = new StringFilter($args);
   }
 
   /**
    * Tests StringFilter->filter()
    */
-  public function testFilter() {
+  public function testFilter(): void {
     $in = 'String test';
-    list($stdout, $err) = $this->filters[0]->filter($in);
+    [$stdout, $err] = $this->filters[0]->filter($in);
     $this->assertEquals($in, $stdout, 'String filter returns its input.');
 
-    list($stdout, $err) = $this->filters[1]->filter($in);
+    [$stdout, $err] = $this->filters[1]->filter($in);
     $expected = strrev($in);
-    $this->assertEquals($expected, $stdout, 'String filter with callback applies it.');
-    $this->assertEquals($expected, $this->out, 'String filter with out string assigns it.');
+    $this->assertEquals($expected, $stdout,
+      'String filter with callback applies it.');
+    $this->assertEquals($expected, $this->out,
+      'String filter with out string assigns it.');
     $this->assertEmpty($err, 'String filter does not return errors');
   }
+
 }

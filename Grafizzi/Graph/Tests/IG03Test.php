@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG03Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -46,63 +46,63 @@ require 'vendor/autoload.php';
  */
 class IG03Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended();
-    $this->Graph->setDirected(true);
+    $this->Graph->setDirected(TRUE);
     $graph = &$this->Graph;
     $dic = &$this->dic;
 
-    $graph->addChild($main = new Node($dic, 'main', array(
+    $graph->addChild($main = new Node($dic, 'main', [
       new Attribute($dic, 'shape', 'box'),
       new Attribute($dic, 'comment', 'this is a comment'),
-    )));
+    ]));
     $graph->addChild(new Edge($dic, $main,
-      $parse = new Node($this->dic, 'parse'), array(
-        new Attribute($dic, 'weight', 8)
-    )));
+      $parse = new Node($this->dic, 'parse'), [
+        new Attribute($dic, 'weight', 8),
+      ]));
     $graph->addChild(new Edge($dic,
       $parse = new Node($dic, 'parse', Node::implicit()),
       $execute = new Node($dic, 'execute', Node::implicit())
     ));
     $graph->addChild(new Edge($dic, $main,
-      $init = new Node($dic, 'init', Node::implicit()), array(
-        new Attribute($dic, 'style', 'dotted')
-    )));
+      $init = new Node($dic, 'init', Node::implicit()), [
+        new Attribute($dic, 'style', 'dotted'),
+      ]));
     $graph->addChild(new Edge($dic, $main,
       $cleanup = new Node($dic, 'cleanup', Node::implicit())
     ));
 
     // XXX The original example creates the node after the edge referencing it.
-    $graph->addChild($make_string = new Node($dic, 'make_string', array(
+    $graph->addChild($make_string = new Node($dic, 'make_string', [
       new Attribute($dic, 'label', "make a\nstring"),
-    )));
+    ]));
 
     $graph->addChild(new Edge($dic, $execute, $make_string));
     $graph->addChild(new Edge($dic, $execute,
       $printf = new Node($dic, 'printf', Node::implicit())
     ));
     $graph->addChild(new Edge($dic, $init, $make_string));
-    $graph->addChild(new Edge($dic, $main, $printf, array(
+    $graph->addChild(new Edge($dic, $main, $printf, [
       new Attribute($dic, 'style', 'bold'),
       new Attribute($dic, 'label', '100 times'),
-    )));
+    ]));
 
-    $graph->addChild($compare = new Node($dic, 'compare', array(
+    $graph->addChild($compare = new Node($dic, 'compare', [
       new Attribute($dic, 'shape', 'box'),
       new Attribute($dic, 'style', 'filled'),
       new Attribute($dic, 'color', '.7 .3 1.0'),
-    )));
+    ]));
 
-    $graph->addChild(new Edge($dic, $execute, $compare, array(
+    $graph->addChild(new Edge($dic, $execute, $compare, [
       new Attribute($dic, 'color', 'red'),
       new Attribute($dic, 'comment', 'so is this'),
-    )));
+    ]));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<'EOT'
 digraph G {
   main [ shape=box, comment="this is a comment" ];
@@ -122,4 +122,5 @@ digraph G {
 EOT;
     $this->check($expected, "Image_GraphViz test 3 passed.");
   }
+
 }

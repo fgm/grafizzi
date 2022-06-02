@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG09Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -43,19 +43,19 @@ require 'vendor/autoload.php';
  */
 class IG09Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     // not strict by default.
     parent::setUpExtended('asde91');
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
+    $g->setDirected(TRUE);
     $g->setAttribute(new Attribute($dic, 'ranksep', .75));
 
     $rankSame = new Attribute($dic, 'rank', 'same');
-    $sgAttrs = array(
+    $sgAttrs = [
       $rankSame,
-      new Attribute($dic, 'title', null),
-    );
+      new Attribute($dic, 'title', NULL),
+    ];
 
     /* program types graph */
     $g->addChild($sgType = new Subgraph($dic, 'type', $sgAttrs));
@@ -79,72 +79,73 @@ class IG09Test extends BaseGraphTest {
     $g->addChild($sgFuture = new Subgraph($dic, 'future', $sgAttrs));
 
     /* programs */
-    $sgPast->addChild($nBourneSh   = new Node($dic, 'Bourne sh'));
-    $sgPast->addChild($nMake       = new Node($dic, 'make'));
-    $sgPast->addChild($nSCCS       = new Node($dic, 'SCCS'));
-    $sgPast->addChild($nYacc       = new Node($dic, 'yacc'));
-    $sgPast->addChild($nCron       = new Node($dic, 'cron'));
+    $sgPast->addChild($nBourneSh = new Node($dic, 'Bourne sh'));
+    $sgPast->addChild($nMake = new Node($dic, 'make'));
+    $sgPast->addChild($nSCCS = new Node($dic, 'SCCS'));
+    $sgPast->addChild($nYacc = new Node($dic, 'yacc'));
+    $sgPast->addChild($nCron = new Node($dic, 'cron'));
 
-    $sg1978->addChild($nReiserCpp  = new Node($dic, 'Reiser cpp'));
-    $sg1978->addChild($nCshell     = new Node($dic, 'Cshell'));
+    $sg1978->addChild($nReiserCpp = new Node($dic, 'Reiser cpp'));
+    $sg1978->addChild($nCshell = new Node($dic, 'Cshell'));
 
-    $sg1980->addChild($nEmacs      = new Node($dic, 'emacs'));
-    $sg1980->addChild($nBuild      = new Node($dic, 'build'));
-    $sg1980->addChild($nVi         = new Node($dic, 'vi'));
+    $sg1980->addChild($nEmacs = new Node($dic, 'emacs'));
+    $sg1980->addChild($nBuild = new Node($dic, 'build'));
+    $sg1980->addChild($nVi = new Node($dic, 'vi'));
 
-    $sg1982->addChild($nCurses     = new Node($dic, '<curses>'));
-    $sg1982->addChild($nRCS        = new Node($dic, 'RCS'));
-    $sg1982->addChild($nIMX        = new Node($dic, 'IMX'));
-    $sg1982->addChild($nSYNED      = new Node($dic, 'SYNED'));
+    $sg1982->addChild($nCurses = new Node($dic, '<curses>'));
+    $sg1982->addChild($nRCS = new Node($dic, 'RCS'));
+    $sg1982->addChild($nIMX = new Node($dic, 'IMX'));
+    $sg1982->addChild($nSYNED = new Node($dic, 'SYNED'));
 
-    $sg1983->addChild($nksh        = new Node($dic, 'ksh'));
-    $sg1983->addChild($nIFS        = new Node($dic, 'IFS'));
-    $sg1983->addChild($nTTU        = new Node($dic, 'TTU'));
+    $sg1983->addChild($nksh = new Node($dic, 'ksh'));
+    $sg1983->addChild($nIFS = new Node($dic, 'IFS'));
+    $sg1983->addChild($nTTU = new Node($dic, 'TTU'));
 
-    $sg1985->addChild($nNmake      = new Node($dic, 'nmake'));
-    $sg1985->addChild($nPeggy      = new Node($dic, 'Peggy'));
+    $sg1985->addChild($nNmake = new Node($dic, 'nmake'));
+    $sg1985->addChild($nPeggy = new Node($dic, 'Peggy'));
 
-    $sg1986->addChild($nNcpp       = new Node($dic, 'ncpp'));
-    $sg1986->addChild($nKsh_i      = new Node($dic, 'ksh-i'));
-    $sg1986->addChild($nCurses_i   = new Node($dic, '<curses-i>'));
-    $sg1986->addChild($nPg2        = new Node($dic, 'PG2'));
-    $sg1986->addChild($nCasterisk  = new Node($dic, 'C*'));
+    $sg1986->addChild($nNcpp = new Node($dic, 'ncpp'));
+    $sg1986->addChild($nKsh_i = new Node($dic, 'ksh-i'));
+    $sg1986->addChild($nCurses_i = new Node($dic, '<curses-i>'));
+    $sg1986->addChild($nPg2 = new Node($dic, 'PG2'));
+    $sg1986->addChild($nCasterisk = new Node($dic, 'C*'));
 
-    $sg1987->addChild($nAnsiCpp    = new Node($dic, 'Ansi cpp'));
-    $sg1987->addChild($nNmake20    = new Node($dic, 'nmake 2.0'));
-    $sg1987->addChild($n3DFS       = new Node($dic, '3D File System'));
-    $sg1987->addChild($nFdelta     = new Node($dic, 'fdelta'));
-    $sg1987->addChild($nDAG        = new Node($dic, 'DAG'));
-    $sg1987->addChild($nCSAS       = new Node($dic, 'CSAS'));
+    $sg1987->addChild($nAnsiCpp = new Node($dic, 'Ansi cpp'));
+    $sg1987->addChild($nNmake20 = new Node($dic, 'nmake 2.0'));
+    $sg1987->addChild($n3DFS = new Node($dic, '3D File System'));
+    $sg1987->addChild($nFdelta = new Node($dic, 'fdelta'));
+    $sg1987->addChild($nDAG = new Node($dic, 'DAG'));
+    $sg1987->addChild($nCSAS = new Node($dic, 'CSAS'));
 
-    $sg1988->addChild($nCia        = new Node($dic, 'CIA'));
-    $sg1988->addChild($nSBCS       = new Node($dic, 'SBCS'));
-    $sg1988->addChild($nKsh88      = new Node($dic, 'ksh-88'));
+    $sg1988->addChild($nCia = new Node($dic, 'CIA'));
+    $sg1988->addChild($nSBCS = new Node($dic, 'SBCS'));
+    $sg1988->addChild($nKsh88 = new Node($dic, 'ksh-88'));
     $sg1988->addChild($nPegasusPml = new Node($dic, 'PEGASUS/PML'));
-    $sg1988->addChild($nPAX        = new Node($dic, 'PAX'));
-    $sg1988->addChild($nBacktalk   = new Node($dic, 'backtalk'));
+    $sg1988->addChild($nPAX = new Node($dic, 'PAX'));
+    $sg1988->addChild($nBacktalk = new Node($dic, 'backtalk'));
 
-    $sg1989->addChild($nCIApp      = new Node($dic, 'CIA++'));
-    $sg1989->addChild($nAPP        = new Node($dic, 'APP'));
-    $sg1989->addChild($nSHIP       = new Node($dic, 'SHIP'));
-    $sg1989->addChild($nDataShare  = new Node($dic, 'DataShare'));
-    $sg1989->addChild($nRyacc      = new Node($dic, 'ryacc'));
-    $sg1989->addChild($nMosaic     = new Node($dic, 'Mosaic'));
+    $sg1989->addChild($nCIApp = new Node($dic, 'CIA++'));
+    $sg1989->addChild($nAPP = new Node($dic, 'APP'));
+    $sg1989->addChild($nSHIP = new Node($dic, 'SHIP'));
+    $sg1989->addChild($nDataShare = new Node($dic, 'DataShare'));
+    $sg1989->addChild($nRyacc = new Node($dic, 'ryacc'));
+    $sg1989->addChild($nMosaic = new Node($dic, 'Mosaic'));
 
-    $sg1990->addChild($nLibft      = new Node($dic, 'libft'));
-    $sg1990->addChild($nCoShell    = new Node($dic, 'CoShell'));
-    $sg1990->addChild($nDIA        = new Node($dic, 'DIA'));
-    $sg1990->addChild($nIFS_i      = new Node($dic, 'IFS-i'));
-    $sg1990->addChild($nKyacc      = new Node($dic, 'kyacc'));
-    $sg1990->addChild($nSfio       = new Node($dic, 'sfio'));
-    $sg1990->addChild($nYeast      = new Node($dic, 'yeast'));
-    $sg1990->addChild($nML_X       = new Node($dic, 'ML-X'));
-    $sg1990->addChild($nDOT        = new Node($dic, 'DOT'));
+    $sg1990->addChild($nLibft = new Node($dic, 'libft'));
+    $sg1990->addChild($nCoShell = new Node($dic, 'CoShell'));
+    $sg1990->addChild($nDIA = new Node($dic, 'DIA'));
+    $sg1990->addChild($nIFS_i = new Node($dic, 'IFS-i'));
+    $sg1990->addChild($nKyacc = new Node($dic, 'kyacc'));
+    $sg1990->addChild($nSfio = new Node($dic, 'sfio'));
+    $sg1990->addChild($nYeast = new Node($dic, 'yeast'));
+    $sg1990->addChild($nML_X = new Node($dic, 'ML-X'));
+    $sg1990->addChild($nDOT = new Node($dic, 'DOT'));
 
-    $sgFuture->addChild($nAST      = new Node($dic, 'Adv. Software Technology'));
+    $sgFuture->addChild($nAST = new Node($dic, 'Adv. Software Technology'));
 
     /* the time-line graph */
-    $g->addChild(new Edge($dic, $yPast = new Node($dic, 'past'), $y1978 = new Node($dic, 1978)));
+    $g->addChild(new Edge($dic, $yPast = new Node($dic, 'past'),
+      $y1978 = new Node($dic, 1978)));
     $g->addChild(new Edge($dic, $y1978, $y1980 = new Node($dic, 1980)));
     $g->addChild(new Edge($dic, $y1980, $y1982 = new Node($dic, 1982)));
     $g->addChild(new Edge($dic, $y1982, $y1983 = new Node($dic, 1983)));
@@ -154,7 +155,7 @@ class IG09Test extends BaseGraphTest {
     $g->addChild(new Edge($dic, $y1987, $y1988 = new Node($dic, 1988)));
     $g->addChild(new Edge($dic, $y1988, $y1989 = new Node($dic, 1989)));
     $g->addChild(new Edge($dic, $y1989, $y1990 = new Node($dic, 1990)));
-    $g->addChild(new Edge($dic, $y1990, $yFuture  = new Node($dic, 'future')));
+    $g->addChild(new Edge($dic, $y1990, $yFuture = new Node($dic, 'future')));
 
     /* hierarchy */
     $g->addChild(new Edge($dic, $nSCCS, $nRCS));
@@ -202,11 +203,13 @@ class IG09Test extends BaseGraphTest {
     $g->addChild(new Edge($dic, $nKsh_i, $nKsh88));
     $g->addChild(new Edge($dic, $nPg2, $nBacktalk));
 
-    $g->addChild(new Edge($dic, $nDAG, $nSoftwareIs = new Node($dic, 'Software IS')));
+    $g->addChild(new Edge($dic, $nDAG,
+      $nSoftwareIs = new Node($dic, 'Software IS')));
     $g->addChild(new Edge($dic, $nDAG, $nDOT));
     $g->addChild(new Edge($dic, $nDAG, $nDIA));
     $g->addChild(new Edge($dic, $nCSAS, $nCia));
-    $g->addChild(new Edge($dic, $nAnsiCpp, $nConfigMgt = new Node($dic, 'Configuration Mgt')));
+    $g->addChild(new Edge($dic, $nAnsiCpp,
+      $nConfigMgt = new Node($dic, 'Configuration Mgt')));
     $g->addChild(new Edge($dic, $nFdelta, $nSBCS));
     $g->addChild(new Edge($dic, $nFdelta, $nPAX));
     $g->addChild(new Edge($dic, $n3DFS, $nConfigMgt));
@@ -218,7 +221,8 @@ class IG09Test extends BaseGraphTest {
     $g->addChild(new Edge($dic, $nSBCS, $nConfigMgt));
     $g->addChild(new Edge($dic, $nPAX, $nSHIP));
     $g->addChild(new Edge($dic, $nKsh88, $nConfigMgt));
-    $g->addChild(new Edge($dic, $nKsh88, $nArchi = new Node($dic, 'Architecture & Libraries')));
+    $g->addChild(new Edge($dic, $nKsh88,
+      $nArchi = new Node($dic, 'Architecture & Libraries')));
     $g->addChild(new Edge($dic, $nKsh88, $nSfio));
     $g->addChild(new Edge($dic, $nPegasusPml, $nML_X));
     $g->addChild(new Edge($dic, $nPegasusPml, $nArchi));
@@ -230,7 +234,8 @@ class IG09Test extends BaseGraphTest {
     $g->addChild(new Edge($dic, $nSHIP, $nConfigMgt));
     $g->addChild(new Edge($dic, $nDataShare, $nArchi));
     $g->addChild(new Edge($dic, $nRyacc, $nKyacc));
-    $g->addChild(new Edge($dic, $nMosaic, $nProcess = new Node($dic, 'Process')));
+    $g->addChild(new Edge($dic, $nMosaic,
+      $nProcess = new Node($dic, 'Process')));
 
     $g->addChild(new Edge($dic, $nDOT, $nSoftwareIs));
     $g->addChild(new Edge($dic, $nDIA, $nSoftwareIs));
@@ -252,7 +257,7 @@ class IG09Test extends BaseGraphTest {
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     /* Test uses the alternate format for subgraphs:
         subgraph type {
           graph [ rank=same ];
@@ -471,4 +476,5 @@ digraph asde91 {
 EOT;
     $this->check($expected, "Image_GraphViz test 9 passed.");
   }
+
 }

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG04Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -41,29 +41,29 @@ require 'vendor/autoload.php';
  */
 class IG04Test extends BaseGraphTest {
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended('G');
-    $this->Graph->setDirected(true);
+    $this->Graph->setDirected(TRUE);
     $graph = &$this->Graph;
     $dic = $this->dic;
     $graph->setAttribute(new Attribute($dic, 'rankdir', 'LR'));
 
-    $graph->addChild($nA = new Node($dic, 'a', array(
+    $graph->addChild($nA = new Node($dic, 'a', [
       new Attribute($dic, 'shape', 'plaintext'),
       new Attribute($dic, 'label', '<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
   <TR><TD ROWSPAN="3" BGCOLOR="yellow">class</TD></TR>
   <TR><TD PORT="here" BGCOLOR="lightblue">qualifier</TD></TR>
 </TABLE>'),
-     )));
+    ]));
 
     // Note: subgraph was created after some of its children in Image_GraphViz,
     // but Grafizzi lets you only add to existing elements, so it is created
     // earlier in this test.
-    $graph->addChild($subgraph = new Subgraph($dic, 'subgraph', array(
+    $graph->addChild($subgraph = new Subgraph($dic, 'subgraph', [
       new Attribute($dic, 'title', ''),
       new Attribute($dic, 'rank', 'same'),
-    )));
-    $subgraph->addChild($nB = new Node($dic, 'b', array(
+    ]));
+    $subgraph->addChild($nB = new Node($dic, 'b', [
       new Attribute($dic, 'shape', 'ellipse'),
       new Attribute($dic, 'style', 'filled'),
       new Attribute($dic, 'label', '<TABLE BGCOLOR="bisque">
@@ -81,35 +81,36 @@ class IG04Test extends BaseGraphTest {
   <TR> <TD COLSPAN="2" BORDER="4" ALIGN="right" PORT="there">4</TD> </TR>
 </TABLE>
   '),
-    )));
-    $subgraph->addChild($nC = new Node($dic, 'c', array(
+    ]));
+    $subgraph->addChild($nC = new Node($dic, 'c', [
       new Attribute($dic, 'shape', 'plaintext'),
-      new Attribute($dic, 'label', 'long line 1<BR/>line 2<BR ALIGN="LEFT"/>line 3<BR ALIGN="RIGHT"/>'),
-    )));
+      new Attribute($dic, 'label',
+        'long line 1<BR/>line 2<BR ALIGN="LEFT"/>line 3<BR ALIGN="RIGHT"/>'),
+    ]));
 
     $graph->addChild($edgeBC = new Edge($dic, $nC, $nB));
 
-    $graph->addChild($nD = new Node($dic, 'd', array(
+    $graph->addChild($nD = new Node($dic, 'd', [
       new Attribute($dic, 'shape', 'triangle'),
-    )));
+    ]));
 
-    $graph->addChild($edgeDC = new Edge($dic, $nD, $nC, array(
+    $graph->addChild($edgeDC = new Edge($dic, $nD, $nC, [
       new Attribute($dic, 'label', '<TABLE>
   <TR><TD BGCOLOR="red" WIDTH="10"> </TD>
       <TD>Edge labels<BR/>also</TD>
       <TD BGCOLOR="blue" WIDTH="10"> </TD>
   </TR>
 </TABLE>'),
-    )));
-    $graph->addChild($edgeAB = new Edge($dic, $nA, $nB, array(
+    ]));
+    $graph->addChild($edgeAB = new Edge($dic, $nA, $nB, [
       new Attribute($dic, 'arrowtail', 'diamond'),
-    ), 'here', 'there'));
+    ], 'here', 'there'));
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $expected = <<<EOT
 digraph G {
   rankdir=LR;
@@ -152,4 +153,5 @@ digraph G {
 EOT;
     $this->check($expected, "Image_GraphViz test 4 passed.");
   }
+
 }

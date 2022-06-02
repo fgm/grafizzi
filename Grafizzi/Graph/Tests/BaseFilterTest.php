@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\BaseFilterTest: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -37,13 +37,14 @@ abstract class BaseFilterTest extends TestCase {
    * @var \Grafizzi\Graph\Filter\FilterInterface[]
    *   Array of filters, implementing FilterInterface.
    */
-  protected $filters = array();
+  protected $filters = [];
 
   /**
    * Cleans up the environment after running a test.
    */
-  protected function tearDown() : void {
-    $this->filters = array();
+  protected function tearDown(): void {
+    $this->filters = [];
     parent::tearDown();
   }
+
 }

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\MultiEdge: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -39,23 +39,26 @@ class MultiEdge extends AbstractElement {
   /**
    * Array of Node objects
    *
-   * @var array
+   * @var array<\Grafizzi\Graph\Node>
    */
-  public $fNodes;
+  public array $fNodes;
 
   /**
    * @var boolean
    */
-  public $fDirected = true;
+  public $fDirected = TRUE;
 
-  public function __construct(Container $dic, array $nodes, array $attributes = array()) {
+  /**
+   * @param \Pimple\Container $dic
+   * @param array<\Grafizzi\Graph\Node> $nodes
+   * @param array<\Grafizzi\Graph\AttributeInterface> $attributes
+   */
+  public function __construct(
+    Container $dic,
+    array $nodes,
+    array $attributes = []
+  ) {
     parent::__construct($dic);
-    $nonNodes = array_filter($nodes, function ($node) {
-      return !($node instanceof Node);
-    });
-    if (!empty($nonNodes)) {
-      throw new ChildTypeException("Trying to add non-nodes to a multi-edge element.");
-    }
     $this->fNodes = $nodes;
     $this->setName(implode('--', array_map(function (Node $node) {
       return $node->getName();
@@ -64,11 +67,11 @@ class MultiEdge extends AbstractElement {
   }
 
   /**
-   * @param bool $directed
+   * @param ?bool $directed
    *
    * @return string
    */
-  public function build($directed = null) {
+  public function build(?bool $directed = NULL): string {
     $type = $this->getType();
     $name = $this->getName();
     if (!isset($directed)) {
@@ -84,20 +87,24 @@ class MultiEdge extends AbstractElement {
         return $node->getBuildName();
       }, $this->fNodes));
 
-    $attributes = array_map(function (AttributeInterface $attribute) use ($directed) {
+    $attributes = array_map(function (AttributeInterface $attribute) use (
+      $directed
+    ) {
       return $attribute->build($directed);
     }, $this->fAttributes);
-    $ret .= $this->buildAttributes($attributes, NULL, NULL);
+    $ret .= $this->buildAttributes($attributes, '', '');
     return $ret;
   }
 
-  public static function getAllowedChildTypes() {
-    return array();
+  /**
+   * @return array<string>
+   */
+  public static function getAllowedChildTypes(): array {
+    return [];
   }
 
-  public function getType() {
-    $ret = 'multiedge';
-    return $ret;
+  public function getType(): string {
+    return 'multiedge';
   }
 
 }

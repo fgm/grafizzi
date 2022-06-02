@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Tests\IG16872Test: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -39,7 +39,7 @@ require 'vendor/autoload.php';
  */
 class IG16872Test extends BaseGraphTest {
 
-  public $expected = <<<EOT
+  public string $expected = <<<EOT
 digraph sp_d_rcp_001 {
   rankdir=LR;
   ranksep=0.75;
@@ -60,61 +60,62 @@ digraph sp_d_rcp_001 {
 
 EOT;
 
-  public function setUp() : void {
+  public function setUp(): void {
     parent::setUpExtended('sp_d_rcp_001');
     $g = $this->Graph;
     $dic = $this->dic;
-    $g->setDirected(true);
-    $g->setAttributes(array(
+    $g->setDirected(TRUE);
+    $g->setAttributes([
       new Attribute($dic, 'rankdir', 'LR'),
       new Attribute($dic, 'ranksep', .75),
-    ));
+    ]);
 
     // Grafizzi emits elements in insertion order, so if we want these nodes to
     // appear above the cluster, they must be created before it, unlike the way
     // the test is build in Image_GraphViz.
-    $result = array(
-      array('tab' => 'courbe_rcp', 'action' => 'S'),
-      array('tab' => 'courbe_rcp', 'action' => 'D'),
-      array('tab' => 'detail_rcp', 'action' => 'S'),
-      array('tab' => 'detail_rcp', 'action' => 'D'),
-    );
+    $result = [
+      ['tab' => 'courbe_rcp', 'action' => 'S'],
+      ['tab' => 'courbe_rcp', 'action' => 'D'],
+      ['tab' => 'detail_rcp', 'action' => 'S'],
+      ['tab' => 'detail_rcp', 'action' => 'D'],
+    ];
 
-    $lst_tab = array();
+    $lst_tab = [];
     $boxShape = new Attribute($dic, 'shape', 'box');
     foreach ($result as $row) {
       $table = $row['tab'];
-      if (array_key_exists($table, $lst_tab) == false){
-        $g->addChild($$table = new Node($dic, $table, array($boxShape)));
+      if (!in_array($table, $lst_tab)) {
+        $g->addChild($$table = new Node($dic, $table, [$boxShape]));
         $lst_tab[] = $table;
       }
     }
 
-    $g->addChild($pck_courbe_rcp = new Cluster($dic, 'pck_courbe_rcp', array(
+    $g->addChild($pck_courbe_rcp = new Cluster($dic, 'pck_courbe_rcp', [
       new Attribute($dic, 'color', 'green'),
       new Attribute($dic, 'label', 'pck_courbe_rcp'),
-    )));
-    $pck_courbe_rcp->addChild($sp_d_rcp_001 = new Node($dic, 'sp_d_rcp_001', array(
+    ]));
+    $pck_courbe_rcp->addChild($sp_d_rcp_001 = new Node($dic, 'sp_d_rcp_001', [
       new Attribute($dic, 'shape', 'component'),
-    )));
+    ]));
 
     foreach ($result as $row) {
       $table = $row['tab'];
       $action = $row['action'];
       $color = ($action == 'D') ? 'red' : 'blue';
-      $this->dic['logger']->debug("Edge source " . $sp_d_rcp_001->getBuildName() .", dest ". $$table->getBuildName());
-      $g->addChild(new Edge($dic, $sp_d_rcp_001, $$table, array(
+      $this->dic['logger']->debug("Edge source " . $sp_d_rcp_001->getBuildName() . ", dest " . $$table->getBuildName());
+      $g->addChild(new Edge($dic, $sp_d_rcp_001, $$table, [
         new Attribute($dic, 'color', $color),
         new Attribute($dic, 'label', $action),
         new Attribute($dic, 'id', $action . $table),
-      )));
+      ]));
     }
   }
 
   /**
    * Tests Graph->build()
    */
-  public function testBuild() {
+  public function testBuild(): void {
     $this->check($this->expected, "Image_GraphViz bug test 16872 passed.");
   }
+
 }

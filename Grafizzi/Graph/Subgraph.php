@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * @file
  * Grafizzi\Graph\Subgraph: a component of the Grafizzi library.
  *
- * (c) 2012 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -25,8 +25,7 @@ namespace Grafizzi\Graph;
 
 class Subgraph extends Graph {
 
-  public function getType() {
-    $ret = 'subgraph';
-    return $ret;
+  public function getType(): string {
+    return 'subgraph';
   }
 }
