@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG17Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -42,7 +42,7 @@ require 'vendor/autoload.php';
  * Note: ordering of insertions differs from Image_GraphViz, since Grafizzi
  * orders output by insertion order to allow customizing output order.
  */
-class IG17Test extends BaseGraphTest {
+class IG17Test extends BaseGraphCase {
 
   public function setUp(): void {
     // not strict by default.
@@ -64,7 +64,7 @@ class IG17Test extends BaseGraphTest {
     $nodes = [];
 
     // cluster0
-    $g->addChild($cluster0 = new Cluster($dic, 0, [
+    $g->addChild($cluster0 = new Cluster($dic, '0', [
       new Attribute($dic, 'style', 'filled'),
       new Attribute($dic, 'color', 'lightgrey'),
       new Attribute($dic, 'label', 'process #1'),
@@ -76,7 +76,7 @@ class IG17Test extends BaseGraphTest {
     }
 
     // cluster1
-    $g->addChild($cluster1 = new Cluster($dic, 1, [
+    $g->addChild($cluster1 = new Cluster($dic, '1', [
       new Attribute($dic, 'color', 'blue'),
       new Attribute($dic, 'label', 'process #2'),
     ]));

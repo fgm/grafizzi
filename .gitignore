@@ -17,5 +17,6 @@ phpunit.xml
 ocular.phar
 coverage/
 coverage.*
+.phpunit.cache
 .phpunit.result.cache
 php.log

@@ -3,7 +3,7 @@
  * @file
  * Grafizzi\Graph\Renderer: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -30,7 +30,7 @@ use Pimple\Container;
  * a pipe to chain invocations of their filter() methods.
  *
  * @method dot(array $args = [])
- * @method string()
+ * @method string(array $s)
  * @method sink()
  */
 class Renderer {
@@ -78,8 +78,11 @@ class Renderer {
 
     fclose($pipes[0]);
     fclose($pipes[1]);
-    $stderr = stream_get_contents($pipes[2]);
-    proc_close($process);
+    $stderr = stream_get_contents($pipes[2]) ?: "";
+    // PHPstan thinks it might have changed since it was initialized.
+    if (is_resource($process)) {
+      proc_close($process);
+    }
 
     $sts = preg_match('/(.+):( .* )*/', $stderr, $matches);
     if (!$sts || count($matches) != 3) {

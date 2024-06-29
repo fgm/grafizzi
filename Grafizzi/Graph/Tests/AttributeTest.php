@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\AttributeTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -26,11 +26,12 @@ namespace Grafizzi\Graph\Tests;
 require 'vendor/autoload.php';
 
 use \Grafizzi\Graph\Attribute;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Attribute test case.
  */
-class AttributeTest extends BaseGraphTest {
+class AttributeTest extends BaseGraphCase {
 
   /**
    *
@@ -118,9 +119,8 @@ class AttributeTest extends BaseGraphTest {
 
   /**
    * Tests Attribute->setValue()
-   *
-   * @depends testSetName
    */
+  #[depends("testSetName")]
   public function testSetValue(): void {
     $name = 'Times New Roman';
     $this->Attribute->setValue($name);

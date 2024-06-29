@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG19286Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -38,7 +38,7 @@ require 'vendor/autoload.php';
  *
  * @link     http://pear.php.net/bugs/bug.php?id=19286
  */
-class IG19286Test extends BaseGraphTest {
+class IG19286Test extends BaseGraphCase {
 
   public string $expected = <<<EOT
 strict digraph G {

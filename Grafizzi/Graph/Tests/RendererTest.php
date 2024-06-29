@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\RendererTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -34,15 +34,11 @@ use \ErrorException;
  * Note: at least in PHP3.7, when passing, expectOutputString is not
  * included in the assertions count, but it is included when failing.
  */
-class RendererTest extends BaseGraphTest {
+class RendererTest extends BaseGraphCase {
 
   const ERASABLE = 'input should be overwritten';
 
-  /**
-   *
-   * @var ?Renderer
-   */
-  private ?Renderer $renderer;
+  private Renderer $renderer;
 
   /**
    * Prepares the environment before running a test.
@@ -57,12 +53,14 @@ class RendererTest extends BaseGraphTest {
    * Cleans up the environment after running a test.
    */
   protected function tearDown(): void {
-    $this->renderer = NULL;
+    unset($this->renderer);
     parent::tearDown();
   }
 
   /**
    * Tests Renderer::getFormats()
+   *
+   * @throws \ErrorException
    */
   public function testGetFormats(): void {
     $dic = $this->dic;
@@ -90,6 +88,9 @@ class RendererTest extends BaseGraphTest {
   public function test__call(): void {
     $expected = $out = 'Some data';
     try {
+      // We ignore the next line because we are specifically creating a
+      // non-existent method to validate that it is intercepted.
+      /* @phpstan-ignore argument.type */
       $out = call_user_func([$this->renderer, 'nonexistent']);
     } catch (\DomainException $e) {
       $this->assertInstanceOf('\\DomainException', $e,
@@ -137,12 +138,16 @@ class RendererTest extends BaseGraphTest {
     // The value of this string should be overwritten by the filter.
     $output1 = $output2 = $output3 = self::ERASABLE;
 
-    $input = $this->renderer->pipe;
+    // Prevent reference copying which would make the test meaningless.
+    $input = unserialize(serialize($this->renderer->pipe));
+
+    /** @var Renderer $step1 */
     $step1 = call_user_func([$this->renderer, 'string'], [
       'out' => &$output1,
       'callback' => $callback,
     ]);
 
+    /** @var Renderer $r */
     $r = call_user_func([$step1, 'string'], [
       'out' => &$output2,
       'callback' => $callback,

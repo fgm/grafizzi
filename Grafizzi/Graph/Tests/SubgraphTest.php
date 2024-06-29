@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\SugraphTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -30,7 +30,7 @@ use Grafizzi\Graph\Subgraph;
 /**
  * Subgraph test case.
  */
-class SubgraphTest extends BaseCompositeTest {
+class SubgraphTest extends BaseCompositeCase {
 
   /**
    * Prepares the environment before running a test.

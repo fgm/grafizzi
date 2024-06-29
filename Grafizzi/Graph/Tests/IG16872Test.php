@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG16872Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -37,7 +37,7 @@ require 'vendor/autoload.php';
  *
  * Bug 16872: "Cluster IDs start with 'cluster'"
  */
-class IG16872Test extends BaseGraphTest {
+class IG16872Test extends BaseGraphCase {
 
   public string $expected = <<<EOT
 digraph sp_d_rcp_001 {

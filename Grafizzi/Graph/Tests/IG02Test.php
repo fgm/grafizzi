@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG02Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -36,7 +36,7 @@ require 'vendor/autoload.php';
  *
  * Test 2: "HTML-like labels"
  */
-class IG02Test extends BaseGraphTest {
+class IG02Test extends BaseGraphCase {
 
   public function setUp(): void {
     parent::setUpExtended('structs');

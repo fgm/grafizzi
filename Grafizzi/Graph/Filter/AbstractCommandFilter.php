@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Filter\AbstractCommandFilter: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -88,8 +88,8 @@ abstract class AbstractCommandFilter extends AbstractFilter {
     fwrite($pipes[0], $input);
     fclose($pipes[0]);
     $ret = [
-      stream_get_contents($pipes[1]),
-      stream_get_contents($pipes[2]),
+      stream_get_contents($pipes[1]) ?: "",
+      stream_get_contents($pipes[2]) ?: "",
     ];
     fclose($pipes[1]);
     fclose($pipes[2]);
