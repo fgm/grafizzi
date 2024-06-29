@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG01Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -38,7 +38,7 @@ require 'vendor/autoload.php';
  * Graph definition taken from Neato documentation, fig. 1 p. 3
  * "Drawing graphs with NEATO" / Stephen C. North / April 26, 2004
  */
-class IG01Test extends BaseGraphTest {
+class IG01Test extends BaseGraphCase {
 
   public function setUp(): void {
     parent::setUpExtended();

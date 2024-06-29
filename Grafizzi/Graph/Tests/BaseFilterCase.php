@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\BaseFilterTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -31,7 +31,7 @@ require 'vendor/autoload.php';
  *
  * @author marand
  */
-abstract class BaseFilterTest extends TestCase {
+abstract class BaseFilterCase extends TestCase {
 
   /**
    * @var \Grafizzi\Graph\Filter\FilterInterface[]

@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG19Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -42,7 +42,7 @@ require 'vendor/autoload.php';
  * Note: ordering of insertions differs from Image_GraphViz, since Grafizzi
  * orders output by insertion order to allow customizing output order.
  */
-class IG19Test extends BaseGraphTest {
+class IG19Test extends BaseGraphCase {
 
   public function setUp(): void {
     // not strict by default.

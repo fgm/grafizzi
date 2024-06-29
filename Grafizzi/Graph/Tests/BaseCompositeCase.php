@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\BaseCompositeTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -32,7 +32,7 @@ use Grafizzi\Graph\Subgraph;
 /**
  * Abstract base class for SubgraphTest/ClusterTest.
  */
-abstract class BaseCompositeTest extends BaseGraphTest {
+abstract class BaseCompositeCase extends BaseGraphCase {
 
   /**
    * @var string

@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG12913Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -23,10 +23,11 @@
 
 namespace Grafizzi\Graph\Tests;
 
+use Exception;
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Cluster;
 use Grafizzi\Graph\Filter\DotFilter;
-use Grafizzi\Graph\Filter\FilterInterface;
+use Grafizzi\Graph\Graph;
 use Grafizzi\Graph\Node;
 use Pimple\Container;
 
@@ -42,48 +43,41 @@ require 'vendor/autoload.php';
  * Since Grafizzi is not a PEAR component, it can throw exceptions instead of
  * using PEAR errors, so the test applies to exceptions.
  */
-class IG12913Test extends BaseGraphTest {
+class IG12913Test extends BaseGraphCase {
 
   /**
    *
-   * @var \Grafizzi\Graph\Graph
+   * @var ?\Grafizzi\Graph\Graph
    */
-  public $Graph2;
+  public ?Graph $Graph2;
 
-  /**
-   * @var \Pimple\Container
-   */
-  public $dic2;
+  public Container $dic2;
 
   public function setUp(): void {
-    parent::setUpExtended('G');
+    parent::setUpExtended();
     $this->Graph2 = $this->Graph;
     $this->dic2 = $this->dic;
     $this->dic2['use_exceptions'] = false;
     unset($this->dic, $this->Graph);
 
-    parent::setUpExtended('G');
+    parent::setUpExtended();
     $this->dic['use_exceptions'] = TRUE;
 
-    $this->Graph->addChild($cluster1 = new Cluster($this->dic, 1));
-    $cluster1->addChild($node1 = new Node($this->dic, 'Node1', [
+    $this->Graph->addChild($cluster1 = new Cluster($this->dic, '1'));
+    $cluster1->addChild(new Node($this->dic, 'Node1', [
       new Attribute($this->dic, 'label', 'Node1'),
     ]));
 
     $this->Graph2->addChild($cluster2 = new Cluster($this->dic2, '2'));
-    $cluster2->addChild($node2 = new Node($this->dic2, 'Node2', [
+    $cluster2->addChild(new Node($this->dic2, 'Node2', [
       new Attribute($this->dic2, 'label', 'Node2'),
     ]));
   }
 
-  /**
-   * @param DotFilter $filter
-   * @param string $format
-   */
   protected function withDicException(DotFilter $filter, string $format): void {
     try {
       $filter->image($format);
-    } catch (\InvalidArgumentException $e) {
+    } catch (Exception $e) {
       $this->assertInstanceOf('InvalidArgumentException', $e,
         'Invalid argument for invalid format.');
     }
@@ -92,6 +86,8 @@ class IG12913Test extends BaseGraphTest {
   /**
    * @param DotFilter $filter
    * @param string $format
+   *
+   * @throws \ErrorException
    */
   protected function withDicNoException(DotFilter $filter, string $format): void {
     $result = $filter->image($format);
@@ -100,6 +96,8 @@ class IG12913Test extends BaseGraphTest {
 
   /**
    * Tests Graph->image()
+   *
+   * @throws \ErrorException
    */
   public function testImage(): void {
     $dotFilter = new DotFilter();

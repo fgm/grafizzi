@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\DotFilterTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -31,7 +31,7 @@ use Pimple\Container;
 /**
  * DotFilter test case.
  */
-class DotFilterTest extends BaseFilterTest {
+class DotFilterTest extends BaseFilterCase {
 
   const INVALID_FORMAT = 'some unlikely to be valid format';
 
@@ -73,7 +73,7 @@ class DotFilterTest extends BaseFilterTest {
     $image = $filter->image('svg');
 
     $this->assertIsArray($filter->formats, "Filter formats is an array");
-    $this->assertTrue(count($filter->formats) >= 1,
+    $this->assertNotEmpty($filter->formats,
       "There is at least one format available from the DotFilter.");
 
     // TODO check actual image generation once it is actually performed.

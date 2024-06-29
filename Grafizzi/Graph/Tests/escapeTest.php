@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\escapeTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -30,7 +30,7 @@ use Grafizzi\Graph\AbstractNamed;
 /**
  * escape() test case.
  */
-class escapeTest extends BaseGraphTest {
+class escapeTest extends BaseGraphCase {
 
   /**
    * Tests escape()

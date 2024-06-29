@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Graph: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -28,15 +28,6 @@ use Pimple\Container;
 class Graph extends AbstractElement implements GraphInterface {
 
   /**
-   * Helper to simplify construction of strict graphs.
-   *
-   * @return array<string,bool>
-   */
-  public static function strict() {
-    return ['strict' => TRUE];
-  }
-
-  /**
    * Generate non-strict graphs by default
    *
    * @var bool
@@ -50,12 +41,12 @@ class Graph extends AbstractElement implements GraphInterface {
 
   /**
    * @param \Pimple\Container $dic
-   * @param mixed $name
+   * @param string $name
    * @param array<int|string,bool|\Grafizzi\Graph\AttributeInterface> $attributes
    */
   public function __construct(
     Container $dic,
-    $name = 'G',
+    string $name = 'G',
     array $attributes = []
   ) {
     if (!isset($dic['directed'])) {
@@ -65,9 +56,12 @@ class Graph extends AbstractElement implements GraphInterface {
     $this->setName($name);
     if (!empty($attributes)) {
       if (isset($attributes['strict'])) {
-        $this->fStrict = $attributes['strict'];
+        $this->fStrict = !!$attributes['strict'];
         unset($attributes['strict']);
       }
+      // Strict is the only key in Graph $attributes that may contain a bool,
+      // instead of an AttributeInterface, and we now removed it.
+      /** @var array<\Grafizzi\Graph\AttributeInterface> $attributes */
       $this->setAttributes($attributes);
     }
   }
@@ -116,6 +110,34 @@ class Graph extends AbstractElement implements GraphInterface {
   }
 
   /**
+   * @return array<string>
+   */
+  public static function getAllowedChildTypes(): array {
+    return [
+      'cluster',
+      'edge',
+      'multiedge', // Grafizzi extension
+      'node',
+      'subgraph',
+    ];
+  }
+
+  /**
+   * @return bool
+   */
+  public function getDirected() {
+    $ret = $this->fDirected;
+    return $ret;
+  }
+
+  /**
+   * @param bool $directed
+   */
+  public function setDirected($directed) {
+    $this->fDirected = $directed;
+  }
+
+  /**
    * Helper for Graph::build(): build attributes.
    *
    * Unrelated with AbstractElement::buildAttributes().
@@ -159,27 +181,6 @@ class Graph extends AbstractElement implements GraphInterface {
   }
 
   /**
-   * @return array<string>
-   */
-  public static function getAllowedChildTypes(): array {
-    return [
-      'cluster',
-      'edge',
-      'multiedge', // Grafizzi extension
-      'node',
-      'subgraph',
-    ];
-  }
-
-  /**
-   * @return bool
-   */
-  public function getDirected() {
-    $ret = $this->fDirected;
-    return $ret;
-  }
-
-  /**
    * @return string
    */
   public function getType(): string {
@@ -188,10 +189,12 @@ class Graph extends AbstractElement implements GraphInterface {
   }
 
   /**
-   * @param bool $directed
+   * Helper to simplify construction of strict graphs.
+   *
+   * @return array<string,bool>
    */
-  public function setDirected($directed) {
-    $this->fDirected = $directed;
+  public static function strict() {
+    return ['strict' => TRUE];
   }
 
 }

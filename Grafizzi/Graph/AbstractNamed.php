@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\AbstractNamed: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -24,6 +24,7 @@
 namespace Grafizzi\Graph;
 
 use Pimple\Container;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractNamed implements NamedInterface {
 
@@ -34,34 +35,16 @@ abstract class AbstractNamed implements NamedInterface {
    *
    * @var \Psr\Log\LoggerInterface
    */
-  public $logger;
+  public LoggerInterface $logger;
 
   /**
    * @var \Pimple\Container
    */
-  protected $dic;
+  protected Container $dic;
 
   function __construct(Container $dic) {
     $this->dic = $dic;
     $this->logger = &$dic['logger'];
-  }
-
-  /**
-   * @param mixed $any
-   *
-   * @return string
-   */
-  public static function stringify($any): string {
-    if (is_string($any)) {
-      return $any;
-    }
-    if (is_object($any) && method_exists($any, '__toString')) {
-      return $any->__toString();
-    }
-    if (is_bool($any)) {
-      return $any ? 'true' : 'false';
-    }
-    return "$any";
   }
 
   /**
@@ -98,8 +81,7 @@ abstract class AbstractNamed implements NamedInterface {
     }
 
     // 3. Wrap requested pseudo-html if it contains at least one terminated element.
-    if ($pseudoHtml && (strpos($s, '</') !== FALSE
-        || strpos($s, '/>') !== FALSE)) {
+    if ($pseudoHtml && (str_contains($s, '</') || str_contains($s, '/>'))) {
       $wrapping = 'html';
     }
 
@@ -124,21 +106,6 @@ abstract class AbstractNamed implements NamedInterface {
     }
 
     return $s;
-  }
-
-  /**
-   * Helper for escape(). Validate non-quoted id.
-   *
-   * @param string $id
-   *
-   * @return boolean
-   * @see escape()
-   *
-   */
-  protected static function validateId($id) {
-    $regex = '^([a-z_][a-z_0-9]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$';
-    $ret = (bool) preg_match("/$regex/i", $id);
-    return $ret;
   }
 
   /**
@@ -168,6 +135,34 @@ abstract class AbstractNamed implements NamedInterface {
   public function setName($name): void {
     $this->logger->debug($this->getType() . " attribute name set to $name.");
     $this->fName = $this->stringify($name);
+  }
+
+  /**
+   * @param mixed $any
+   *
+   * @return string
+   */
+  public static function stringify(mixed $any): string {
+    if (is_string($any)) {
+      return $any;
+    }
+    if (is_object($any) && method_exists($any, '__toString')) {
+      return $any->__toString();
+    }
+    if (is_bool($any)) {
+      return $any ? 'true' : 'false';
+    }
+    return "$any";
+  }
+
+  /**
+   * Helper for escape(). Validate non-quoted id.
+   *
+   * @see escape()
+   */
+  protected static function validateId(string $id): bool {
+    $regex = '^([a-z_][a-z_0-9]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$';
+    return (bool) preg_match("/$regex/i", $id);
   }
 
 }
