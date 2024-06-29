@@ -15,7 +15,7 @@
   "name": "osinet/grafizzi",
 
   "require": {
-    "php": "^8",
+    "php": "^8.2",
     "pimple/pimple": "^v3.5.0",
     "psr/log": "^3"
   },

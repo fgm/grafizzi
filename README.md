@@ -3,7 +3,6 @@ Grafizzi
 
 Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 
-[![Build Status](https://secure.travis-ci.org/fgm/grafizzi.png?branch=master)](http://travis-ci.org/fgm/grafizzi)
 [![codecov](https://codecov.io/gh/fgm/grafizzi/branch/master/graph/badge.svg)](https://codecov.io/gh/fgm/grafizzi)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/fgm/grafizzi/badges/quality-score.png?s=95ce57b528611f1f89868672f04e3af65ba73801)](https://scrutinizer-ci.com/g/fgm/grafizzi/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi?ref=badge_shield)
@@ -65,7 +64,7 @@ Then run:
 
     php composer.phar install
 
-Note that Grafizzi is available for PHP &ge; 8.0.
+Note that Grafizzi is available for PHP &ge; 8.2.
 
 
 #### Check your System Configuration
@@ -146,9 +145,10 @@ Have fun!
 ## Changelog
 
 - 0.0.4:
-  - Dropped all PHP 7 support, added PHP 8.3 support
-  - Upgraded to PHPUnit 11
+  - Dropped all PHP &le; 8.1 support, added PHP 8.3+ support
+  - Upgraded to PHPUnit 11.2.x
   - examples renamed from `app/*` to `example/*`
+  - Clean to PHPstan level 7
 - 0.0.3: 
   - Dropped PHP < 7.4 support, added PHP 8.1+ support
   - Upgraded to PHPunit 9.5.x
