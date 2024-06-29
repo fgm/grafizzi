@@ -3,6 +3,7 @@ Grafizzi
 
 Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 
+[![Build](https://github.com/fgm/grafizzi/actions/workflows/php.yml/badge.svg)](https://github.com/fgm/grafizzi/actions/workflows/php.yml)
 [![codecov](https://codecov.io/gh/fgm/grafizzi/branch/master/graph/badge.svg)](https://codecov.io/gh/fgm/grafizzi)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/fgm/grafizzi/badges/quality-score.png?s=95ce57b528611f1f89868672f04e3af65ba73801)](https://scrutinizer-ci.com/g/fgm/grafizzi/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi?ref=badge_shield)

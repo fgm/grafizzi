@@ -1,0 +1,74 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    environment: CI
+    strategy:
+      matrix:
+        php: ["8.2", "8.3"]
+        experimental: [ false ]
+        include:
+          - php: 8.4
+            experimental: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+            fetch-depth: 10
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php${{matrix.php}}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php${{matrix.php}}-
+
+      - name: Install dependencies
+        run: make install-ci
+
+      - name: Lint code
+        if: ${{ matrix.php != '8.4' }}
+        run: make lint && echo "result=$?"
+
+      - name: Install test dependencies
+        # We do not care whether dot is ancient, so no sudo apt-get update -qq.
+        run: sudo apt-get install -y --no-upgrade graphviz
+
+      - name: Run test suite
+        run: make test
+
+      - name: Upload coverage to Scrutinizer CI
+        uses: sudo-bot/action-scrutinizer@latest
+        if: ${{ matrix.php == '8.3' }}
+        with:
+          cli-args: "--format=php-clover ./coverage.xml"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        if: ${{ matrix.php == '8.3' }}
+        with:
+          directory: .
+          fail_ci_if_error: true
+          files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
