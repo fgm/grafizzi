@@ -149,7 +149,7 @@ Have fun!
   - Upgraded to PHPUnit 11.2.x
   - examples renamed from `app/*` to `example/*`
   - Clean to PHPstan level 7
-- 0.0.3: 
+  - 0.0.3: 
   - Dropped PHP < 7.4 support, added PHP 8.1+ support
   - Upgraded to PHPunit 9.5.x
   - Clean to PHPstan level 6
