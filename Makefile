@@ -42,8 +42,11 @@ docs:
 install:
 	composer install -nvv --prefer-source
 
+install-ci:
+	composer install --prefer-dist --no-progress
+
 lint:
-	phpstan analyze -l 7 example Grafizzi
+	vendor/bin/phpstan analyze -l 7 example Grafizzi
 
 test:
 	vendor/bin/phpunit Grafizzi
