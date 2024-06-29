@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Filter\AbstractFilter: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -52,10 +52,13 @@ abstract class AbstractFilter implements FilterInterface {
    *
    * @throws \DomainException
    */
-  public static function create(string $name, array &$args = []) {
+  public static function create(string $name, array &$args = []): FilterInterface {
     $className = __NAMESPACE__ . '\\' . ucfirst($name) . 'Filter';
     if (class_exists($className, TRUE)) {
       $ret = new $className($args);
+      if (!($ret instanceof FilterInterface)) {
+        throw new \DomainException("{$className} does not implement FilterInterface");
+      }
     }
     else {
       throw new \DomainException('Non existent filter "' . $name . '" (' . $className . ').');

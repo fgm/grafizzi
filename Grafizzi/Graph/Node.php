@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Node: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -56,9 +56,12 @@ class Node extends AbstractElement {
   ) {
     parent::__construct($dic);
     if (isset($attributes['implicit'])) {
-      $this->fImplicit = $attributes['implicit'];
+      $this->fImplicit = !!$attributes['implicit'];
       unset($attributes['implicit']);
     }
+    // Implicit is the only key in Node $attributes that may contain a bool,
+    // instead of an AttributeInterface, and we now removed it.
+    /** @var array<\Grafizzi\Graph\AttributeInterface> $attributes */
     $this->setAttributes($attributes);
     if (!isset($attributes['name'])) {
       $this->setName($name);

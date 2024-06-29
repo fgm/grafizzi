@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG09Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -41,7 +41,7 @@ require 'vendor/autoload.php';
  * generated source according to the sequence of addChild() calls, whereas
  * Image_GraphViz orders subgraphs before edges whatever their insertion order.
  */
-class IG09Test extends BaseGraphTest {
+class IG09Test extends BaseGraphCase {
 
   public function setUp(): void {
     // not strict by default.
@@ -66,16 +66,16 @@ class IG09Test extends BaseGraphTest {
 
     /* time graphs */
     $g->addChild($sgPast = new Subgraph($dic, 'past', $sgAttrs));
-    $g->addChild($sg1978 = new Subgraph($dic, 1978, $sgAttrs));
-    $g->addChild($sg1980 = new Subgraph($dic, 1980, $sgAttrs));
-    $g->addChild($sg1982 = new Subgraph($dic, 1982, $sgAttrs));
-    $g->addChild($sg1983 = new Subgraph($dic, 1983, $sgAttrs));
-    $g->addChild($sg1985 = new Subgraph($dic, 1985, $sgAttrs));
-    $g->addChild($sg1986 = new Subgraph($dic, 1986, $sgAttrs));
-    $g->addChild($sg1987 = new Subgraph($dic, 1987, $sgAttrs));
-    $g->addChild($sg1988 = new Subgraph($dic, 1988, $sgAttrs));
-    $g->addChild($sg1989 = new Subgraph($dic, 1989, $sgAttrs));
-    $g->addChild($sg1990 = new Subgraph($dic, 1990, $sgAttrs));
+    $g->addChild($sg1978 = new Subgraph($dic, '1978', $sgAttrs));
+    $g->addChild($sg1980 = new Subgraph($dic, '1980', $sgAttrs));
+    $g->addChild($sg1982 = new Subgraph($dic, '1982', $sgAttrs));
+    $g->addChild($sg1983 = new Subgraph($dic, '1983', $sgAttrs));
+    $g->addChild($sg1985 = new Subgraph($dic, '1985', $sgAttrs));
+    $g->addChild($sg1986 = new Subgraph($dic, '1986', $sgAttrs));
+    $g->addChild($sg1987 = new Subgraph($dic, '1987', $sgAttrs));
+    $g->addChild($sg1988 = new Subgraph($dic, '1988', $sgAttrs));
+    $g->addChild($sg1989 = new Subgraph($dic, '1989', $sgAttrs));
+    $g->addChild($sg1990 = new Subgraph($dic, '1990', $sgAttrs));
     $g->addChild($sgFuture = new Subgraph($dic, 'future', $sgAttrs));
 
     /* programs */

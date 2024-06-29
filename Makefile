@@ -1,7 +1,7 @@
 #
 # Makefile: a component of the Grafizzi library.
 #
-# (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+# (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
 #
 # Grafizzi is free software: you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free
@@ -31,19 +31,22 @@ clean:
 	find . \( -name "php*.log" -o -name "*.dot" \) -delete
 	# Avoid deleting SVGs in php-code-coverage
 	find Grafizzi \( -name "*.svg" \) -delete
-	rm -fr coverage* doxygen .phpunit.result.cache
+	rm -fr coverage* doxygen .phpunit*cache
 
 cover:
-	vendor/bin/phpunit -v Grafizzi --coverage-html=coverage -c phpunit.xml.dist
+	vendor/bin/phpunit Grafizzi --coverage-html=coverage -c phpunit.xml.dist
 
 docs:
 	doxygen Grafizzi.dox
 
+install:
+	composer install -nvv --prefer-source
+
 lint:
-	phpstan analyse -l 6 app Grafizzi
+	phpstan analyze -l 7 example Grafizzi
 
 test:
-	vendor/bin/phpunit -v Grafizzi
+	vendor/bin/phpunit Grafizzi
 
 # Stronger cleaning: will need net access to restore.
 purge: clean

@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\AbstractElement: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -286,13 +286,13 @@ abstract class AbstractElement extends AbstractNamed implements ElementInterface
 
   /**
    * @param array<\Grafizzi\Graph\AttributeInterface> $attributes
-   *   An array of objects implementing AttributeInterface
+   *   An array of booleans or objects implementing AttributeInterface.
    *
    * @return void
    */
   public function setAttributes(array $attributes): void {
     foreach ($attributes as $attribute) {
-      if (!in_array('Grafizzi\\Graph\\AttributeInterface', class_implements($attribute))) {
+      if (!in_array(AttributeInterface::class, class_implements($attribute))) {
         $message = 'Trying to set non-attribute as an attribute';
         $this->logger->warning($message);
         throw new AttributeNameException($message);

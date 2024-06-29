@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\BaseGraphTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -21,16 +21,14 @@
  * <http://www.gnu.org/licenses/>
  */
 
-
 namespace Grafizzi\Graph\Tests;
 
 require 'vendor/autoload.php';
 
-use \Grafizzi\Graph\Graph;
-
-use \Monolog\Logger;
-use \Monolog\Handler\StreamHandler;
-
+use Grafizzi\Graph\Graph;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Pimple\Container;
 
@@ -39,7 +37,7 @@ use Pimple\Container;
  *
  * Build a graph that all other test cases will need.
  */
-abstract class BaseGraphTest extends TestCase {
+abstract class BaseGraphCase extends TestCase {
 
   /**
    *
@@ -53,25 +51,6 @@ abstract class BaseGraphTest extends TestCase {
   public Container $dic;
 
   /**
-   * Prepares the environment before running a test.
-   *
-   * @param string $name
-   * @param array<string,bool> $attributes
-   *
-   * @return void
-   */
-  protected function setUpExtended(string $name = 'G', array $attributes = []): void {
-    parent::setUp();
-
-    $log = new Logger(basename(__FILE__, '.php'));
-    $log->pushHandler(new StreamHandler('php://stderr', Logger::INFO));
-    $this->dic = new Container([
-      'logger' => $log,
-    ]);
-    $this->Graph = new Graph($this->dic, $name, $attributes);
-  }
-
-  /**
    * Helper function for testBuild() method.
    *
    * @param string $expected
@@ -83,6 +62,25 @@ abstract class BaseGraphTest extends TestCase {
     $build = $this->Graph->build();
     $this->Graph->logger->debug("\n\n$build\n\n");
     $this->assertEquals($expected, $build, $message);
+  }
+
+  /**
+   * Prepares the environment before running a test.
+   *
+   * @param string $name
+   * @param array<string,bool> $attributes
+   *
+   * @return void
+   */
+  protected function setUpExtended(string $name = 'G', array $attributes = []): void {
+    parent::setUp();
+
+    $log = new Logger(basename(__FILE__, '.php'));
+    $log->pushHandler(new StreamHandler('php://stderr', Level::Info));
+    $this->dic = new Container([
+      'logger' => $log,
+    ]);
+    $this->Graph = new Graph($this->dic, $name, $attributes);
   }
 
   /**

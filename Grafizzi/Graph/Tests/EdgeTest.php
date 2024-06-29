@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\EdgeTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -33,7 +33,7 @@ use Grafizzi\Graph\Node;
 /**
  * Edge test case.
  */
-class EdgeTest extends BaseGraphTest {
+class EdgeTest extends BaseGraphCase {
 
   /**
    * @var ?Edge

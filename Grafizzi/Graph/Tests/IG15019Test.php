@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG15019Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -26,6 +26,7 @@ namespace Grafizzi\Graph\Tests;
 use Grafizzi\Graph\Attribute;
 use Grafizzi\Graph\Cluster;
 use Grafizzi\Graph\Node;
+use PHPUnit\Framework\Attributes\Depends;
 
 require 'vendor/autoload.php';
 
@@ -40,9 +41,9 @@ require 'vendor/autoload.php';
  * Note 2: IG test expects an abnormal result: attribute "0" being set to "".
  *   Since this is an incorrect behavior, Grafizzi does not reproduce it.
  */
-class IG15019Test extends BaseGraphTest {
+class IG15019Test extends BaseGraphCase {
 
-  const CLUSTER_NAME = 0;
+  const CLUSTER_NAME = '0';
 
   public string $expected = <<<EOT
 strict digraph Bug {
@@ -78,9 +79,7 @@ EOT;
     $this->check($this->expected, "Image_GraphViz bug test 15019 passed.");
   }
 
-  /**
-   * @depends testBuild
-   */
+  #[depends("testBuild")]
   public function testBuild2(): void {
     $cluster0 = $this->Graph->getChildByName(self::CLUSTER_NAME);
     $this->assertNotNull($cluster0, "Numbered cluster found in graph.");

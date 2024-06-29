@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\NodeTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -31,7 +31,7 @@ use Grafizzi\Graph\Node;
 /**
  * Node test case.
  */
-class NodeTest extends BaseGraphTest {
+class NodeTest extends BaseGraphCase {
 
   /**
    *

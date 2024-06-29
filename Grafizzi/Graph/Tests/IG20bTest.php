@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG20bTest: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -39,7 +39,7 @@ require 'vendor/autoload.php';
  *
  * "Graph definition taken from GraphViz documentation"
  */
-class IG20bTest extends BaseGraphTest {
+class IG20bTest extends BaseGraphCase {
 
   public function setUp(): void {
     // not strict by default.
@@ -54,12 +54,12 @@ class IG20bTest extends BaseGraphTest {
     $nullTitle = [new Attribute($dic, 'title', NULL)];
     $nodes = [];
 
-    $graph->addChild($cluster0 = new Cluster($dic, 0, $nullTitle));
+    $graph->addChild($cluster0 = new Cluster($dic, '0', $nullTitle));
     foreach (['a', 'b', 'c', 'd'] as $name) {
       $cluster0->addChild($nodes[$name] = new Node($dic, $name));
     }
 
-    $graph->addChild($cluster1 = new Cluster($dic, 1, $nullTitle));
+    $graph->addChild($cluster1 = new Cluster($dic, '1', $nullTitle));
     foreach (['e', 'f', 'g'] as $name) {
       $cluster1->addChild($nodes[$name] = new Node($dic, $name));
     }
@@ -85,7 +85,7 @@ class IG20bTest extends BaseGraphTest {
     $graph->addChild(new Edge($dic, $nodes['e'], $nodes['f']));
     $graph->addChild(new Edge($dic, $nodes['d'], $nodes['e']));
     $graph->addChild(new Edge($dic, $nodes['d'],
-      $nodes['h'] = new Node($dic, 'h', ['implicit' => TRUE])));
+      new Node($dic, 'h', ['implicit' => TRUE])));
   }
 
   /**

@@ -3,7 +3,6 @@ Grafizzi
 
 Welcome to Grafizzi, a PHP wrapper for AT&T GraphViz.
 
-[![Build Status](https://secure.travis-ci.org/fgm/grafizzi.png?branch=master)](http://travis-ci.org/fgm/grafizzi)
 [![codecov](https://codecov.io/gh/fgm/grafizzi/branch/master/graph/badge.svg)](https://codecov.io/gh/fgm/grafizzi)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/fgm/grafizzi/badges/quality-score.png?s=95ce57b528611f1f89868672f04e3af65ba73801)](https://scrutinizer-ci.com/g/fgm/grafizzi/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffgm%2Fgrafizzi?ref=badge_shield)
@@ -35,10 +34,10 @@ $ composer require osinet/grafizzi
    to run Graphviz from your PHP script (`DotFilter`), or "tee" it between a
    filter pipe and a string (`StringFilter`).
    
-You can take inspiration from the examples provided in the `app/` directory:
+You can take inspiration from the examples provided in the `example/` directory:
 
-* `app/hello_node.php` builds a minimal graph showing a lot of logging
-* `app/grafizzi.php` builds a graph for the Grafizzi hierarchy of `Filter` 
+* `example/hello_node.php` builds a minimal graph showing a lot of logging
+* `example/grafizzi.php` builds a graph for the Grafizzi hierarchy of `Filter` 
   classes.
   
 [Monolog]: https://github.com/Seldaek/monolog
@@ -49,8 +48,7 @@ You can take inspiration from the examples provided in the `app/` directory:
 
 #### Obtain the Grafizzi sources
 
-With Grafizzi being very new, the easiest way to get started is to clone the
-Git repository.
+The easiest way to get started is to clone the Git repository.
 
     git clone https://github.com/fgm/grafizzi.git
 
@@ -58,16 +56,15 @@ Git repository.
 #### Download the dependencies
 
 Once you have a clone of the Grafizzi repository, you need to install its
-dependencies, using the Composer package dependency manager. Download Composer
-following the instructions on http://getcomposer.org/ , typically like this:
+development dependencies, using the Composer package dependency manager.
 
-    curl -s http://getcomposer.org/installer | php
+Download Composer following the instructions on https://getcomposer.org/download/
 
 Then run:
 
     php composer.phar install
 
-Note that Grafizzi is available for PHP &ge; 7.4, including 8.1.x.
+Note that Grafizzi is available for PHP &ge; 8.2.
 
 
 #### Check your System Configuration
@@ -75,12 +72,12 @@ Note that Grafizzi is available for PHP &ge; 7.4, including 8.1.x.
 Now make sure that your local system is properly configured for Grafizzi. To do
 this, execute:
 
-    php app/hello-node.php
+    php example/hello-node.php
 
 You should see a detailed debug execution trace. On a POSIX system, you can get
 just the resulting GraphViz source by redirecting _stderr_ to `/dev/null`:
 
-    php app/hello-node.php 2> /dev/null
+    php example/hello-node.php 2> /dev/null
 
 You should see a very basic GraphViz source:
 
@@ -122,8 +119,7 @@ you do not need a web server to access it.
 
 ### Running tests
 
-If you want to make sure that Grafizzi runs fine on your system, make sure
-that PHPunit 4.6 or later is installed on your system, and run:
+If you want to make sure that Grafizzi runs fine on your system, run:
 
     make test
 
@@ -133,11 +129,12 @@ your `vendor` folder.
 
 ### Cleaning up
 
-You can remove php_error.log, the generated doxygen docs directory, the 
+You can remove `php_error.log`, the generated doxygen docs directory, the 
 generated coverage reports, and many stray generated files by running:
 
     make clean
 
+This will not remove the `vendor/` directory.
 
 Have fun!
 
@@ -147,6 +144,11 @@ Have fun!
 
 ## Changelog
 
+- 0.0.4:
+  - Dropped all PHP &le; 8.1 support, added PHP 8.3+ support
+  - Upgraded to PHPUnit 11.2.x
+  - examples renamed from `app/*` to `example/*`
+  - Clean to PHPstan level 7
 - 0.0.3: 
   - Dropped PHP < 7.4 support, added PHP 8.1+ support
   - Upgraded to PHPunit 9.5.x

@@ -4,7 +4,7 @@
  * @file
  * Grafizzi\Graph\Tests\IG03Test: a component of the Grafizzi library.
  *
- * (c) 2012-2022 Frédéric G. MARAND <fgm@osinet.fr>
+ * (c) 2012-2024 Frédéric G. MARAND <fgm@osinet.fr>
  *
  * Grafizzi is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free
@@ -44,7 +44,7 @@ require 'vendor/autoload.php';
  * API change: nodes must be created before they are referenced, be they
  * implicit or explicit in the resulting graph.
  */
-class IG03Test extends BaseGraphTest {
+class IG03Test extends BaseGraphCase {
 
   public function setUp(): void {
     parent::setUpExtended();
